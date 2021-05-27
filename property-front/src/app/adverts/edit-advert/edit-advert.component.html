@@ -1,0 +1,142 @@
+<div class="bg-modal" *ngIf="exitConfirm">
+  <div class="alert alert-danger text-center">
+    <p class="py-3 px-2">You have unsaved changes that will be lost if you continue - are you sure you want to leave?</p>
+      <div class="mt-2 mb-4">
+        <button class="btn btn-light mr-4" (click)="choose(true)">Continue</button>
+        <button class="btn btn-light" (click)="choose(false)">Cancel</button>
+      </div>
+    </div> 
+  </div>
+
+<div class="container">
+ 
+  <div id="login-row" class="row justify-content-center align-items-center">
+    <div id="login-column" class="col-md-6">
+      <div id="login-box" class="col-md-12">
+        <form
+          id="login-form"
+          class="form"
+          novalidate
+          [formGroup]="editAdvertForm"
+        >
+  
+          <h1 class="text-center my-4 h3">{{ id > 0 ? 'Edit Advert' : 'Create New Advert' }}</h1>
+          <div class="form-group">
+            <input
+              type="text"
+              name="title"
+              id="title"
+              class="form-control"
+              formControlName="title"
+              placeholder="Title"
+              autocomplete="off"
+              [ngClass]="{
+                'is-invalid': validationMessage && validationMessage.title
+              }"
+            />
+            <span class="invalid-feedback">
+              <span>
+                {{ validationMessage.title }}
+              </span>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <select
+              class="custom-select"
+              formControlName="province"
+              [ngClass]="{
+                'is-invalid': validationMessage && validationMessage.province
+              }"
+            >
+              <option value="" disabled>Choose your province</option>
+              <option *ngFor="let location of locations"> {{ location }}</option>
+            </select>
+            <span class="invalid-feedback">
+              {{ validationMessage.province }}
+            </span>
+          </div>
+
+    
+          <div class="form-group">
+
+            <select
+              class="custom-select"
+              formControlName="city"
+              [ngClass]="{
+                'is-invalid': validationMessage && validationMessage.city
+              }"
+              *ngIf="cities.length > 0"
+            >
+              <option value="" disabled>Choose your city</option>
+              <option *ngFor="let city of cities"> {{ city }}</option>
+            </select>
+            <span class="invalid-feedback">
+              <span> {{ validationMessage.city }} </span>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <textarea
+              class="form-control"
+              id="exampleFormControlTextarea1"
+              placeholder="Advert Details"
+              rows="3"
+              formControlName="details"
+              [ngClass]="{
+                'is-invalid':
+                  validationMessage && validationMessage.details
+              }"
+            ></textarea>
+            <span class="invalid-feedback">
+              <span> {{ validationMessage.details }} </span>
+            </span>
+          </div>
+
+          <div class="form-group">
+            <input
+              type="text"
+              name="price"
+              id="price"
+              formControlName="price"
+              class="form-control"
+              placeholder="Price"
+              autocomplete="off"
+              [ngClass]="{
+                'is-invalid': validationMessage && validationMessage.price
+              }"
+            />
+            <span class="invalid-feedback">
+              <span>{{ validationMessage.price }}</span>
+            </span>
+          </div>
+
+          <button
+            type="submit"
+            name="submit"
+            class="btn btn-outline-success btn-lg btn-block"
+            (click)="onSave()"
+          >
+            Publish {{ id > 0 ? 'Changes' : 'Advert' }}
+          </button>
+          <a
+            class="btn btn-outline-danger btn-lg btn-block"
+            routerLink="/myadverts"
+          >
+            Cancel
+          </a>
+
+          <div
+            class="alert alert-warning text-center mt-3"
+            *ngIf="alertMessage && alertMessage.length > 0"
+          >
+            <div>{{ alertMessage }}</div>
+            <div class="mt-2">
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
