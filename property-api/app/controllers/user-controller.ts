@@ -3,11 +3,17 @@ import { JwtUtils } from '../lib/jwt-utils';
 
 
 export class UserController {
-  async users (req: any, res: any) {
+  async list (req: any, res: any) {
 
     const users = await db.User.findAndCountAll({});
 
     res.send(users);
+  }
+
+  async user (req: any, res: any) {
+    const user = await db.User.findByPk(req.params.id);
+
+    res.send(user);
   }
 
   async login(req: any, res: any) {

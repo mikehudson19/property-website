@@ -13,10 +13,16 @@ exports.UserController = void 0;
 const models_1 = require("../../models");
 const jwt_utils_1 = require("../lib/jwt-utils");
 class UserController {
-    users(req, res) {
+    list(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
             const users = yield models_1.db.User.findAndCountAll({});
             res.send(users);
+        });
+    }
+    user(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            const user = yield models_1.db.User.findByPk(req.params.id);
+            res.send(user);
         });
     }
     login(req, res) {

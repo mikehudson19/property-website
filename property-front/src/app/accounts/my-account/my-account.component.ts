@@ -5,7 +5,7 @@ import { CustomValidators } from "@app/_helpers/customValidators";
 import { User } from "@app/_models";
 import { IPasswords } from '@app/_models/IPasswords';
 import { IUser } from '@app/_models/IUser';
-import { UserService } from "@app/_services";
+import { AuthenticationService, UserService } from "@app/_services";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 
@@ -73,7 +73,8 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   constructor(
     private _formBuilder: FormBuilder,
     private _userService: UserService,
-    private _router: Router
+    private _router: Router,
+    private authService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
@@ -173,12 +174,11 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   }
 
   getAuthUser(): void {
-    this._userService.getAuthUser().subscribe(user => {
-        this.authUser = user;
-        this.displayUser();      
+    const userId = this.authService.decodedToken.sub;
+
+    this._userService.getUser(userId).subscribe((user) => {
+      this.authUser = user;
     })
-    // In memory API code
-    // this.authUser = JSON.parse(localStorage.getItem("currentUser"));
   }
 
   displayUser(): void {
@@ -190,20 +190,23 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   }
 
   updateUser(): void {
-    const userToUpdate: IUser = {
+    /** TODO: Change the way this updates */
+    const userToUpdate: IUser = { 
       firstName: this.manageAccountForm.get("forenames").value,
       lastName: this.manageAccountForm.get("surname").value,
       email: this.manageAccountForm.get("email").value,
       contactNumber: this.authUser.contactNumber ? this.authUser.contactNumber : "",
     };
 
-    this._userService.updateUser(userToUpdate).subscribe((user) => {
-      this._router
-        .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
-        .then(() => {
-          this._router.navigate(["/myaccount"]);
-        });
-    });
+    console.log(userToUpdate);
+
+    // this._userService.updateUser(userToUpdate).subscribe((user) => {
+    //   this._router
+    //     .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
+    //     .then(() => {
+    //       this._router.navigate(["/myaccount"]);
+    //     });
+    // });
   }
 
   toggleFieldTextType(): void {

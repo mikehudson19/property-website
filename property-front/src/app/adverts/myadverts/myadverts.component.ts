@@ -45,8 +45,8 @@ export class MyAdvertsComponent implements OnInit {
 
   onConfirm(): void {
     this._advertService
-      .shadowDeleteAdvert(this.advertToDeleteId)
-      .subscribe((data) => {
+      .deleteAdvert(this.advertToDeleteId)
+      .subscribe(() => {
         this._router
           .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
           .then(() => {

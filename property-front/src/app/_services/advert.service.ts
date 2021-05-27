@@ -37,19 +37,19 @@ export class AdvertService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.post<IAdvert>(`${environment.apiUrl}/adverts`, advert, { headers });
   }
-
+  /** @TODO: Pass the advert ID and request body seperatley here so i'm not using advert.id as the param */
   updateAdvert(advert: IAdvert): Observable<IAdvert> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.put<IAdvert>(`${environment.apiUrl}/adverts/${advert.id}`, advert, { headers });
   }
 
-  shadowDeleteAdvert(id: number): Observable<IAdvert> {
+  deleteAdvert(id: number): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'});
-    return this._http.put<IAdvert>(`${environment.apiUrl}/api/adverts?advertId=${id}`, id, { headers });
+    return this._http.delete<IAdvert>(`${environment.apiUrl}/adverts/${id}`, { headers });
   }
 
   initializeAd(): IAdvert {
-    return {
+    return {  
       title: '',
       province: '',
       city: '',

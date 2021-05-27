@@ -38,13 +38,22 @@ class AdvertController {
     }
     update(req, res) {
         return __awaiter(this, void 0, void 0, function* () {
-            console.log(req.body);
             const result = yield models_1.db.Advert.update(req.body, {
                 where: {
                     id: req.params.id
                 }
             });
             res.send(result);
+        });
+    }
+    delete(req, res) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield models_1.db.Advert.destroy({
+                where: {
+                    id: req.params.id
+                }
+            });
+            res.sendStatus(200);
         });
     }
 }

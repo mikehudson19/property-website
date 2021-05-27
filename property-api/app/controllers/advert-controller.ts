@@ -25,12 +25,21 @@ export class AdvertController {
   }
 
   async update(req: any, res: any) {
-    console.log(req.body);
     const result = await db.Advert.update(req.body, {
       where: {
         id: req.params.id
       }
     });
     res.send(result);
+  }
+
+  async delete(req: any, res: any) {
+    await db.Advert.destroy({
+      where: {
+        id: req.params.id
+      }
+    })
+
+    res.sendStatus(200);
   }
 }
