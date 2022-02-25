@@ -58,6 +58,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return updateUser();
         case url.endsWith("/users/password") && method === "PUT":
           return updatePassword();
+        // case url.endsWith("/users") && method === "POST":
+        //   return createUser();
         default:
           // pass through any requests not handled above
           return next.handle(request);
@@ -110,6 +112,17 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       });
     }
 
+    function createUser() {
+      let user = body;
+      users.push(user);
+      return ok({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        password: user.password
+      })
+    }
+
     // helper functions
 
     function ok(body?) {
@@ -125,6 +138,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function isLoggedIn() {
+      console.log("headers",headers.get("Authorization"));
       return headers.get("Authorization") === "Bearer fake-jwt-token";
     }
   }

@@ -17,6 +17,7 @@ export class NotAuthGuard implements CanActivate {
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
     const currentUser = this.authenticationService.currentUserValue;
+    console.log("current user");
     if (currentUser) {
       // logged in so return true
       return true;

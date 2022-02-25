@@ -111,6 +111,7 @@ export class LoginComponent implements OnInit {
           this._router.navigate(["myadverts"]);
         },
         (error) => {
+          console.log("error",error)
           this.error = error;
           setTimeout (() => {
             this.error = '';

@@ -67,7 +67,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _myInMemService: InMemoryUserService,
+    private _inMemUserService: InMemoryUserService,
     private _userService: UserService,
     private _router: Router,
     private _authenticationService: AuthenticationService
@@ -186,24 +186,22 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       this.registrationForm.get("passwords.confirmPass").value.trim()
     );
 
-    this._userService.createUser(user).subscribe(data => {
-      console.log(data);
-    })
+    // this._userService.createUser(user).subscribe(data => {
+    //   console.log(data);
+    // })
 
     // In Memory API backend for testing
-    // this._myInMemService
-    //   .saveUser(user)
-    //   .pipe()
-    //   .subscribe((data) => {
-    //     console.log(data);
-    //   });
+    this._inMemUserService
+      .saveUser(user)
+      .subscribe();
 
     setTimeout (() => {
       this._authenticationService
-      .login(user.email, user.password) 
-      // .login('test@test', 'test') // For when using the fake back end.
+      // .login(user.email, user.password) 
+      .login('test@test', 'test') // For when using the fake back end.
       .subscribe(
         (data) => {
+          console.log("logged in and authed")
           this._router.navigate(["myadverts"]);
           this.loading = false;
         },
@@ -214,15 +212,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       );
    }, 3000);
   
-  }
-
-  onClick(): void {
-    this._userService
-      .getAll()
-      .pipe()
-      .subscribe((data) => {
-        console.log(data);
-      });
   }
 
   showPassRequirements(): void {

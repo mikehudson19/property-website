@@ -5,8 +5,6 @@ import { map } from 'rxjs/operators';
 import { User } from '@app/_models/user';
 import { IAdvert } from '@app/_models/IAdvert';
 
-
-
 @Injectable({
   providedIn: 'root'
 })

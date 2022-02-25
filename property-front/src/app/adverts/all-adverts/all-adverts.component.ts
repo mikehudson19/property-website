@@ -18,10 +18,13 @@ export class AllAdvertsComponent implements OnInit {
               private _advertService: AdvertService) { }
 
   ngOnInit(): void {
-    // this._inMemAdService
-    this._advertService
+    this._inMemAdService
+    // this._advertService
     .getAllAdverts().subscribe((adverts => {
-      this.adverts = adverts.rows;
+      console.log("adverts", adverts);
+      this.adverts = adverts;
+      /** @TODO: This is for when connected to the NodeJS API - it returns a res object of rows and count. Format that reposnse before it gets here so that there are no rows. */
+      // this.adverts = adverts.rows;
     }))
   }
 

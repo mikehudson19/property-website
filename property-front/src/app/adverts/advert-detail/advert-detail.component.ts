@@ -31,10 +31,11 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
   }
 
   getAdvert(id: number): void {
-    // this._inMemAdService
-    this._advertService  
+    this._inMemAdService
+    // this._advertService  
     .getAdvert(id).subscribe((advert => {
         this.advert = advert;
+        console.log("advert",this.advert);
       }))
   }
 
