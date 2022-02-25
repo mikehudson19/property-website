@@ -27,10 +27,10 @@ export class AuthenticationService {
     }
 
     login(email: string, password: string) {
+        console.log("Request to login the user")
         /** @TODO: The api url that needs to be used when connected to the Node API is: `${environment.apiUrl}/users/login` - need to change this so they are the same */
         return this._http.post<any>(`${environment.apiUrl}/users/authenticate`, { email, password })
             .pipe(map(user => {
-                console.log("user to set", user);
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);

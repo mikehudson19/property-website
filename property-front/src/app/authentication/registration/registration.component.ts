@@ -201,7 +201,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       .login('test@test', 'test') // For when using the fake back end.
       .subscribe(
         (data) => {
-          console.log("logged in and authed")
           this._router.navigate(["myadverts"]);
           this.loading = false;
         },

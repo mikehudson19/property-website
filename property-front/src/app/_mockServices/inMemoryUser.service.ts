@@ -12,12 +12,12 @@ import { User } from '@app/_models/user';
 
 export class InMemoryUserService {
 
-  userUrl: string = 'api/users';
+  userUrl: string = 'http://localhost:3000/api/users';
 
   constructor(private _http: HttpClient) { }
 
   getUsers(): Observable<User[]> {
-    return this._http.get<User[]>(this.userUrl).pipe()
+    return this._http.get<User[]>(this.userUrl);
   }
 
   getUser(id: number): Observable<Object> {
@@ -26,16 +26,8 @@ export class InMemoryUserService {
   }
 
   saveUser(user: User): Observable<User> {
+    console.log("Save user request")
     const headers = new HttpHeaders({ 'Content-Type' : 'application/json' })
-    const url = `${this.userUrl}`
-    return this._http.post<User>(url, user, { headers : headers });
+    return this._http.post<User>(this.userUrl, user, { headers : headers });
   }
-
-
-
-  // createAdvert(advert: IAdvert): Observable<IAdvert> {
-  //   const headers = new HttpHeaders({ 'Content-Type' : 'application/json' })
-  //   const url = `${this.adUrl}/${advert.id}`
-  //   return this._http.post<IAdvert>(url, advert, { headers : headers });
-  // }
 }

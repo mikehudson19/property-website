@@ -16,6 +16,7 @@ export class InMemoryAdvertService {
   constructor(private _http: HttpClient) { }
 
   getUserAdverts(): Observable<IAdvert[]> {
+    console.log("Request to get all user adverts")
     return this._http.get<IAdvert[]>(this.advertUrl)
   }
 

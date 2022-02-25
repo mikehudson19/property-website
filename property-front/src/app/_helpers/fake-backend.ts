@@ -58,8 +58,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return updateUser();
         case url.endsWith("/users/password") && method === "PUT":
           return updatePassword();
-        // case url.endsWith("/users") && method === "POST":
-        //   return createUser();
+        case url.endsWith("/users") && method === "POST":
+          return createUser();
         default:
           // pass through any requests not handled above
           return next.handle(request);
@@ -86,6 +86,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
     }
 
     function getUsers() {
+      console.log("Getting all the users!");
       if (!isLoggedIn()) return unauthorized();
       return ok(users);
     }

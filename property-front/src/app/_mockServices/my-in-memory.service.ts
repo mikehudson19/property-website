@@ -50,16 +50,6 @@ export class MyInMemoryService implements InMemoryDbService {
       { province: "Free State", cities: [ { cityName: 'Bloemfontein' }, { cityName: 'Welkom' } ] },
     ];
 
-    const users = [{
-      id: 1,
-      email: "test@test",
-      password: "test",
-      firstName: "Test",
-      lastName: "User",
-      // password: "test",
-      contactNumber: "0765698964"
-    }];
-
-    return { adverts, locations, users };
+    return { adverts, locations };
   }
 }
