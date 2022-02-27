@@ -26,7 +26,7 @@ export class InMemoryUserService {
   }
 
   saveUser(user: User): Observable<User> {
-    console.log("Save user request")
+    /** @TODO: This call the save the user isn't saving the user correctly - or, it's maybe saving the user to the users array on the in mem service, not the fake-backend */
     const headers = new HttpHeaders({ 'Content-Type' : 'application/json' })
     return this._http.post<User>(this.userUrl, user, { headers : headers });
   }

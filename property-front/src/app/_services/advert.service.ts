@@ -11,6 +11,8 @@ import { Observable, of } from 'rxjs';
 })
 export class AdvertService {
 
+  apiEndpoint = 'api/adverts';
+
   constructor(private _http: HttpClient) {}
 
   getAdvert(id: number): Observable<IAdvert> {
@@ -30,7 +32,7 @@ export class AdvertService {
   }
 
   getUserAdverts(): Observable<any> {
-    return this._http.get<IAdvert[]>(`${environment.apiUrl}/adverts`);
+    return this._http.get<IAdvert[]>(`${environment.apiUrl}/${this.apiEndpoint}`);
   }
 
   createAdvert(advert: IAdvert): Observable<IAdvert> {

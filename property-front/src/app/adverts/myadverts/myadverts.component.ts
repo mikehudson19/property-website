@@ -32,14 +32,11 @@ export class MyAdvertsComponent implements OnInit {
   ngOnInit() {
     this.loading = true;
 
-    this._inMemUserService.getUsers().subscribe(x => console.log(x));
-
-    this._advertService
-    .getUserAdverts()
-    // .subscribe((adverts) => {
-    //   this.loading = false;
-    //   this.adverts = adverts.rows;
-    // });
+    this._advertService.getUserAdverts()
+    .subscribe((adverts) => {
+      this.loading = false;
+      this.adverts = adverts.rows;
+    });
   }
 
   onDelete(advertId: number): void {
