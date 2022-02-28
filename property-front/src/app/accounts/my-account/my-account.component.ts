@@ -198,7 +198,6 @@ export class MyAccountComponent implements OnInit, OnDestroy {
       contactNumber: this.authUser.contactNumber ? this.authUser.contactNumber : "",
     };
 
-    console.log(userToUpdate);
 
     // this._userService.updateUser(userToUpdate).subscribe((user) => {
     //   this._router

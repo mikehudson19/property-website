@@ -33,9 +33,7 @@ export class SearchComponent implements OnInit {
       maxPrice: this.searchForm.get("maxPrice").value
     }
 
-    this._advertService.getSearchedAdverts().subscribe(adverts => {
-      console.log(adverts);
-    })
+    this._advertService.getSearchedAdverts().subscribe()
   }
 
 }

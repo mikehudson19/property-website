@@ -35,7 +35,6 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
     // this._advertService  
     .getAdvert(id).subscribe((advert => {
         this.advert = advert;
-        console.log("advert",this.advert);
       }))
   }
 

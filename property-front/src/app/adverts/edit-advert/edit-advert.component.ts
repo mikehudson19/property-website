@@ -205,9 +205,6 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       ...this.editAdvertForm.value,
     };
 
-    console.log(this.advert);
-    console.log(this.editAdvertForm.value);
-
     this._advertService
     .updateAdvert(updatedAdvert).subscribe({
       next: () => this.afterSave(),
