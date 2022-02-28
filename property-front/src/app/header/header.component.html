@@ -2,28 +2,20 @@
   <div class="navbar-nav">
       <a class="nav-item nav-link text-light" routerLink="/home">Home</a>
       <a class="nav-item nav-link text-light" routerLink="/alladverts">Homes for sale</a>
-      <a class="nav-item nav-link text-light" [routerLink]="['/editadvert', 0]">Sell a house</a>
+      <a class="nav-item nav-link text-light" routerLink="/myadverts" *ngIf="currentUser">My Ads</a>
+      <a class="nav-item nav-link text-light" routerLink="/myaccount" *ngIf="currentUser">My Profile</a>
+      <a class="nav-item nav-link text-light" [routerLink]="['/editadvert', 0]" *ngIf="currentUser">Create Ad</a>
+      <a class="nav-item nav-link text-light" routerLink="/" *ngIf="currentUser">Favourites</a>
       <a class="nav-item nav-link text-light" routerLink="/login" *ngIf="!currentUser">Login</a>
       <a class="nav-item nav-link text-light" routerLink="/registration" *ngIf="!currentUser">Register</a>
       <a class="nav-item nav-link text-light" (click)="logout()" *ngIf="currentUser">Logout</a>
   </div>
 </nav>
 
-<nav class="navbar navbar-expand navbar-light bg-secondary" *ngIf="currentUser">
-  <div class="navbar-nav">
-      <a class="nav-item nav-link text-light" routerLink="/myadverts">My Ads</a>
-      <a class="nav-item nav-link text-light" routerLink="/">My Profile</a>
-      <a class="nav-item nav-link text-light" routerLink="/alladverts">Buy a House</a>
-      <a class="nav-item nav-link text-light" [routerLink]="['/editadvert', 0]">Sell a House</a>
-      <a class="nav-item nav-link text-light" routerLink="/myaccount">Manage Account</a>
-      <a class="nav-item nav-link text-light" routerLink="/selleraccount">My Seller Profile</a>
-      <a class="nav-item nav-link text-light" routerLink="/">Favourite Houses</a>
-  </div>
-</nav>
-
-<nav class="navbar navbar-expand navbar-light bg-light" *ngIf="currentUser">
+<!-- @TODO: Implement this when admin code is done -->
+<!-- <nav class="navbar navbar-expand navbar-light bg-light" *ngIf="currentUser">
   <div class="navbar-nav">
       <a class="nav-item nav-link text-dark" routerLink="/home">User Management</a>
       <a class="nav-item nav-link text-dark" routerLink="/">Advert Management</a>
   </div>
-</nav>
+</nav> -->
