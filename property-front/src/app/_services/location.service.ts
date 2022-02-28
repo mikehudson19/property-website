@@ -9,9 +9,11 @@ import { Observable } from 'rxjs';
 })
 export class LocationService {
 
+  apiEndpoint = 'api/cities';
+
   constructor(private _http: HttpClient) { }
 
   list(): Observable<any> {
-    return this._http.get<any>(`${environment.apiUrl}/cities`);
+    return this._http.get<any>(`${environment.apiUrl}/${this.apiEndpoint}`);
   }
 }

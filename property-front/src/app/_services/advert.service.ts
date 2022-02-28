@@ -5,7 +5,7 @@ import { IAdvert } from '@app/_models/IAdvert';
 import { ISearchTerms } from '@app/_models/ISearchTerms';
 import { environment } from '@environments/environment';
 import { Observable, of } from 'rxjs';
-import { filter, map, tap } from 'rxjs/operators';
+import { map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -21,15 +21,15 @@ export class AdvertService {
       return of(this.initializeAd());
     }
     
-    return this._http.get<IAdvert>(`${environment.apiUrl}/adverts/${id}`);
+    return this._http.get<IAdvert>(`${environment.apiUrl}/${this.apiEndpoint}/${id}`);
   }
 
   getAllAdverts(): Observable<any> {
-    return this._http.get<any>(`${environment.apiUrl}/adverts`);
+    return this._http.get<any>(`${environment.apiUrl}/${this.apiEndpoint}`);
   }
 
   getSearchedAdverts(): Observable<IAdvert[]> {
-    return this._http.get<IAdvert[]>(`${environment.apiUrl}/api/adverts/search`);
+    return this._http.get<IAdvert[]>(`${environment.apiUrl}/${this.apiEndpoint}/search`);
   }
 
   getUserAdverts(id: number): Observable<any> {
@@ -44,17 +44,17 @@ export class AdvertService {
 
   createAdvert(advert: IAdvert): Observable<IAdvert> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this._http.post<IAdvert>(`${environment.apiUrl}/adverts`, advert, { headers });
+    return this._http.post<IAdvert>(`${environment.apiUrl}/${this.apiEndpoint}`, advert, { headers });
   }
   /** @TODO: Pass the advert ID and request body seperatley here so i'm not using advert.id as the param */
   updateAdvert(advert: IAdvert): Observable<IAdvert> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
-    return this._http.put<IAdvert>(`${environment.apiUrl}/adverts/${advert.id}`, advert, { headers });
+    return this._http.put<IAdvert>(`${environment.apiUrl}/${this.apiEndpoint}/${advert.id}`, advert, { headers });
   }
 
   deleteAdvert(id: number): Observable<any> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json'});
-    return this._http.delete<IAdvert>(`${environment.apiUrl}/adverts/${id}`, { headers });
+    return this._http.delete<IAdvert>(`${environment.apiUrl}/${this.apiEndpoint}/${id}`, { headers });
   }
 
   initializeAd(): IAdvert {

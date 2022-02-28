@@ -9,29 +9,32 @@ import { Observable } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class UserService {
+
+    apiEndpoint = 'api/users';
+
     constructor(private _http: HttpClient) { }
 
     getAll(): Observable<IUser[]> {
-        return this._http.get<IUser[]>(`${environment.apiUrl}/api/users`);
+        return this._http.get<IUser[]>(`${environment.apiUrl}/${this.apiEndpoint}`);
     }
 
     getUser(id: number): Observable<any> {
-        return this._http.get<any>(`${environment.apiUrl}/users/${id}`)
+        return this._http.get<any>(`${environment.apiUrl}/${this.apiEndpoint}/${id}`)
     }
 
     getAuthUser(): Observable<IUser> {
-        return this._http.get<IUser>(`${environment.apiUrl}/api/users/auth`);
+        return this._http.get<IUser>(`${environment.apiUrl}/${this.apiEndpoint}/auth`);
     }
 
     createUser(body: IUser): Observable<IUser> {
-        return this._http.post<IUser>(`${environment.apiUrl}/users/register`, body);
+        return this._http.post<IUser>(`${environment.apiUrl}/${this.apiEndpoint}/register`, body);
     }
 
     updateUser(body: IUser): Observable<IUser> {
-        return this._http.put<IUser>(`${environment.apiUrl}/api/users`, body);
+        return this._http.put<IUser>(`${environment.apiUrl}/${this.apiEndpoint}`, body);
     }
 
     updateUserPassword(body: {}): Observable<IUser> {
-        return this._http.put<IUser>(`${environment.apiUrl}/api/users/password`, body);
+        return this._http.put<IUser>(`${environment.apiUrl}/${this.apiEndpoint}/password`, body);
     }
 }
