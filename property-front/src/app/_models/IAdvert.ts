@@ -6,4 +6,5 @@ export interface IAdvert {
   price: number,
   details: string,
   status?: string;
+  userId?: number;
 }

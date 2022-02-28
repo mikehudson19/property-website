@@ -8,6 +8,7 @@ import { InMemoryAdvertService } from "@app/_mockServices/inMemoryAdvert.service
 import { Router } from "@angular/router";
 import { IAdvert } from "@app/_models/IAdvert";
 import { AdvertService } from "@app/_services/advert.service";
+import { IUser } from "@app/_models/IUser";
 
 @Component({
   templateUrl: "myadverts.component.html",
@@ -20,22 +21,22 @@ export class MyAdvertsComponent implements OnInit {
   message: string;
   advertToDeleteId: number;
   advert: IAdvert;
+  currentUser: IUser;
 
   constructor(
     private userService: UserService,
-    private _inMemUserService: InMemoryUserService,
-    private _inMemAdvertService: InMemoryAdvertService,
     private _router: Router,
-    private _advertService: AdvertService
+    private _advertService: AdvertService,
+    private _authService: AuthenticationService
   ) {}
 
   ngOnInit() {
     this.loading = true;
-
-    this._advertService.getUserAdverts()
+    this.currentUser = this._authService.currentUserValue;
+    this._advertService.getUserAdverts(this.currentUser.id)
     .subscribe((adverts) => {
       this.loading = false;
-      this.adverts = adverts.rows;
+      this.adverts = adverts//.rows;
     });
   }
 
@@ -76,7 +77,7 @@ export class MyAdvertsComponent implements OnInit {
       this._advertService
         .updateAdvert(updatedAdvert)
         .subscribe(() => {
-          this._advertService.getUserAdverts()
+          this._advertService.getUserAdverts(this.currentUser.id)
           .subscribe((adverts) => {
             this.loading = false;
             this.adverts = adverts;

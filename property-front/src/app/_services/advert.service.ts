@@ -5,6 +5,7 @@ import { IAdvert } from '@app/_models/IAdvert';
 import { ISearchTerms } from '@app/_models/ISearchTerms';
 import { environment } from '@environments/environment';
 import { Observable, of } from 'rxjs';
+import { filter, map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -31,8 +32,14 @@ export class AdvertService {
     return this._http.get<IAdvert[]>(`${environment.apiUrl}/api/adverts/search`);
   }
 
-  getUserAdverts(): Observable<any> {
-    return this._http.get<IAdvert[]>(`${environment.apiUrl}/${this.apiEndpoint}`);
+  getUserAdverts(id: number): Observable<any> {
+    return this._http.get<IAdvert[]>(`${environment.apiUrl}/${this.apiEndpoint}`)
+    /** @Note: This would be removed and handled by the API when there is one */
+      .pipe(
+        map(x => {
+          return x.filter(advert => advert.userId === id)
+        })
+      );
   }
 
   createAdvert(advert: IAdvert): Observable<IAdvert> {
