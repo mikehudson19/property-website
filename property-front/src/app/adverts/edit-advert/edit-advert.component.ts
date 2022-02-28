@@ -164,6 +164,7 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
   }
 
   displayAdvert(): void {
+    console.log(this.advert);
     this.editAdvertForm.patchValue({
       title: this.advert.title,
       province: this.advert.province,
