@@ -22,6 +22,7 @@ export class AuthenticationService {
     }
 
     public get decodedToken(): any {
+        /** @NOTE: Won't work with the in memory API as a fake token is being assigned */
         const token = this.currentUserSubject.value.token;
         return jwt_decode(token);
     }

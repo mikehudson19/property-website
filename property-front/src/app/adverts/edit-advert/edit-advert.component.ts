@@ -64,7 +64,6 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
   };
 
   constructor(
-    private _inMemLocationService: InMemoryLocationService,
     private _formBuilder: FormBuilder,
     private _route: ActivatedRoute,
     private _inMemAdService: InMemoryAdvertService,
@@ -101,8 +100,6 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
         [Validators.required, Validators.min(10000), Validators.max(100000000), CustomValidators.noSpaceValidator, CustomValidators.onlyNumbers],
       ],
     });
-
-    // this.getLocations();
 
     this.sub.add(
       this.editAdvertForm.get("province").valueChanges.subscribe((value) => {
@@ -147,14 +144,12 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
   }
 
   getCities(): void {
-    const user = this.authenticationService.currentUser;
-
     this.cities = [];
-    this._locationService.list().subscribe(x => {
+    this._locationService.list().subscribe(cities => {
       /** @Note: Can replace this at some stage with a query param sent to the API */
-      x.rows.forEach(row => {
-        if (this.province === row.province) {
-          this.cities?.push(row.name);
+      cities.forEach(city => {
+        if (this.province === city.province) {
+          this.cities?.push(city.name);
         }
       })
     });
@@ -179,8 +174,8 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
   }
 
   createAdvert(): void {
-    /** @TODO: Hack for now - need to move this to the API at some stage */
-    const token = this.authenticationService.decodedToken;
+    /** @TODO: Hack for now - need to move this userId to the API at some stage */
+    const currentUser = this.authenticationService.currentUserValue;
 
     const advert = new Advert(
       this.editAdvertForm.get("title").value.trim(),
@@ -189,10 +184,9 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       this.editAdvertForm.get("price").value.trim(),
       this.editAdvertForm.get("details").value.trim(),
       'Live',
-      token.id,
+      currentUser.id,
     );
 
-    // this._inMemAdService
     this._advertService
     .createAdvert(advert).subscribe({
       next: () => this.afterSave(),

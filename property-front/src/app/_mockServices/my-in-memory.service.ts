@@ -42,14 +42,27 @@ export class MyInMemoryService implements InMemoryDbService {
     ];
 
 
-    const locations = [
-      { province: "Gauteng", cities: [ { cityName: 'Fourways'}, { cityName: 'Pretoria'} ] },
-      { province: "Eastern Cape", cities: [ { cityName: 'Port Elizabeth' }, { cityName: 'East London' } ] },
-      { province: "Western Cape", cities: [ { cityName: 'Cape Town' }, { cityName: 'Jeffries Bay' } ] },
-      { province: "Northern Cape", cities: [ { cityName: 'Kimberley' }, { cityName: 'Upington' } ] },
-      { province: "Free State", cities: [ { cityName: 'Bloemfontein' }, { cityName: 'Welkom' } ] },
+    const cities = [
+      { name: "Johannesburg", province: "Gauteng"},
+      { name: "Pretoria", province: "Gauteng"},
+      { name: "Port Elizabeth", province: "Eastern Cape"},
+      { name: "East London", province: "Eastern Cape"},
+      { name: "Cape Town", province: "Western Cape"},
+      { name: "Jeffries Bay", province: "Western Cape"},
+      { name: "Kimberley", province: "Northern Cape"},
+      { name: "Upington", province: "Northern Cape"},
+      { name: "Bloemfontein", province: "Free State"},
+      { name: "Welkom", province: "Free State"},
+      { name: "Mahikeng", province: "North West"},
+      { name: "Klerksdop", province: "North West"},
+      { name: "Polokwane", province: "Limpopo"},
+      { name: "Mokopane", province: "Limpopo"},
+      { name: "Mbombela", province: "Mpumalanga"},
+      { name: "Hazyview", province: "Mpumalanga"},
+      { name: "Durban", province: "Kwazulu-Natal"},
+      { name: "Pietermaritzburg", province: "Kwazulu-Natal"}
     ];
 
-    return { adverts, locations };
+    return { adverts, cities };
   }
 }

@@ -24,7 +24,6 @@ export class MyAdvertsComponent implements OnInit {
   currentUser: IUser;
 
   constructor(
-    private userService: UserService,
     private _router: Router,
     private _advertService: AdvertService,
     private _authService: AuthenticationService
@@ -36,7 +35,7 @@ export class MyAdvertsComponent implements OnInit {
     this._advertService.getUserAdverts(this.currentUser.id)
     .subscribe((adverts) => {
       this.loading = false;
-      this.adverts = adverts//.rows;
+      this.adverts = adverts
     });
   }
 

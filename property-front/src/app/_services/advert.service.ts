@@ -46,6 +46,7 @@ export class AdvertService {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
     return this._http.post<IAdvert>(`${environment.apiUrl}/${this.apiEndpoint}`, advert, { headers });
   }
+
   /** @TODO: Pass the advert ID and request body seperatley here so i'm not using advert.id as the param */
   updateAdvert(advert: IAdvert): Observable<IAdvert> {
     const headers = new HttpHeaders({ 'Content-Type': 'application/json' });
