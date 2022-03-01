@@ -16,7 +16,9 @@ import { HeaderComponent } from './header/header.component';
 import { AuthenticationModule } from './authentication/authentication.module';
 import { AdvertsModule } from './adverts/adverts.module';
 import { HomeComponent } from './home/home.component';
-import { AccountsModule } from './accounts/accounts.module';;
+import { AccountsModule } from './accounts/accounts.module';
+import { SharedModule } from './shared/shared.module';
+;
 
 
 @NgModule({
@@ -29,12 +31,13 @@ import { AccountsModule } from './accounts/accounts.module';;
         AccountsModule,
         HttpClientModule,
         HttpClientInMemoryWebApiModule.forRoot(MyInMemoryService),
+        SharedModule
     ],
     declarations: [
         AppComponent,
         FooterComponent,
         HeaderComponent,
-        HomeComponent,
+        HomeComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

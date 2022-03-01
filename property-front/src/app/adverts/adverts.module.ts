@@ -7,7 +7,7 @@ import { RouterModule } from "@angular/router";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AllAdvertsComponent } from "./all-adverts/all-adverts.component";
 import { AdvertDetailComponent } from "./advert-detail/advert-detail.component";
-import { SearchComponent } from "@app/shared/search/search.component";
+import { SharedModule } from "@app/shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -15,9 +15,14 @@ import { SearchComponent } from "@app/shared/search/search.component";
     TruncateTextPipe,
     EditAdvertComponent,
     AllAdvertsComponent,
-    AdvertDetailComponent,
-    SearchComponent,
+    AdvertDetailComponent
   ],
-  imports: [CommonModule, RouterModule, ReactiveFormsModule, FormsModule],
+  imports: [
+    CommonModule, 
+    RouterModule, 
+    ReactiveFormsModule, 
+    FormsModule,
+    SharedModule
+  ],
 })
 export class AdvertsModule {}
