@@ -19,9 +19,7 @@ import { HomeComponent } from './home/home.component';
 import { AccountsModule } from './accounts/accounts.module';
 import { SharedModule } from './shared/shared.module';
 import { NgMaterialModule } from './shared/ng-material/ng-material.module';;
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
-;
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
     imports: [
@@ -34,14 +32,14 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
         HttpClientModule,
         HttpClientInMemoryWebApiModule.forRoot(MyInMemoryService),
         SharedModule,
-        NgMaterialModule,
+        NgMaterialModule,
         BrowserAnimationsModule
     ],
     declarations: [
         AppComponent,
         FooterComponent,
         HeaderComponent,
-        HomeComponent,
+        HomeComponent
     ],
     providers: [
         { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

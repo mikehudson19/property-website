@@ -4,13 +4,50 @@
   </div>
 
   <div class="featured" *ngIf="adverts">
-    <mat-card *ngFor="let advert of adverts">
-      <img src="../assets/headline-image.jpg" mat-card-image>
-      <mat-card-title>{{ advert.title }}</mat-card-title>
-      <mat-card-content>{{ advert.details }}</mat-card-content>
-      <mat-card-footer>This is the footer</mat-card-footer>
-    </mat-card>
+    <a class="card" href="" *ngFor="let advert of adverts">
+      <div class="card-image">
+        <img src="../assets/headline-image.jpg" alt="">
+      </div>
+      <div class="card-content">
+        <h2>{{ advert.title }}</h2>
+        <p>{{ advert.details | truncateText: 180 }}</p>
+        <div class="icons">
+          <div class="icon-container">
+            <i class="fa fa-solid fa-bed"></i>
+            <span>2</span>
+          </div>
+          <div class="icon-container">
+            <i class="fa fa-solid fa-toilet"></i>
+            <span>1</span>
+          </div>
+          <div class="icon-container">
+            <i class="fa fa-solid fa-car"></i>
+            <span>1</span>
+          </div>
+        </div>
+      </div>
+    </a>
   </div>
 
-  <div class="actions"></div>
+  <div class="actions">
+      <div class="action">
+        <h4>Buy</h4>
+        <p>With us, finding and buying your dream home has never been easier</p>
+        <a href=""><button>Register</button></a>
+      </div>
+
+      <div class="action">
+        <h4>Sell</h4>
+        <p>We'll make sure that you get everything you want and deserve from the sale</p>
+        <a href=""><button>Register</button></a>
+      </div>
+
+      <div class="action">
+        <h4>Login</h4>
+        <p>You've been here before? Login below and welcome back!</p>
+        <a href=""><button>Login</button></a>    
+      </div>
+
+  </div>
+
 </div>

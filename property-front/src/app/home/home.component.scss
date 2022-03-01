@@ -1,9 +1,79 @@
-.container {
-    // width: 100vw;
-}
-
 .featured {
     display: flex;
     flex-direction: row;
     column-gap: 16px;
+    height: 30rem;
+
+    a {
+        color: black;
+    }
+
+    a:hover {
+        text-decoration: none;
+        color: black;
+        box-shadow: 5px 5px 10px 2px rgba(175, 175, 175, 0.8);
+    }
+
+    .card {
+        height: 26.5rem;
+
+        img {
+            height: 14rem;
+            width: 100%;
+        }
+
+        .card-content {
+            padding: 1rem;
+
+            p {
+                letter-spacing: 0.5px;
+            }
+        }
+
+        .icons {
+            display: flex;
+        }
+
+        .icon-container {
+            padding-right: 9px;
+            display: flex;
+            flex-direction: row;
+    
+            i {
+                padding-right: 3px;
+                font-size: 18px;
+                color: rgb(100, 100, 100);
+            }
+        }
+    }
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    text-align: center;
+
+    > div:first-child {
+        border-right: 1.5px rgb(194, 194, 194) solid;
+    }
+
+    > div:nth-of-type(2) {
+        border-right: 1.5px rgb(194, 194, 194) solid;
+    }
+
+    .action {
+        padding: 0 1rem;
+
+        h4 {
+            font-weight: 600;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        a {
+            width: 10rem;
+            height: 10rem;
+        }
+    }
 }
