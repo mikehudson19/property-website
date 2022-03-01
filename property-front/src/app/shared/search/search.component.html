@@ -1,54 +1,64 @@
 <div class="container-fluid mt-4">
   <div class="alert alert-info row">
     <form action="" class="form row" (ngSubmit)="onSearch()" [formGroup]="searchForm">
-    <div class="col">
-      <select name="province" id="" class="custom-select" formControlName="province">
-        <option value="" disabled selected>Province</option>
-        <option>Free State</option>
-        <option>Western Cape</option>
-      </select>
-    </div>
+      <div class="filters">
+        <div class="col">
+          <select name="province" id="" class="custom-select" formControlName="province">
+            <option value="" disabled selected>Province</option>
+            <option>Free State</option>
+            <option>Western Cape</option>
+          </select>
+        </div>
+  
+        <div class="from-group col">
+          <select name="city" id="" class="custom-select" formControlName="city">
+            <option value="" disabled selected>City</option>
+            <option>Bloemfontein</option>
+            <option>Cape Town</option>
+          </select>
+        </div>
+  
+        <div class="col">
+          <select name="minPrice" id="" class="custom-select" formControlName="minPrice">
+            <option value="" disabled selected>Min. Price</option>
+            <option>100000</option>
+            <option>200000</option>
+            <option>300000</option> 
+          </select>
+        </div>
+  
+        <div class="col">
+          <select name="maxPrice" id="" class="custom-select" formControlName="maxPrice">
+            <option value="" disabled selected>Max. Price</option>
+            <option>5000000</option>
+            <option>6000000</option>
+          </select>
+        </div>
+      </div>
 
-    <div class="from-group col">
-      <select name="city" id="" class="custom-select" formControlName="city">
-        <option value="" disabled selected>City</option>
-        <option>Bloemfontein</option>
-        <option>Cape Town</option>
-      </select>
-    </div>
+      <div>
+        <div class="col input-group">
+          <input
+            type="text"
+            placeholder="Enter your search term..."
+            class="form-control"
+            formControlName="keyword"
+          />
+          <div class="input-group-append">
+            <span class="input-group-text">
+              <a><i 
+                class="fa fa-search"
+                (click)="onSearch()"
+                ></i></a>
+            </span>
+          </div>
+        </div>
+      </div>
 
-    <div class="col">
-      <select name="minPrice" id="" class="custom-select" formControlName="minPrice">
-        <option value="" disabled selected>Min. Price</option>
-        <option>100000</option>
-        <option>200000</option>
-        <option>300000</option> 
-      </select>
-    </div>
-
-    <div class="col">
-      <select name="maxPrice" id="" class="custom-select" formControlName="maxPrice">
-        <option value="" disabled selected>Max. Price</option>
-        <option>5000000</option>
-        <option>6000000</option>
-      </select>
-    </div>
-
-    <div class="col">
-      <input
-        type="text"
-        placeholder="Enter your search term..."
-        class="form-control"
-        formControlName="keyword"
-      />
-    </div>
-
-   
-      <button class="btn btn-light ml-5 mr-3">Submit</button>
+      <!-- <button class="btn btn-light ml-5 mr-3">Submit</button>
  
-      <a class="btn btn-light">Reset</a>
+      <a class="btn btn-light">Reset</a> -->
     
-
   </form>
   </div>
 </div>

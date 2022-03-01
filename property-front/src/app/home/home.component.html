@@ -1,9 +1,16 @@
 <div class="container">
-  <h1>HOME PAGE</h1>
-  <h2>Will later include:</h2>
-  <ul>
-    <li>Search Component</li>
-    <li>Featured Homes Component</li>
-  </ul>
-  
+  <div class="search">
+    <app-search></app-search>
+  </div>
+
+  <div class="featured" *ngIf="adverts">
+    <mat-card *ngFor="let advert of adverts">
+      <img src="../assets/headline-image.jpg" mat-card-image>
+      <mat-card-title>{{ advert.title }}</mat-card-title>
+      <mat-card-content>{{ advert.details }}</mat-card-content>
+      <mat-card-footer>This is the footer</mat-card-footer>
+    </mat-card>
+  </div>
+
+  <div class="actions"></div>
 </div>

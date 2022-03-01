@@ -1,0 +1,15 @@
+form {
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+}
+
+.filters {
+    display: flex;
+    flex-direction: row ;
+}
+
+.alert {
+    display: flex;
+    justify-content: space-evenly;
+}
