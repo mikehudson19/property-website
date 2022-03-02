@@ -4,7 +4,7 @@
   </div>
 
   <div class="featured" *ngIf="adverts">
-    <a class="card" href="" *ngFor="let advert of adverts">
+    <a class="card" href="" *ngFor="let advert of adverts" [routerLink]="['/advertdetail', advert.id]">
       <div class="card-image">
         <img src="../assets/headline-image.jpg" alt="">
       </div>
@@ -33,19 +33,23 @@
       <div class="action">
         <h4>Buy</h4>
         <p>With us, finding and buying your dream home has never been easier</p>
-        <a href=""><button>Register</button></a>
+        <a routerLink="/registration"><button class="btn btn-outline-secondary btn-sm">Register</button></a>
       </div>
-
+      
+      <mat-divider [vertical]="true"></mat-divider>
+      
       <div class="action">
         <h4>Sell</h4>
         <p>We'll make sure that you get everything you want and deserve from the sale</p>
-        <a href=""><button>Register</button></a>
+        <a routerLink="/registration"><button class="btn btn-outline-secondary btn-sm">Register</button></a>
       </div>
+      
+      <mat-divider [vertical]="true"></mat-divider>
 
       <div class="action">
         <h4>Login</h4>
         <p>You've been here before? Login below and welcome back!</p>
-        <a href=""><button>Login</button></a>    
+        <a routerLink="/login"><button class="btn btn-outline-secondary btn-sm">Login</button></a>    
       </div>
 
   </div>
