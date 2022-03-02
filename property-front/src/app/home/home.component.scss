@@ -55,13 +55,6 @@
     text-align: center;
     margin-top: 1rem;
 
-    // > div:first-child {
-    //     border-right: 1.5px rgb(194, 194, 194) solid;
-    // }
-
-    // > div:nth-of-type(2) {
-    //     border-right: 1.5px rgb(194, 194, 194) solid;
-    // }
 
     .action {
         padding: 0 1rem;
@@ -77,4 +70,8 @@
             height: 10rem;
         }
     }
+}
+
+h1 {
+    text-align: center;
 }
