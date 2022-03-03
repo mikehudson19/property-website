@@ -29,7 +29,28 @@ export class AdvertService {
   }
 
   getSearchedAdverts(): Observable<IAdvert[]> {
-    return this._http.get<IAdvert[]>(`${environment.apiUrl}/${this.apiEndpoint}/search`);
+    // console.log(searchTerms);
+    return this._http.get<IAdvert[]>(`${environment.apiUrl}/${this.apiEndpoint}`)
+    // /** @Note: This would be removed and handled by the API when there is one */
+    // .pipe(
+    //   map(x => {
+    //     return x.filter(advert => {
+    //       const terms = Object.keys(searchTerms);
+    //       if (advert.province === searchTerms.province && advert.city === searchTerms.city && advert.price >= searchTerms.minPrice && advert.price <= searchTerms.maxPrice) return advert;
+    //       if (advert.province === searchTerms.province && advert.city === searchTerms.city && advert.price >= searchTerms.minPrice) return advert;
+    //       if (advert.province === searchTerms.province && advert.city === searchTerms.city && advert.price <= searchTerms.maxPrice) return advert;
+    //       if (advert.province === searchTerms.province && advert.price >= searchTerms.minPrice) return advert;
+    //       if (advert.province === searchTerms.province && advert.price <= searchTerms.maxPrice) return advert;
+    //       if (advert.city === searchTerms.city && advert.price <= searchTerms.maxPrice) return advert;
+    //       if (advert.city === searchTerms.city && advert.price >= searchTerms.minPrice) return advert;
+    //       if (advert.province === searchTerms.province && advert.city === searchTerms.city) return advert;
+    //       if (advert.province === searchTerms.province) return advert;
+    //       if (advert.city === searchTerms.city) return advert;
+    //       if (advert.price <= searchTerms.maxPrice) return advert;
+    //       if (advert.price >= searchTerms.minPrice) return advert;
+    //     })
+    //   })
+    // )
   }
 
   getUserAdverts(id: number): Observable<any> {

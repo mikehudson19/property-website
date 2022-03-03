@@ -9,8 +9,8 @@ export class MyInMemoryService implements InMemoryDbService {
         id: 3,
         userId: 2,
         title: "2 Bedroom Apartment (Mock API)",
-        province: "Gauteng",
-        city: "Johannesburg",
+        province: "Western Cape",
+        city: "Jeffries Bay",
         details:
           "2 bedrooms with the main leading out to garden with french doors, unit has a beautiful full bathroom. Generous sized living area open plan lounge/ dining and kitchen with sliding doors leading out on to the private  garden and covered patio area. Complex offers tennis court 3 pools active club house fiber and 24 hour security, access control, Douglasdale village shopping center a walk away.",
         price: 940000,

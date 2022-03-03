@@ -5,16 +5,14 @@
         <div class="col">
           <select name="province" id="" class="custom-select" formControlName="province">
             <option value="" disabled selected>Province</option>
-            <option>Free State</option>
-            <option>Western Cape</option>
+            <option *ngFor="let prov of provinces">{{ prov }}</option>
           </select>
         </div>
   
         <div class="from-group col">
-          <select name="city" id="" class="custom-select" formControlName="city">
+          <select name="city" id="" class="custom-select" formControlName="city" *ngIf="cities">
             <option value="" disabled selected>City</option>
-            <option>Bloemfontein</option>
-            <option>Cape Town</option>
+            <option *ngFor="let city of cities">{{ city }}</option>
           </select>
         </div>
   
