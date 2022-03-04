@@ -5,7 +5,7 @@ import { IAdvert } from '@app/_models/IAdvert';
 import { ISearchTerms } from '@app/_models/ISearchTerms';
 import { environment } from '@environments/environment';
 import { Observable, of } from 'rxjs';
-import { map} from 'rxjs/operators';
+import { map, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,32 +25,13 @@ export class AdvertService {
   }
 
   getAllAdverts(): Observable<any> {
+    console.log("get all ads")
     return this._http.get<any>(`${environment.apiUrl}/${this.apiEndpoint}`);
   }
 
-  getSearchedAdverts(): Observable<IAdvert[]> {
-    // console.log(searchTerms);
+  getSearchedAdverts(searchTerms): Observable<IAdvert[]> {
+    console.log("get searched ads")
     return this._http.get<IAdvert[]>(`${environment.apiUrl}/${this.apiEndpoint}`)
-    // /** @Note: This would be removed and handled by the API when there is one */
-    // .pipe(
-    //   map(x => {
-    //     return x.filter(advert => {
-    //       const terms = Object.keys(searchTerms);
-    //       if (advert.province === searchTerms.province && advert.city === searchTerms.city && advert.price >= searchTerms.minPrice && advert.price <= searchTerms.maxPrice) return advert;
-    //       if (advert.province === searchTerms.province && advert.city === searchTerms.city && advert.price >= searchTerms.minPrice) return advert;
-    //       if (advert.province === searchTerms.province && advert.city === searchTerms.city && advert.price <= searchTerms.maxPrice) return advert;
-    //       if (advert.province === searchTerms.province && advert.price >= searchTerms.minPrice) return advert;
-    //       if (advert.province === searchTerms.province && advert.price <= searchTerms.maxPrice) return advert;
-    //       if (advert.city === searchTerms.city && advert.price <= searchTerms.maxPrice) return advert;
-    //       if (advert.city === searchTerms.city && advert.price >= searchTerms.minPrice) return advert;
-    //       if (advert.province === searchTerms.province && advert.city === searchTerms.city) return advert;
-    //       if (advert.province === searchTerms.province) return advert;
-    //       if (advert.city === searchTerms.city) return advert;
-    //       if (advert.price <= searchTerms.maxPrice) return advert;
-    //       if (advert.price >= searchTerms.minPrice) return advert;
-    //     })
-    //   })
-    // )
   }
 
   getUserAdverts(id: number): Observable<any> {

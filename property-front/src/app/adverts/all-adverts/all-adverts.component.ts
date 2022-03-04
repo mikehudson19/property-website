@@ -1,7 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 import { InMemoryAdvertService } from '@app/_mockServices/inMemoryAdvert.service';
 import { IAdvert } from '@app/_models/IAdvert';
 import { AdvertService } from '@app/_services/advert.service';
+import { ISearchTerms } from '@app/_models/ISearchTerms'
 
 @Component({
   selector: 'app-home',
@@ -13,18 +15,30 @@ export class AllAdvertsComponent implements OnInit {
   adverts: IAdvert[] = [];
   isAscending: boolean;
   orderBy: string = 'None';
+  preFilledTerms: any;
 
   constructor(private _inMemAdService: InMemoryAdvertService,
-              private _advertService: AdvertService) { }
+              private _advertService: AdvertService,
+              private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this._inMemAdService
-    // this._advertService
-    .getAllAdverts().subscribe((adverts => {
-      this.adverts = adverts;
-      /** @TODO: This is for when connected to the NodeJS API - it returns a res object of rows and count. Format that reposnse before it gets here so that there are no rows. */
-      // this.adverts = adverts.rows;
-    }))
+  
+    this.route.queryParamMap
+      .subscribe((params) => {
+        this.preFilledTerms = params;
+
+        const hasParams = Object.keys(this.preFilledTerms.params).length > 0;
+        const advertSubscription = hasParams ? this._advertService.getSearchedAdverts(this.preFilledTerms.params) : this._advertService.getAllAdverts();
+
+        advertSubscription.subscribe(adverts => {
+          if (hasParams) {
+            this.adverts = this.filterAdverts(adverts, this.preFilledTerms.params);
+          } else {
+            this.adverts = adverts;
+          }
+        })
+      })
+
   }
 
   orderChoice(choice: string): void {
@@ -56,7 +70,178 @@ export class AllAdvertsComponent implements OnInit {
       }
       
       return (order === 'desc') ? (comparison * -1) : comparison;
-      
     }
   }
+
+  filterAdverts(adverts, searchTerms): IAdvert[] {
+
+    const hasProvince = searchTerms.hasOwnProperty("province");
+    const hasCity = searchTerms.hasOwnProperty("city");
+    const hasMinPrice = searchTerms.hasOwnProperty("minPrice");
+    const hasMaxPrice = searchTerms.hasOwnProperty("maxPrice");
+
+    const advertsToSend: IAdvert[] = [];
+
+    adverts.forEach(advert => {
+
+      if (hasProvince && hasCity && hasMinPrice && hasMaxPrice) {
+        const { province, city, minPrice, maxPrice } = searchTerms;   
+  
+        if (advert.province == province &&
+            advert.city == city && 
+            advert.price >= minPrice &&
+            advert.price <= maxPrice) 
+            {
+              advertsToSend.push(advert);
+            }
+        return;
+      }
+
+      if (hasProvince && hasCity && hasMinPrice) {
+        const { province, city, minPrice } = searchTerms;   
+  
+        if (advert.province == province &&
+            advert.city == city && 
+            advert.price >= minPrice) 
+            {
+              advertsToSend.push(advert);
+            }
+        return;
+      }
+
+      if (hasProvince && hasCity) {
+        const { province, city } = searchTerms;   
+  
+        if (advert.province == province &&
+            advert.city == city) 
+            {
+              advertsToSend.push(advert);
+            }
+        return;
+      }
+
+      if (hasProvince && hasMaxPrice && !hasCity && !hasMinPrice) {
+        const { province, maxPrice } = searchTerms;   
+  
+        if (advert.province == province &&
+            advert.price <= maxPrice) 
+            {
+              advertsToSend.push(advert);
+            }
+        return;
+      }
+
+      if (hasProvince && hasMinPrice) {
+        const { province, minPrice } = searchTerms;   
+  
+        if (advert.province == province &&
+            advert.price >= minPrice) 
+            {
+              advertsToSend.push(advert);
+            }
+        return;
+      }
+
+      if (hasCity && hasMinPrice) {
+        const { city, minPrice } = searchTerms;   
+  
+        if (advert.city == city &&
+            advert.price >= minPrice) 
+            {
+              advertsToSend.push(advert);
+            }
+        return;
+      }
+
+      if (hasCity && hasMaxPrice) {
+        const { city, maxPrice } = searchTerms;   
+  
+        if (advert.city == city &&
+            advert.price <= maxPrice) 
+            {
+              advertsToSend.push(advert);
+            }
+        return;
+      }
+
+      if (hasCity && hasMaxPrice && hasMinPrice) {
+        const { city, maxPrice, minPrice } = searchTerms;   
+  
+        if (advert.city == city &&
+            advert.price <= maxPrice &&
+            advert.price >= minPrice) 
+            {
+              advertsToSend.push(advert);
+            }
+        return;
+      }
+
+      if (hasProvince && hasMaxPrice && hasMinPrice) {
+        const { province, maxPrice, minPrice } = searchTerms;   
+  
+        if (advert.province == province &&
+            advert.price <= maxPrice &&
+            advert.price >= minPrice) 
+            {
+              advertsToSend.push(advert);
+            }
+        return;
+      }
+
+      if (hasMaxPrice && hasMinPrice) {
+        const { maxPrice, minPrice } = searchTerms;   
+  
+        if (advert.price <= maxPrice &&
+            advert.price >= minPrice) 
+            {
+              advertsToSend.push(advert);
+            }
+        return;
+      }
+
+      if (hasProvince) {
+        const { province } = searchTerms;   
+  
+        if (advert.province == province) 
+            {
+              advertsToSend.push(advert);
+            }
+        return;
+      }
+
+      if (hasCity) {
+        const { city } = searchTerms;   
+  
+        if (advert.city == city) 
+            {
+              advertsToSend.push(advert);
+            }
+        return;
+      }
+
+      if (hasMaxPrice) {
+        const { maxPrice } = searchTerms;   
+  
+        if (advert.price <= maxPrice) 
+            {
+              advertsToSend.push(advert);
+            }
+        return;
+      }
+
+      if (hasMinPrice) {
+        const { minPrice } = searchTerms;   
+  
+        if (advert.price >= minPrice) 
+            {
+              advertsToSend.push(advert);
+            }
+        return;
+      }
+
+    });
+
+    return advertsToSend;
+  }
+
 }
