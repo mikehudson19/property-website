@@ -1,9 +1,9 @@
+import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, ParamMap } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { InMemoryAdvertService } from '@app/_mockServices/inMemoryAdvert.service';
 import { IAdvert } from '@app/_models/IAdvert';
 import { AdvertService } from '@app/_services/advert.service';
-import { ISearchTerms } from '@app/_models/ISearchTerms'
 
 @Component({
   selector: 'app-home',
@@ -16,6 +16,7 @@ export class AllAdvertsComponent implements OnInit {
   isAscending: boolean;
   orderBy: string = 'None';
   preFilledTerms: any;
+  advertsToSend: any = [];
 
   constructor(private _inMemAdService: InMemoryAdvertService,
               private _advertService: AdvertService,
@@ -28,7 +29,7 @@ export class AllAdvertsComponent implements OnInit {
         this.preFilledTerms = params;
 
         const hasParams = Object.keys(this.preFilledTerms.params).length > 0;
-        const advertSubscription = hasParams ? this._advertService.getSearchedAdverts(this.preFilledTerms.params) : this._advertService.getAllAdverts();
+        const advertSubscription = hasParams ? this._advertService.getSearchedAdverts() : this._advertService.getAllAdverts();
 
         advertSubscription.subscribe(adverts => {
           if (hasParams) {
@@ -74,174 +75,529 @@ export class AllAdvertsComponent implements OnInit {
   }
 
   filterAdverts(adverts, searchTerms): IAdvert[] {
+    /** @Note: If there was an API, this would be done there.  */
+    const hasProvince = searchTerms.hasOwnProperty("province");
+    const hasCity = searchTerms.hasOwnProperty("city");
+    const hasMinPrice = searchTerms.hasOwnProperty("minPrice");
+    const hasMaxPrice = searchTerms.hasOwnProperty("maxPrice");
+    const hasKeyword = searchTerms.hasOwnProperty("keyword");
+
+    const advertsToSend: IAdvert[] = [];
+
+    this.advertsToSend = [];
+
+    adverts.forEach(advert => {
+
+
+      if (hasKeyword) {
+        const { keyword } = searchTerms;
+        if (advert.details.includes(keyword)) {
+          this.filterSomeMore(advert, searchTerms);
+        } else {
+          return;
+        }
+      } else {
+        this.filterSomeMore(advert, searchTerms);
+      }
+
+
+
+      // if (hasProvince && hasCity && hasMinPrice && hasMaxPrice) {
+
+      //   const { province, city, minPrice, maxPrice, keyword } = searchTerms;   
+  
+      //   if (advert.province == province &&
+      //       advert.city == city && 
+      //       advert.price >= minPrice &&
+      //       advert.price <= maxPrice) 
+      //       {
+      //         advertsToSend.push(advert);
+      //       }
+      //   return;
+      // }
+
+      // if (hasProvince && hasCity && hasMinPrice) {
+      //   const { province, city, minPrice, keyword } = searchTerms;   
+  
+      //   if (advert.province == province &&
+      //       advert.city == city && 
+      //       advert.price >= minPrice) 
+      //       {
+      //         advertsToSend.push(advert);
+      //       }
+      //   return;
+      // }
+
+      // if (hasProvince && hasCity) {
+      //   const { province, city, keyword } = searchTerms;   
+  
+      //   if (advert.province == province &&
+      //       advert.city == city) 
+      //       {
+      //         advertsToSend.push(advert);
+      //       }
+      //   return;
+      // }
+
+      // if (hasProvince && hasMaxPrice && !hasCity && !hasMinPrice && !hasKeyword) {
+      //   const { province, maxPrice } = searchTerms;   
+  
+      //   if (advert.province == province &&
+      //       advert.price <= maxPrice) 
+      //       {
+      //         advertsToSend.push(advert);
+      //       }
+      //   return;
+      // }
+
+      // if (hasProvince && hasMinPrice) {
+      //   const { province, minPrice, keyword } = searchTerms;   
+  
+      //   if (advert.province == province &&
+      //       advert.price >= minPrice) 
+      //       {
+      //         advertsToSend.push(advert);
+      //       }
+      //   return;
+      // }
+
+      // if (hasCity && hasMinPrice) {
+      //   const { city, minPrice, keyword } = searchTerms;   
+  
+      //   if (advert.city == city &&
+      //       advert.price >= minPrice) 
+      //       {
+      //         advertsToSend.push(advert);
+      //       }
+      //   return;
+      // }
+
+      // if (hasCity && hasMaxPrice) {
+      //   const { city, maxPrice, keyword } = searchTerms;   
+  
+      //   if (advert.city == city &&
+      //       advert.price <= maxPrice) 
+      //       {
+      //         advertsToSend.push(advert);
+      //       }
+      //   return;
+      // }
+
+      // if (hasCity && hasMaxPrice && hasMinPrice) {
+      //   const { city, maxPrice, minPrice, keyword } = searchTerms;   
+  
+      //   if (advert.city == city &&
+      //       advert.price <= maxPrice &&
+      //       advert.price >= minPrice) 
+      //       {
+      //         advertsToSend.push(advert);
+      //       }
+      //   return;
+      // }
+
+      // if (hasProvince && hasMaxPrice && hasMinPrice) {
+      //   const { province, maxPrice, minPrice, keyword } = searchTerms;   
+  
+      //   if (advert.province == province &&
+      //       advert.price <= maxPrice &&
+      //       advert.price >= minPrice) 
+      //       {
+      //         advertsToSend.push(advert);
+      //       }
+      //   return;
+      // }
+
+      // if (hasMaxPrice && hasMinPrice) {
+      //   const { maxPrice, minPrice, keyword } = searchTerms;   
+  
+      //   if (advert.price <= maxPrice &&
+      //       advert.price >= minPrice) 
+      //       {
+      //         advertsToSend.push(advert);
+      //       }
+      //   return;
+      // }
+
+      // if (hasProvince) {
+      //   const { province, keyword } = searchTerms;   
+  
+      //   if (advert.province == province) 
+      //       {
+      //         advertsToSend.push(advert);
+      //       }
+      //   return;
+      // }
+
+      // if (hasCity) {
+      //   const { city, keyword } = searchTerms;   
+  
+      //   if (advert.city == city) 
+      //       {
+      //         advertsToSend.push(advert);
+      //       }
+      //   return;
+      // }
+
+      // if (hasMaxPrice) {
+      //   const { maxPrice, keyword } = searchTerms;   
+  
+      //   if (advert.price <= maxPrice) 
+      //       {
+      //         advertsToSend.push(advert);
+      //       }
+      //   return;
+      // }
+
+      // if (hasMinPrice) {
+      //   const { minPrice, keyword } = searchTerms;   
+  
+      //   if (advert.price >= minPrice) 
+      //       {
+      //         advertsToSend.push(advert);
+      //       }
+      //   return;
+      // }
+
+    });
+
+    return this.advertsToSend;
+  }
+
+  filterSomeMore(advert, searchTerms) {
+  
 
     const hasProvince = searchTerms.hasOwnProperty("province");
     const hasCity = searchTerms.hasOwnProperty("city");
     const hasMinPrice = searchTerms.hasOwnProperty("minPrice");
     const hasMaxPrice = searchTerms.hasOwnProperty("maxPrice");
 
-    const advertsToSend: IAdvert[] = [];
+    if (hasProvince && hasCity && hasMinPrice && hasMaxPrice) {
 
-    adverts.forEach(advert => {
+      const { province, city, minPrice, maxPrice, keyword } = searchTerms;   
 
-      if (hasProvince && hasCity && hasMinPrice && hasMaxPrice) {
-        const { province, city, minPrice, maxPrice } = searchTerms;   
-  
-        if (advert.province == province &&
-            advert.city == city && 
-            advert.price >= minPrice &&
-            advert.price <= maxPrice) 
-            {
-              advertsToSend.push(advert);
-            }
-        return;
-      }
+      if (advert.province == province &&
+          advert.city == city && 
+          advert.price >= minPrice &&
+          advert.price <= maxPrice) 
+          {
+            this.advertsToSend.push(advert);
+          }
+      return;
+    }
 
-      if (hasProvince && hasCity && hasMinPrice) {
-        const { province, city, minPrice } = searchTerms;   
-  
-        if (advert.province == province &&
-            advert.city == city && 
-            advert.price >= minPrice) 
-            {
-              advertsToSend.push(advert);
-            }
-        return;
-      }
+    if (hasProvince && hasCity && hasMinPrice) {
+      const { province, city, minPrice, keyword } = searchTerms;   
 
-      if (hasProvince && hasCity) {
-        const { province, city } = searchTerms;   
-  
-        if (advert.province == province &&
-            advert.city == city) 
-            {
-              advertsToSend.push(advert);
-            }
-        return;
-      }
+      if (advert.province == province &&
+          advert.city == city && 
+          advert.price >= minPrice) 
+          {
+            this.advertsToSend.push(advert);
+          }
+      return;
+    }
 
-      if (hasProvince && hasMaxPrice && !hasCity && !hasMinPrice) {
-        const { province, maxPrice } = searchTerms;   
-  
-        if (advert.province == province &&
-            advert.price <= maxPrice) 
-            {
-              advertsToSend.push(advert);
-            }
-        return;
-      }
+    if (hasProvince && hasCity) {
+      const { province, city, keyword } = searchTerms;   
 
-      if (hasProvince && hasMinPrice) {
-        const { province, minPrice } = searchTerms;   
-  
-        if (advert.province == province &&
-            advert.price >= minPrice) 
-            {
-              advertsToSend.push(advert);
-            }
-        return;
-      }
+      if (advert.province == province &&
+          advert.city == city) 
+          {
+            this.advertsToSend.push(advert);
+          }
+      return;
+    }
 
-      if (hasCity && hasMinPrice) {
-        const { city, minPrice } = searchTerms;   
-  
-        if (advert.city == city &&
-            advert.price >= minPrice) 
-            {
-              advertsToSend.push(advert);
-            }
-        return;
-      }
+    if (hasProvince && hasMaxPrice && !hasCity && !hasMinPrice) {
+      const { province, maxPrice } = searchTerms;   
 
-      if (hasCity && hasMaxPrice) {
-        const { city, maxPrice } = searchTerms;   
-  
-        if (advert.city == city &&
-            advert.price <= maxPrice) 
-            {
-              advertsToSend.push(advert);
-            }
-        return;
-      }
+      if (advert.province == province &&
+          advert.price <= maxPrice) 
+          {
+            this.advertsToSend.push(advert);
+          }
+      return;
+    }
 
-      if (hasCity && hasMaxPrice && hasMinPrice) {
-        const { city, maxPrice, minPrice } = searchTerms;   
-  
-        if (advert.city == city &&
-            advert.price <= maxPrice &&
-            advert.price >= minPrice) 
-            {
-              advertsToSend.push(advert);
-            }
-        return;
-      }
+    if (hasProvince && hasMinPrice) {
+      const { province, minPrice, keyword } = searchTerms;   
 
-      if (hasProvince && hasMaxPrice && hasMinPrice) {
-        const { province, maxPrice, minPrice } = searchTerms;   
-  
-        if (advert.province == province &&
-            advert.price <= maxPrice &&
-            advert.price >= minPrice) 
-            {
-              advertsToSend.push(advert);
-            }
-        return;
-      }
+      if (advert.province == province &&
+          advert.price >= minPrice) 
+          {
+            this.advertsToSend.push(advert);
+          }
+      return;
+    }
 
-      if (hasMaxPrice && hasMinPrice) {
-        const { maxPrice, minPrice } = searchTerms;   
-  
-        if (advert.price <= maxPrice &&
-            advert.price >= minPrice) 
-            {
-              advertsToSend.push(advert);
-            }
-        return;
-      }
+    if (hasCity && hasMinPrice) {
+      const { city, minPrice, keyword } = searchTerms;   
 
-      if (hasProvince) {
-        const { province } = searchTerms;   
-  
-        if (advert.province == province) 
-            {
-              advertsToSend.push(advert);
-            }
-        return;
-      }
+      if (advert.city == city &&
+          advert.price >= minPrice) 
+          {
+            this.advertsToSend.push(advert);
+          }
+      return;
+    }
 
-      if (hasCity) {
-        const { city } = searchTerms;   
-  
-        if (advert.city == city) 
-            {
-              advertsToSend.push(advert);
-            }
-        return;
-      }
+    if (hasCity && hasMaxPrice) {
+      const { city, maxPrice, keyword } = searchTerms;   
 
-      if (hasMaxPrice) {
-        const { maxPrice } = searchTerms;   
-  
-        if (advert.price <= maxPrice) 
-            {
-              advertsToSend.push(advert);
-            }
-        return;
-      }
+      if (advert.city == city &&
+          advert.price <= maxPrice) 
+          {
+            this.advertsToSend.push(advert);
+          }
+      return;
+    }
 
-      if (hasMinPrice) {
-        const { minPrice } = searchTerms;   
-  
-        if (advert.price >= minPrice) 
-            {
-              advertsToSend.push(advert);
-            }
-        return;
-      }
+    if (hasCity && hasMaxPrice && hasMinPrice) {
+      const { city, maxPrice, minPrice, keyword } = searchTerms;   
 
-    });
+      if (advert.city == city &&
+          advert.price <= maxPrice &&
+          advert.price >= minPrice) 
+          {
+            this.advertsToSend.push(advert);
+          }
+      return;
+    }
 
-    return advertsToSend;
+    if (hasProvince && hasMaxPrice && hasMinPrice) {
+      const { province, maxPrice, minPrice, keyword } = searchTerms;   
+
+      if (advert.province == province &&
+          advert.price <= maxPrice &&
+          advert.price >= minPrice) 
+          {
+            this.advertsToSend.push(advert);
+          }
+      return;
+    }
+
+    if (hasMaxPrice && hasMinPrice) {
+      const { maxPrice, minPrice, keyword } = searchTerms;   
+
+      if (advert.price <= maxPrice &&
+          advert.price >= minPrice) 
+          {
+            this.advertsToSend.push(advert);
+          }
+      return;
+    }
+
+    if (hasProvince) {
+      const { province, keyword } = searchTerms;   
+
+      if (advert.province == province) 
+          {
+            this.advertsToSend.push(advert);
+          }
+      return;
+    }
+
+    if (hasCity) {
+      const { city, keyword } = searchTerms;   
+
+      if (advert.city == city) 
+          {
+            this.advertsToSend.push(advert);
+          }
+      return;
+    }
+
+    if (hasMaxPrice) {
+      const { maxPrice, keyword } = searchTerms;   
+
+      if (advert.price <= maxPrice) 
+          {
+            this.advertsToSend.push(advert);
+          }
+      return;
+    }
+
+    if (hasMinPrice) {
+      const { minPrice, keyword } = searchTerms;   
+
+      if (advert.price >= minPrice) 
+          {
+            this.advertsToSend.push(advert);
+          }
+      return;
+    }
   }
 
 }
+
+
+
+
+// if (hasProvince && hasCity && hasMinPrice && hasMaxPrice && hasKeyword) {
+
+//   const { province, city, minPrice, maxPrice, keyword } = searchTerms;   
+
+//   if (advert.province == province &&
+//       advert.city == city && 
+//       advert.price >= minPrice &&
+//       advert.price <= maxPrice,
+//       advert.details.includes(keyword)) 
+//       {
+//         advertsToSend.push(advert);
+//       }
+//   return;
+// }
+
+// if (hasProvince && hasCity && hasMinPrice && hasKeyword) {
+//   const { province, city, minPrice, keyword } = searchTerms;   
+
+//   if (advert.province == province &&
+//       advert.city == city && 
+//       advert.price >= minPrice && 
+//       advert.details.includes(keyword)) 
+//       {
+//         advertsToSend.push(advert);
+//       }
+//   return;
+// }
+
+// if (hasProvince && hasCity) {
+//   const { province, city, keyword } = searchTerms;   
+
+//   if (advert.province == province &&
+//       advert.city == city && 
+//       advert.details.includes(keyword)) 
+//       {
+//         advertsToSend.push(advert);
+//       }
+//   return;
+// }
+
+// if (hasProvince && hasMaxPrice && !hasCity && !hasMinPrice && !hasKeyword) {
+//   const { province, maxPrice } = searchTerms;   
+
+//   if (advert.province == province &&
+//       advert.price <= maxPrice) 
+//       {
+//         advertsToSend.push(advert);
+//       }
+//   return;
+// }
+
+// if (hasProvince && hasMinPrice && hasKeyword) {
+//   const { province, minPrice, keyword } = searchTerms;   
+
+//   if (advert.province == province &&
+//       advert.price >= minPrice &&
+//       advert.details.includes(keyword)) 
+//       {
+//         advertsToSend.push(advert);
+//       }
+//   return;
+// }
+
+// if (hasCity && hasMinPrice && hasKeyword) {
+//   const { city, minPrice, keyword } = searchTerms;   
+
+//   if (advert.city == city &&
+//       advert.price >= minPrice && 
+//       advert.details.includes(keyword)) 
+//       {
+//         advertsToSend.push(advert);
+//       }
+//   return;
+// }
+
+// if (hasCity && hasMaxPrice && hasKeyword) {
+//   const { city, maxPrice, keyword } = searchTerms;   
+
+//   if (advert.city == city &&
+//       advert.price <= maxPrice &&
+//       advert.details.includes(keyword)) 
+//       {
+//         advertsToSend.push(advert);
+//       }
+//   return;
+// }
+
+// if (hasCity && hasMaxPrice && hasMinPrice && hasKeyword) {
+//   const { city, maxPrice, minPrice, keyword } = searchTerms;   
+
+//   if (advert.city == city &&
+//       advert.price <= maxPrice &&
+//       advert.price >= minPrice && 
+//       advert.details.includes(keyword)) 
+//       {
+//         advertsToSend.push(advert);
+//       }
+//   return;
+// }
+
+// if (hasProvince && hasMaxPrice && hasMinPrice && hasKeyword) {
+//   const { province, maxPrice, minPrice, keyword } = searchTerms;   
+
+//   if (advert.province == province &&
+//       advert.price <= maxPrice &&
+//       advert.price >= minPrice && 
+//       advert.includes(keyword)) 
+//       {
+//         advertsToSend.push(advert);
+//       }
+//   return;
+// }
+
+// if (hasMaxPrice && hasMinPrice && hasKeyword) {
+//   const { maxPrice, minPrice, keyword } = searchTerms;   
+
+//   if (advert.price <= maxPrice &&
+//       advert.price >= minPrice &&
+//       advert.details.includes(keyword)) 
+//       {
+//         advertsToSend.push(advert);
+//       }
+//   return;
+// }
+
+// if (hasProvince && hasKeyword) {
+//   const { province, keyword } = searchTerms;   
+
+//   if (advert.province == province &&
+//       advert.details.includes(keyword)) 
+//       {
+//         advertsToSend.push(advert);
+//       }
+//   return;
+// }
+
+// if (hasCity && hasKeyword) {
+//   const { city, keyword } = searchTerms;   
+
+//   if (advert.city == city &&
+//       advert.keyword.includes(keyword)) 
+//       {
+//         advertsToSend.push(advert);
+//       }
+//   return;
+// }
+
+// if (hasMaxPrice && hasKeyword) {
+//   const { maxPrice, keyword } = searchTerms;   
+
+//   if (advert.price <= maxPrice &&
+//       advert.details.includes(keyword)) 
+//       {
+//         advertsToSend.push(advert);
+//       }
+//   return;
+// }
+
+// if (hasMinPrice && hasKeyword) {
+//   const { minPrice, keyword } = searchTerms;   
+
+//   if (advert.price >= minPrice && 
+//       advert.details.includes(keyword)) 
+//       {
+//         advertsToSend.push(advert);
+//       }
+//   return;
+// }

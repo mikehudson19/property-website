@@ -4,21 +4,31 @@
       <div class="filters">
         <div class="col">
           <select name="province" id="" class="custom-select" formControlName="province">
-            <option value="" disabled selected>Province</option>
-            <option *ngFor="let prov of provinces">{{ prov }}</option>
+            <option value="" disabled selected hidden>Province</option>
+            <option>Gauteng</option>
+            <option>North West</option>
+            <option>Western Cape</option>
+            <option>Northern Cape</option>
+            <option>Eastern Cape</option>
+            <option>Limpopo</option>
+            <option>Northern Province</option>
+            <option>Free State</option>
+            <option>Mpumalanga</option>
+
+            <!-- <option *ngFor="let prov of provinces">{{ prov }}</option> -->
           </select>
         </div>
   
         <div class="from-group col">
           <select name="city" id="" class="custom-select" formControlName="city" *ngIf="cities">
-            <option value="" disabled selected>City</option>
+            <option value="" disabled selected hidden>City</option>
             <option *ngFor="let city of cities">{{ city }}</option>
           </select>
         </div>
   
         <div class="col">
           <select name="minPrice" id="" class="custom-select" formControlName="minPrice">
-            <option value="" disabled selected>Min. Price</option>
+            <option value="" disabled selected hidden>Min. Price</option>
             <option>100000</option>
             <option>200000</option>
             <option>300000</option> 
@@ -27,14 +37,14 @@
   
         <div class="col">
           <select name="maxPrice" id="" class="custom-select" formControlName="maxPrice">
-            <option value="" disabled selected>Max. Price</option>
+            <option value="" disabled selected hidden>Max. Price</option>
             <option>5000000</option>
             <option>6000000</option>
           </select>
         </div>
       </div>
 
-      <div>
+      <div class="bottom-row">
         <div class="col input-group">
           <input
             type="text"
@@ -42,15 +52,14 @@
             class="form-control"
             formControlName="keyword"
           />
-          <div class="input-group-append">
-            <span class="input-group-text">
-              <a><i 
-                class="fa fa-search"
-                (click)="onSearch()"
-                ></i></a>
-            </span>
-          </div>
         </div>
+
+        <div class="button-div">
+          <button type="button" class="btn btn-light" (click)="onSearch()">Search</button>
+
+          <button type="button" class="btn btn-light" (click)="resetClick()">Reset</button>
+        </div>
+       
       </div>
 
     

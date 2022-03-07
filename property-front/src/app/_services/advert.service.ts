@@ -5,7 +5,7 @@ import { IAdvert } from '@app/_models/IAdvert';
 import { ISearchTerms } from '@app/_models/ISearchTerms';
 import { environment } from '@environments/environment';
 import { Observable, of } from 'rxjs';
-import { map, tap} from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,12 +25,10 @@ export class AdvertService {
   }
 
   getAllAdverts(): Observable<any> {
-    console.log("get all ads")
     return this._http.get<any>(`${environment.apiUrl}/${this.apiEndpoint}`);
   }
 
-  getSearchedAdverts(searchTerms): Observable<IAdvert[]> {
-    console.log("get searched ads")
+  getSearchedAdverts(): Observable<IAdvert[]> {
     return this._http.get<IAdvert[]>(`${environment.apiUrl}/${this.apiEndpoint}`)
   }
 

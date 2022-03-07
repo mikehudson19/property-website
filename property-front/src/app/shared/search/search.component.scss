@@ -13,3 +13,23 @@ form {
     display: flex;
     justify-content: space-evenly;
 }
+
+.bottom-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.button-div {
+    padding-right: 1rem;
+    display: flex;
+    flex-direction: row;
+    column-gap: 9px;
+}
+
+button {
+    width: 6rem;
+}
+
+.custom-select {
+    width: 10rem;
+}
