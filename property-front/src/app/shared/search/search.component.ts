@@ -39,7 +39,7 @@ export class SearchComponent implements OnInit {
     this.route.queryParamMap
       .subscribe((params: any) => {
         const queryParams = params.params;
-        console.log(queryParams);
+        
         this.searchForm.patchValue({
           province: queryParams.province ? queryParams.province : "",
           minPrice: queryParams.minPrice ? queryParams.minPrice : "",

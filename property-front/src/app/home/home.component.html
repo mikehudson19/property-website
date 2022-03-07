@@ -12,9 +12,11 @@
       <div class="card-content">
         <h2>{{ advert.title }}</h2>
         <p>{{ advert.details | truncateText: 180 }}</p>
+        <p>{{ advert.province }}, {{ advert.city }}</p>
         <div class="icons">
           <div class="icon-container">
             <i class="fa fa-solid fa-bed"></i>
+            <!-- @TODO: Need to add these figures to the advert model and retrieve them dynamically here -->
             <span>2</span>
           </div>
           <div class="icon-container">
