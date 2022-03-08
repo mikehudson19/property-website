@@ -82,7 +82,7 @@ export class AllAdvertsComponent implements OnInit {
     this.advertsToSend = [];
 
     adverts.forEach(advert => {
-
+      
       if (hasKeyword) {
         const { keyword } = searchTerms;
         if (advert.details.includes(keyword)) {

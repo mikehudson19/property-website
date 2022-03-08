@@ -49,6 +49,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       .pipe(dematerialize());
 
     function handleRoute() {
+ 
       switch (true) {
         case url.endsWith("/users/authenticate") && method === "POST":
           return authenticate();
@@ -56,6 +57,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return getUsers();
         case url.endsWith("/users") && method === "PUT":
           return updateUser();
+        case url.includes("/users") && !url.endsWith("/users") && method === "GET":
+          return getUser(url);
         case url.endsWith("/users/password") && method === "PUT":
           return updatePassword();
         case url.endsWith("/users") && method === "POST":
@@ -90,14 +93,30 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       return ok(users);
     }
 
+    function getUser(url) {
+      if (!isLoggedIn()) return unauthorized();
+      const startPoint = url.lastIndexOf("/") + 1;
+      const endPoint = url.length;
+      const userId = url.slice(startPoint, endPoint);
+
+      const user = users.find(user => user.id === +userId);
+      return ok(user);
+    }
+
     function updateUser() {
-      const { email, forenames, surname, id } = body;
+      /** @TODO: Change the value stored in localstorage as well..? */
+      const { email, firstName, lastName, id } = body;
       const user = users.find((x) => x.id === id);
+
+      user.firstName = firstName;
+      user.lastName = lastName;
+      user.email = email;
+
       return ok({
         id: user.id,
         email: email,
-        forenames: forenames,
-        surname: surname,
+        firstName: firstName,
+        lastName: lastName,
         token: "fake-jwt-token",
       });
     }
@@ -114,7 +133,12 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function createUser() {
       let user = body;
+
+      const numberOfUsers = users.length;
+      user.id = numberOfUsers + 1;
+
       users.push(user);
+
       return ok({
         firstName: user.firstName,
         lastName: user.lastName,

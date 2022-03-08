@@ -186,10 +186,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       this.registrationForm.get("passwords.confirmPass").value.trim()
     );
 
-    // this._userService.createUser(user).subscribe(data => {
-    //   console.log(data);
-    // })
-
     // In Memory API backend for testing
     this._inMemUserService
       .saveUser(user)
@@ -197,8 +193,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
     setTimeout (() => {
       this._authenticationService
-      // .login(user.email, user.password) 
-      .login('test@test', 'test') // For when using the fake back end.
+      .login(user.email, user.password) 
       .subscribe(
         (data) => {
           this._router.navigate(["myadverts"]);

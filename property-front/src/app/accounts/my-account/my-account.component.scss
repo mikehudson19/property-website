@@ -1,90 +1,18 @@
-.control-text {
-  font-size: 0.9rem;
-  margin-bottom: 0.2rem;
-}
-
-.btn:hover {
-  color: white;
-}
-
-.user-info {
-  display: grid;
-  grid-template-columns: 1.5fr 2fr 2fr;
-  grid-template-rows: repeat(4, 3rem);
-  justify-items: center;
+.bg-modal {
+  background: rgba(39, 39, 39, 0.432);
+  position: fixed;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
   align-items: center;
+  z-index: 5;
 }
 
-.label_forename {
-  grid-column: 1 / span 1;
-  grid-row: 1 / span 1;
-  justify-self: start;
+.form-group-container {
+  display: flex;
+  column-gap: 12px;
 }
 
-.value_forename {
-  grid-column: 2 / span 1;
-  grid-row: 1 / span 1;
-}
 
-.btn_forename {
-  grid-column: 3 / span 1;
-  grid-row: 1 / span 1;
-}
-
-.label_surname {
-  grid-column: 1 / span 1;
-  grid-row: 2 / span 1; 
-  justify-self: start;
-}
-
-.value_surname {
-  grid-column: 2 / span 1;
-  grid-row: 2 / span 1;
-}
-
-.btn_surname {
-  grid-column: 3 / span 1;
-  grid-row: 2 / span 1;
-}
-
-.label_email {
-  grid-column: 1 / span 1;
-  grid-row: 3 / span 1; 
-  justify-self: start;
-}
-
-.value_email {
-  grid-column: 2 / span 1;
-  grid-row: 3 / span 1;
-}
-
-.btn_email {
-  grid-column: 3 / span 1;
-  grid-row: 3 / span 1;
-}
-
-.label_password {
-  grid-column: 1 / span 1;
-  grid-row: 4 / span 1; 
-  justify-self: start;
-}
-
-.value_password {
-  grid-column: 2 / span 1;
-  grid-row: 4 / span 1;
-  font-size: 0.5rem;
-}
-
-.btn_password {
-  grid-column: 3 / span 1;
-  grid-row: 4 / span 1;
-}
-
-.btn-sm {
-  width: 80%;
-}
-
-.alert {
-  font-size: 0.9rem;
-  grid-column: 1 / span 3;
-}

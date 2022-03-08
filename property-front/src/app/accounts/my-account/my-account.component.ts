@@ -17,7 +17,7 @@ import { debounceTime } from "rxjs/operators";
 
 export class MyAccountComponent implements OnInit, OnDestroy {
   manageAccountForm: FormGroup;
-  message: { [key: string]: string } = {};
+  validationMessage: { [key: string]: string } = {};
   sub: Subscription;
   authUser: IUser;
   fieldTextType: boolean = false;
@@ -25,23 +25,23 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   successMessage: string = '';
 
   validationMessages: {} = {
-    forenames: {
+    firstName: {
       required: "A forename is required.",
-      minlength: "Your forenames need to be at least 1 character long.",
-      multipleSpaceValidator: "Your forenames cannot contain multiple spaces.",
+      minlength: "Your firstName need to be at least 1 character long.",
+      multipleSpaceValidator: "Your firstName cannot contain multiple spaces.",
       maxlength: "Your forename cannot be longer than 100 characters",
       noNumbers: "Your forename cannot contain any numbers",
       noSpecialChar: "Your forename cannot contain any special characters",
       spaceStart: "Your forename cannot start with a space",
     },
-    surname: {
-      required: "Your surname is required",
-      minlength: "Your surname needs to be at least 3 characters long.",
-      multipleSpaceValidator: "Your forenames cannot contain multiple spaces.",
-      spaceStart: "Your surname cannot start with a space",
-      maxlength: "Your surname cannot be longer than 100 characters",
-      noNumbers: "Your surname cannot contain any numbers",
-      noSpecialChar: "Your surname cannot contain any special characters",
+    lastName: {
+      required: "Your lastName is required",
+      minlength: "Your lastName needs to be at least 3 characters long.",
+      multipleSpaceValidator: "Your lastName cannot contain multiple spaces.",
+      spaceStart: "Your lastName cannot start with a space",
+      maxlength: "Your lastName cannot be longer than 100 characters",
+      noNumbers: "Your lastName cannot contain any numbers",
+      noSpecialChar: "Your lastName cannot contain any special characters",
     },
     email: {
       required: "Your email address is required.",
@@ -79,7 +79,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.manageAccountForm = this._formBuilder.group({
-      forenames: [
+      firstName: [
         "",
         [
           Validators.required,
@@ -91,7 +91,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
           CustomValidators.spaceStartValidator,
         ],
       ],
-      surname: [
+      lastName: [
         "",
         [
           Validators.required,
@@ -136,7 +136,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
     this.sub = this.manageAccountForm.valueChanges
       .pipe(debounceTime(600))
       .subscribe(
-        (value) => (this.message = this.invalidInputs(this.manageAccountForm))
+        (value) => (this.validationMessage = this.invalidInputs(this.manageAccountForm))
       );
 
     this.getAuthUser();
@@ -174,14 +174,19 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   }
 
   getAuthUser(): void {
-    const userId = this.authService.decodedToken.sub;
+    const userId = this.authService.currentUserValue.id;
 
-    this._userService.getUser(userId).subscribe((user) => {
-      this.authUser = user;
-    })
+    this._userService.getUser(userId)
+      .subscribe((user) => {
+        console.log(user)
+        this.authUser = user;
+
+        this.displayUser();
+      })
   }
 
   displayUser(): void {
+    console.log("userToDisplay", this.authUser)
     this.manageAccountForm.patchValue({
       firstName: this.authUser.firstName,
       lastName: this.authUser.lastName,
@@ -192,20 +197,22 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   updateUser(): void {
     /** TODO: Change the way this updates */
     const userToUpdate: IUser = { 
-      firstName: this.manageAccountForm.get("forenames").value,
-      lastName: this.manageAccountForm.get("surname").value,
+      id: this.authUser.id,
+      firstName: this.manageAccountForm.get("firstName").value,
+      lastName: this.manageAccountForm.get("lastName").value,
       email: this.manageAccountForm.get("email").value,
       contactNumber: this.authUser.contactNumber ? this.authUser.contactNumber : "",
     };
+    console.log("userToUpdate", userToUpdate);
 
-
-    // this._userService.updateUser(userToUpdate).subscribe((user) => {
-    //   this._router
-    //     .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
-    //     .then(() => {
-    //       this._router.navigate(["/myaccount"]);
-    //     });
-    // });
+    this._userService.updateUser(userToUpdate)
+      .subscribe((user) => {
+        this._router
+          .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
+          .then(() => {
+            this._router.navigate(["/myaccount"]);
+          });
+      });
   }
 
   toggleFieldTextType(): void {
