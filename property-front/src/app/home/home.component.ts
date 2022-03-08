@@ -16,8 +16,15 @@ export class HomeComponent implements OnInit {
   ngOnInit(): void {
     this.advertService.getAllAdverts()
       .subscribe(adverts => {
-        /** @TODO: Implement a feature to only return/display three featured adverts */
-        this.adverts = adverts;
+        /** @TODO: Temporary hack - implement a more sophisticated feature to only return/display three featured adverts */
+        let count = 0;
+
+        adverts.forEach(advert => {
+          if (count <= 2) {
+            this.adverts.push(advert);
+            count++;
+          }
+        })
       })
   }
 
