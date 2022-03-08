@@ -5,7 +5,7 @@ import { IAdvert } from '@app/_models/IAdvert';
 import { ISearchTerms } from '@app/_models/ISearchTerms';
 import { environment } from '@environments/environment';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -25,7 +25,12 @@ export class AdvertService {
   }
 
   getAllAdverts(): Observable<any> {
-    return this._http.get<any>(`${environment.apiUrl}/${this.apiEndpoint}`);
+    return this._http.get<any>(`${environment.apiUrl}/${this.apiEndpoint}`)
+      .pipe(
+        map(adverts => {
+          return adverts.filter(ad => ad.status == "Live");
+        })
+      );
   }
 
   getSearchedAdverts(): Observable<IAdvert[]> {
