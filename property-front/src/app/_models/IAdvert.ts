@@ -5,6 +5,9 @@ export interface IAdvert {
   city: string,
   price: number,
   details: string,
-  status?: string;
-  userId?: number;
+  status?: string,
+  userId?: number,
+  bedrooms: number,
+  bathrooms: number,
+  parkingSpaces: number
 }

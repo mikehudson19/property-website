@@ -58,6 +58,20 @@
                 {{ advert.details | truncateText: 275 }}
               </p>
               <p>{{ advert.province }}, {{ advert.city}}</p>
+              <div class="icons">
+                <div class="icon-container">
+                  <i class="fa fa-solid fa-bed"></i>
+                  <span>{{ advert.bedrooms }}</span>
+                </div>
+                <div class="icon-container">
+                  <i class="fa fa-solid fa-toilet"></i>
+                  <span>{{ advert.bathrooms }}</span>
+                </div>
+                <div class="icon-container">
+                  <i class="fa fa-solid fa-car"></i>
+                  <span>{{ advert.parkingSpaces }}</span>
+                </div>
+              </div>
             </div>
           </div>
         </div>

@@ -92,6 +92,55 @@
             </span>
           </div>
 
+          <div class="form-group-container">
+            <div class="form-group">
+              <input type="number" 
+                     name="bedrooms"    
+                     formControlName="bedrooms" 
+                     class="form-control" 
+                     autocomplete="off" 
+                     id="bedrooms" 
+                     placeholder="Bedrooms"
+                     [ngClass]="{
+                      'is-invalid': validationMessage && validationMessage.bedrooms
+                    }" />
+              <span class="invalid-feedback">
+                <span>{{ validationMessage.bedrooms }}</span>
+              </span>
+            </div>
+          
+            <div class="form-group">
+              <input type="number" 
+                     name="bathrooms" 
+                     formControlName="bathrooms" 
+                     class="form-control" 
+                     autocomplete="off" 
+                     id="bathrooms" 
+                     placeholder="Bathrooms"
+                     [ngClass]="{
+                      'is-invalid': validationMessage && validationMessage.bathrooms
+                    }"/>
+              <span class="invalid-feedback">
+                <span>{{ validationMessage.bathrooms }}</span>
+              </span>
+            </div>
+            <div class="form-group">
+              <input type="number" 
+                     name="parkingSpaces" 
+                     formControlName="parkingSpaces" 
+                     class="form-control" 
+                     autocomplete="off" 
+                     id="parkingSpaces" 
+                     placeholder="Parkings"
+                     [ngClass]="{
+                      'is-invalid': validationMessage && validationMessage.parkingSpaces
+                    }"/>
+              <span class="invalid-feedback">
+                <span>{{ validationMessage.parkingSpaces }}</span>
+              </span>
+            </div>
+          </div>
+
           <div class="form-group">
             <input
               type="text"

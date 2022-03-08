@@ -49,7 +49,7 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       required: "Your city is required.",
     },
     details: {
-      required: "Advert deatils are required.",
+      required: "Advert details are required.",
       minlength: "Your advert details need to be at least 10 characters long.",
       maxlength: "Your advert details cannot be longer than 1000 characters.",
       multipleSpaceValidator: "Your advert details cannot have consecutive spaces"
@@ -61,6 +61,18 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       noSpaceValidator: "Your price cannot contain spaces",
       onlyNumbers: "Your price can only contain numbers"
     },
+    bedrooms: {
+      required: "Bedrooms are required",
+      min: "Cannot be less than 0"
+    },
+    bathrooms: {
+      required: "Bathrooms are required",
+      min: "Cannot be less than 0"
+    },
+    parkingSpaces: {
+      required: "Parkings are required",
+      min: "Cannot be less than 0"
+    }
   };
 
   constructor(
@@ -99,6 +111,18 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
         this.advert?.price,
         [Validators.required, Validators.min(10000), Validators.max(100000000), CustomValidators.noSpaceValidator, CustomValidators.onlyNumbers],
       ],
+      bedrooms: [
+        this.advert?.bedrooms,
+        [Validators.required, Validators.min(0)]
+      ],
+      bathrooms: [
+        this.advert?.bathrooms,
+        [Validators.required, Validators.min(0)]
+      ],
+      parkingSpaces: [
+        this.advert?.parkingSpaces,
+        [Validators.required, Validators.min(0)]
+      ]
     });
 
     this.sub.add(
@@ -140,6 +164,7 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
         }
       }
     }
+    console.log(messages)
     return messages;
   }
 
@@ -171,6 +196,9 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       city: this.advert.city,
       details: this.advert.details,
       price: this.advert.price,
+      bedrooms: this.advert.bedrooms,
+      bathrooms: this.advert.bathrooms,
+      parkingSpaces: this.advert.parkingSpaces
     });
   }
 
@@ -184,6 +212,9 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       this.editAdvertForm.get("city").value.trim(),
       this.editAdvertForm.get("price").value.trim(),
       this.editAdvertForm.get("details").value.trim(),
+      this.editAdvertForm.get("bedrooms").value,
+      this.editAdvertForm.get("bathrooms").value,
+      this.editAdvertForm.get("parkingSpaces").value,
       'Live',
       currentUser.id,
     );
@@ -219,6 +250,8 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       }
     } else {
       this.alertMessage = "Please ensure the form is valid.";
+      this.editAdvertForm.markAllAsTouched();
+      this.validationMessage = this.invalidInputs(this.editAdvertForm)
       setTimeout(() => {
         this.alertMessage = "";
       }, 2000);

@@ -17,3 +17,20 @@ a {
   text-decoration: none;
   box-shadow: 1px 1px 7px 4px #ccc;
 }
+
+.icons {
+  display: flex;
+
+  .icon-container {
+    padding-right: 9px;
+    display: flex;
+    flex-direction: row;
+  
+    i {
+        padding-right: 3px;
+        font-size: 18px;
+        color: rgb(100, 100, 100);
+    }
+  }
+}
+

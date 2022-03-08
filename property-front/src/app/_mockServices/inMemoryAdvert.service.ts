@@ -61,7 +61,10 @@ export class InMemoryAdvertService {
       city: '',
       details: '',
       price: null,
-      status: ''
+      status: '',
+      bedrooms: null,
+      bathrooms: null,
+      parkingSpaces: null
     }
   }
 
