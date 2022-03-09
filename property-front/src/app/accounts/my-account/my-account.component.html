@@ -69,68 +69,6 @@
             </span>
           </div>
 
-          <div class="form-group">
-            <input
-              type="text"
-              name="currentPassword"
-              id="currentPassword"
-              class="form-control"
-              formControlName="currentPassword"
-              placeholder="Current Password"
-              autocomplete="off"
-              [ngClass]="{
-                'is-invalid': validationMessage && validationMessage.currentPassword
-              }"
-            />
-            <span class="invalid-feedback">
-              <span>
-                {{ validationMessage.currentPassword }}
-              </span>
-            </span>
-          </div>
-
-          <div formGroupName="passwords">
-            <div class="form-group">
-              <input
-                type="text"
-                name="password"
-                id="password"
-                class="form-control"
-                formControlName="password"
-                placeholder="Password"
-                autocomplete="off"
-                [ngClass]="{
-                  'is-invalid': validationMessage && validationMessage.password
-                }"
-              />
-              <span class="invalid-feedback">
-                <span>
-                  {{ validationMessage.password }}
-                </span>
-              </span>
-            </div>
-  
-            <div class="form-group">
-              <input
-                type="text"
-                name="confirmPass"
-                id="confirmPass"
-                class="form-control"
-                formControlName="confirmPass"
-                placeholder="Confirm Password"
-                autocomplete="off"
-                [ngClass]="{
-                  'is-invalid': validationMessage && validationMessage.confirmPass
-                }"
-              />
-              <span class="invalid-feedback">
-                <span>
-                  {{ validationMessage.confirmPass }}
-                </span>
-              </span>
-            </div>
-          </div>
-
           <button
             type="submit"
             name="submit"
@@ -144,6 +82,12 @@
             routerLink="/myadverts"
           >
             Cancel
+          </a>
+          <a
+            class="btn btn-outline-danger btn-lg btn-block"
+            (click)="openDialog()"
+          >
+            Dialog
           </a>
 
           <!-- <div

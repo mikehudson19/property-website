@@ -123,8 +123,10 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function updatePassword() {
       const { currentPassword, password, confirmPass } = body;
+      /** @ TODO: Change this - we might have two users with the same password */
       const user = users.find((x) => x.password === currentPassword);
       if (!user) return error("Current password is incorrect");
+      user.password = password;
       return ok({
         password: password,
         confirmPass: confirmPass,

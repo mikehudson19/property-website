@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Form, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { CustomValidators } from "@app/_helpers/customValidators";
 import { User } from "@app/_models";
@@ -8,6 +9,7 @@ import { IUser } from '@app/_models/IUser';
 import { AuthenticationService, UserService } from "@app/_services";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
+import { PasswordDialogComponent } from "../password-dialog/password-dialog.component";
 
 @Component({
   selector: "app-my-account",
@@ -20,7 +22,6 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   validationMessage: { [key: string]: string } = {};
   sub: Subscription;
   authUser: IUser;
-  fieldTextType: boolean = false;
   error: string = '';
   successMessage: string = '';
 
@@ -49,32 +50,15 @@ export class MyAccountComponent implements OnInit, OnDestroy {
       noSpaceValidator: "Your email address cannot contain spaces.",
       email: "This must be a valid email address.",
       maxlength: "Your email cannot be longer than 100 characters",
-    },
-    currentPassword: {
-      required: "Your current password is required.",
-    },
-    passwords: {
-      match: "Your passwords must match.",
-    },
-    password: {
-      required: "A password is required.",
-      minlength: "Your password needs to be at least 8 characters long.",
-      maxlength: "Your password cannot be longer than 100 characters.",
-      noSpaceValidator: "Your password cannot contain spaces.",
-      passwordNumber: "Your password must contain at least one number.",
-      passwordUpperCase:
-        "Your password must contain at leat one uppercase character.",
-    },
-    confirmPass: {
-      required: "Please confirm your password.",
-    },
+    }
   };
 
   constructor(
     private _formBuilder: FormBuilder,
     private _userService: UserService,
     private _router: Router,
-    private authService: AuthenticationService
+    private authService: AuthenticationService,
+    private matDialog: MatDialog 
   ) {}
 
   ngOnInit(): void {
@@ -112,25 +96,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
           Validators.maxLength(100),
           CustomValidators.noSpaceValidator,
         ],
-      ],
-      currentPassword: ["", [Validators.required]],
-      passwords: this._formBuilder.group(
-        {
-          password: [
-            "",
-            [
-              Validators.required,
-              Validators.minLength(8),
-              Validators.maxLength(100),
-              CustomValidators.noSpaceValidator,
-              CustomValidators.passwordNumber,
-              CustomValidators.passwordUpperCase,
-            ],
-          ],
-          confirmPass: ["", [Validators.required]],
-        },
-        { validator: CustomValidators.passwordCompare }
-      ),
+      ]
     });
 
     this.sub = this.manageAccountForm.valueChanges
@@ -170,6 +136,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
         }
       }
     }
+    console.log(messages);
     return messages;
   }
 
@@ -178,7 +145,6 @@ export class MyAccountComponent implements OnInit, OnDestroy {
 
     this._userService.getUser(userId)
       .subscribe((user) => {
-        console.log(user)
         this.authUser = user;
 
         this.displayUser();
@@ -186,11 +152,10 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   }
 
   displayUser(): void {
-    console.log("userToDisplay", this.authUser)
     this.manageAccountForm.patchValue({
       firstName: this.authUser.firstName,
       lastName: this.authUser.lastName,
-      email: this.authUser.email,
+      email: this.authUser.email
     });
   }
 
@@ -203,7 +168,6 @@ export class MyAccountComponent implements OnInit, OnDestroy {
       email: this.manageAccountForm.get("email").value,
       contactNumber: this.authUser.contactNumber ? this.authUser.contactNumber : "",
     };
-    console.log("userToUpdate", userToUpdate);
 
     this._userService.updateUser(userToUpdate)
       .subscribe((user) => {
@@ -215,8 +179,12 @@ export class MyAccountComponent implements OnInit, OnDestroy {
       });
   }
 
-  toggleFieldTextType(): void {
-    this.fieldTextType = !this.fieldTextType;
+  openDialog() {
+    this.matDialog.open(PasswordDialogComponent, {
+      data: {
+        user: this.authUser
+      }
+    })
   }
 
   updatePassword(): void {
