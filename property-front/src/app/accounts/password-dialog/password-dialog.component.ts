@@ -1,10 +1,12 @@
 import { Component, Inject, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { CustomValidators } from '@app/_helpers/customValidators';
 import { IUser } from '@app/_models/IUser';
 import { UserService } from '@app/_services';
+import { debounceTime, delay } from 'rxjs/operators';
 
 @Component({
   selector: 'app-password-dialog',
@@ -43,45 +45,60 @@ export class PasswordDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<PasswordDialogComponent>,
               private _userService: UserService,
-              private _router: Router) { }
+              private _router: Router,
+              private matSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.buildForm();
-    console.log(this.data)
+    
   }
 
   buildForm() {
     this.editPasswordForm = this._formBuilder.group({
-      currentPassword: [""],
+      currentPassword: ["", Validators.required],
       passwords: this._formBuilder.group({
-        password: [""],
-        confirmPass: [""]
+        password: ["", [  Validators.required, 
+                          Validators.minLength(8), 
+                          Validators.maxLength(100),
+                          CustomValidators.noSpaceValidator,
+                          CustomValidators.passwordNumber,
+                          CustomValidators.passwordUpperCase ]],
+        confirmPass: ["", Validators.required]
       }, { validator: CustomValidators.passwordCompare } )
     })
+
+    this.editPasswordForm.valueChanges
+      .pipe(debounceTime(800))
+      .subscribe(() => {
+        this.validationMessage = this.invalidInputs(this.editPasswordForm);
+      })
   }
 
   updatePassword() {
-      const currentPassword = this.editPasswordForm.get("currentPassword").value;
+    const currentPassword = this.editPasswordForm.get("currentPassword").value;
 
-      if (currentPassword !== this.data.user.password) {
-        /** @TODO: Form validation here to prevent save */
-        return;
-      } 
+    this.editPasswordForm.get("currentPassword").setErrors(null);
+    this.validationMessage = {};
 
-       const passwordToUpdate: {} = { 
-          id: this.data.user.id,
-          currentPassword: this.editPasswordForm.get("currentPassword").value,
-          password: this.editPasswordForm.get("passwords.password").value,
-          confirmPass: this.editPasswordForm.get("passwords.confirmPass").value
-      };
+    if (currentPassword !== this.data.user.password) {
+      this.editPasswordForm.get("currentPassword").setErrors({ required: true });
+      this.validationMessage = { currentPassword: "Password is not right, it is so not right"}
+      return;
+    } 
+
+    const passwordToUpdate: {} = { 
+        id: this.data.user.id,
+        currentPassword: this.editPasswordForm.get("currentPassword").value,
+        password: this.editPasswordForm.get("passwords.password").value,
+        confirmPass: this.editPasswordForm.get("passwords.confirmPass").value
+    };
       
     this._userService.updateUserPassword(passwordToUpdate)
       .subscribe((user) => {
-        this._router
-          .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
-          .then(() => {
-            this._router.navigate(["/myaccount"]);
-          });
+        this.dialogRef.close();
+        this.matSnackBar.open("Your password has been updated", 'Close', { 
+          duration: 2000
+         });
       });
   }
 
@@ -91,6 +108,38 @@ export class PasswordDialogComponent implements OnInit {
 
   closeDialog() {
     this.dialogRef.close();
+  }
+
+  invalidInputs(formgroup: FormGroup) {
+    let messages = {};
+    for (const input in formgroup.controls) {
+      const control = formgroup.controls[input];
+
+      // If the passwords don't match, assign error message.
+      if (control instanceof FormGroup && control.errors) {
+        Object.keys(control.errors).map((messageKey) => {
+          messages[input] = this.validationMessages[input][messageKey];
+        });
+      }
+
+      // If the password field doesn't meet the requirements, assign error message.
+      if (control instanceof FormGroup) {
+        const nestedGroupMessages = this.invalidInputs(control);
+        Object.assign(messages, nestedGroupMessages);
+      }
+
+      // If any of the other fields don't meet the requirements, assign error message.
+      if (this.validationMessages[input]) {
+        messages[input] = "";
+        if (control.errors && (control.dirty || control.touched)) {
+          Object.keys(control.errors).map((messageKey) => {
+            messages[input] = this.validationMessages[input][messageKey];
+          });
+        }
+      }
+    }
+    
+    return messages;
   }
 
 }
