@@ -48,6 +48,11 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       email: "This must be a valid email address.",
       maxlength: "Your email cannot be longer than 100 characters",
     },
+    contactNumber: {
+      required: "Your contact number is required",
+      onlyNumbers: "Your contact number can only contain numbers",
+      spaceStart: "Your contact number can't start with a space"
+    },
     passwords: {
       match: "Your passwords must match.",
     },
@@ -108,6 +113,14 @@ export class RegistrationComponent implements OnInit, OnDestroy {
           Validators.maxLength(100),
           CustomValidators.noSpaceValidator,
         ],
+      ],
+      contactNumber: [
+        "", 
+        [
+          Validators.required,
+          CustomValidators.onlyNumbers,
+          CustomValidators.spaceStartValidator,
+        ]
       ],
       passwords: this._formBuilder.group(
         {
@@ -182,6 +195,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       this.registrationForm.get("forenames").value.trim(),
       this.registrationForm.get("surname").value.trim(),
       this.registrationForm.get("email").value.trim(),
+      this.registrationForm.get("contactNumber").value.trim(),
       this.registrationForm.get("passwords.password").value.trim(),
       this.registrationForm.get("passwords.confirmPass").value.trim()
     );

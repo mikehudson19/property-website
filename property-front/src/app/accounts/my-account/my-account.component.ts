@@ -50,6 +50,11 @@ export class MyAccountComponent implements OnInit, OnDestroy {
       noSpaceValidator: "Your email address cannot contain spaces.",
       email: "This must be a valid email address.",
       maxlength: "Your email cannot be longer than 100 characters",
+    },
+    contactNumber: {
+      required: "Your email address is required.",
+      onlyNumbers: "Your contact number can only contain numbers",
+      spaceStart: "Your contact number cannot start with a space"
     }
   };
 
@@ -96,6 +101,14 @@ export class MyAccountComponent implements OnInit, OnDestroy {
           Validators.maxLength(100),
           CustomValidators.noSpaceValidator,
         ],
+      ],
+      contactNumber: [
+        "",
+        [
+          Validators.required,
+          CustomValidators.onlyNumbers,
+          CustomValidators.spaceStartValidator
+        ]
       ]
     });
 
@@ -136,7 +149,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
         }
       }
     }
-    console.log(messages);
+
     return messages;
   }
 
@@ -145,6 +158,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
 
     this._userService.getUser(userId)
       .subscribe((user) => {
+        console.log(user);
         this.authUser = user;
 
         this.displayUser();
@@ -155,7 +169,8 @@ export class MyAccountComponent implements OnInit, OnDestroy {
     this.manageAccountForm.patchValue({
       firstName: this.authUser.firstName,
       lastName: this.authUser.lastName,
-      email: this.authUser.email
+      email: this.authUser.email,
+      contactNumber: this.authUser.contactNumber
     });
   }
 
@@ -166,7 +181,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
       firstName: this.manageAccountForm.get("firstName").value,
       lastName: this.manageAccountForm.get("lastName").value,
       email: this.manageAccountForm.get("email").value,
-      contactNumber: this.authUser.contactNumber ? this.authUser.contactNumber : "",
+      contactNumber: this.manageAccountForm.get("contactNumber").value,
     };
 
     this._userService.updateUser(userToUpdate)
@@ -188,7 +203,6 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   }
 
   updatePassword(): void {
-    
     const passwords: IPasswords = {
       currentPassword: this.manageAccountForm.get("currentPassword").value,
       password: this.manageAccountForm.get("passwords.password").value,

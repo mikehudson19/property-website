@@ -105,18 +105,20 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
     function updateUser() {
       /** @TODO: Change the value stored in localstorage as well..? */
-      const { email, firstName, lastName, id } = body;
+      const { email, firstName, lastName, contactNumber, id } = body;
       const user = users.find((x) => x.id === id);
 
       user.firstName = firstName;
       user.lastName = lastName;
       user.email = email;
-
+      user.contactNumber = contactNumber;
+      console.log(contactNumber)
       return ok({
         id: user.id,
         email: email,
         firstName: firstName,
         lastName: lastName,
+        contactNumber: contactNumber,
         token: "fake-jwt-token",
       });
     }

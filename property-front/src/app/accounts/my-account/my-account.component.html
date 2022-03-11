@@ -69,6 +69,26 @@
             </span>
           </div>
 
+          <div class="form-group">
+            <input
+              type="text"
+              name="contactNumber"
+              id="contactNumber"
+              class="form-control"
+              formControlName="contactNumber"
+              placeholder="Contact Number"
+              autocomplete="off"
+              [ngClass]="{
+                'is-invalid': validationMessage && validationMessage.contactNumber
+              }"
+            />
+            <span class="invalid-feedback">
+              <span>
+                {{ validationMessage.contactNumber }}
+              </span>
+            </span>
+          </div>
+
           <a
           class="btn btn-outline-secondary btn-lg btn-block"
           (click)="openDialog()"

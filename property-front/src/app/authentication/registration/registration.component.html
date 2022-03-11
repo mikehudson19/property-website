@@ -37,6 +37,7 @@
             </span>
           </span>
         </div>
+
         <div class="form-group">
           <input
             type="email"
@@ -50,6 +51,23 @@
           <span class="invalid-feedback">
             <span>
               {{ message.email }}
+            </span>
+          </span>
+        </div>
+
+        <div class="form-group">
+          <input
+            type="text"
+            name="contactNumber"
+            formControlName="contactNumber"
+            class="form-control"
+            placeholder="Contact Number"
+            autocomplete="off"
+            [ngClass]="{ 'is-invalid': message && message.contactNumber }"
+          />
+          <span class="invalid-feedback">
+            <span>
+              {{ message.contactNumber }}
             </span>
           </span>
         </div>
