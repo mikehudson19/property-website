@@ -28,12 +28,6 @@
       <button *ngIf="adverts.length == 0" class="btn btn-info" [routerLink]="['/editadvert', 0]">Create New Advert</button>
 
     </div>
-
-    <!-- <div class="no-adverts" *ngIf="loading">
-      <h3>Finding your adverts...</h3>
-      <button *ngIf="adverts.length == 0" class="btn btn-info" [routerLink]="['/editadvert', 0]">Create New Advert</button>
-
-    </div> -->
     
     <div class="mb-3" *ngIf="adverts">
       <a *ngFor="let advert of adverts" class="card my-4">
