@@ -22,17 +22,18 @@
     </div>
   </div>
 
-    <div *ngIf="adverts.length == 0" class="alert alert-warning mt-5">
-      You currently have no adverts listed.
-      <div class="mt-2">
-        <button
-          class="btn btn-light btn-sm mx-2 my-1"
-          [routerLink]="['/editadvert', 0]"
-        >
-          Create an advert
-        </button>
-      </div>
+    <div class="no-adverts" *ngIf="adverts.length == 0">
+      <h2 *ngIf="loading">Finding your adverts...</h2>
+      <h2 *ngIf="!loading">You currently have no adverts listed.</h2>
+      <button *ngIf="adverts.length == 0" class="btn btn-info" [routerLink]="['/editadvert', 0]">Create New Advert</button>
+
     </div>
+
+    <!-- <div class="no-adverts" *ngIf="loading">
+      <h3>Finding your adverts...</h3>
+      <button *ngIf="adverts.length == 0" class="btn btn-info" [routerLink]="['/editadvert', 0]">Create New Advert</button>
+
+    </div> -->
     
     <div class="mb-3" *ngIf="adverts">
       <a *ngFor="let advert of adverts" class="card my-4">
@@ -135,7 +136,7 @@
       </div>
 
       </a>
-      <button class="btn btn-info" [routerLink]="['/editadvert', 0]">Create New Advert</button>
+      <button *ngIf="adverts.length > 0" class="btn btn-info" [routerLink]="['/editadvert', 0]">Create New Advert</button>
     </div>
   </div>
 </div>
