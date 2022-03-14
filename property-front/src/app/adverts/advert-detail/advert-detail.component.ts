@@ -1,9 +1,12 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { InMemoryAdvertService } from '@app/_mockServices/inMemoryAdvert.service';
 import { IAdvert } from '@app/_models/IAdvert';
 import { AdvertService } from '@app/_services/advert.service';
 import { Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-advert-detail',
@@ -15,12 +18,41 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
   id: number;
   advert: IAdvert;
+  validationMessage: { [key: string]: string } = {};
+
+  contactSellerForm: FormGroup;
+
+  validationMessages: {} = {
+    name: {
+      required: "Your name is required."
+    },
+    message: {
+      required: "A message is required"
+    },
+    email: {
+      required: "Your email address is required.",
+      email: "This must be a valid email address."
+
+    },
+    contactNumber: {
+      required: "Your contact number is required."
+    }
+  };
 
   constructor(private _route: ActivatedRoute,
               private _inMemAdService: InMemoryAdvertService,
-              private _advertService: AdvertService) { }
+              private _advertService: AdvertService,
+              private matSnackBar: MatSnackBar,
+              private formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+
+    this.contactSellerForm = this.formBuilder.group({
+      name: ["", Validators.required],
+      email: ["", Validators.required],
+      contactNumber: ["", Validators.required],
+      message: ["", Validators.required]
+    })
 
     this.sub.add(
       this._route.paramMap.subscribe((params) => {
@@ -28,6 +60,12 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
         this.getAdvert(this.id);
       })
     );
+
+    this.contactSellerForm.valueChanges
+    .pipe(debounceTime(500))
+    .subscribe(x => {
+      this.validationMessage = this.invalidInputs(this.contactSellerForm);
+    })
   }
 
   getAdvert(id: number): void {
@@ -36,6 +74,43 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
     .getAdvert(id).subscribe((advert => {
         this.advert = advert;
       }))
+  }
+
+  invalidInputs(formgroup: FormGroup) {
+    let messages = {};
+    for (const input in formgroup.controls) {
+      const control = formgroup.controls[input];
+
+      // If any of the fields don't meet the requirements, assign error message.
+      if (this.validationMessages[input]) {
+        messages[input] = "";
+        if (control.errors && (control.dirty || control.touched)) {
+          Object.keys(control.errors).map((messageKey) => {
+            messages[input] = this.validationMessages[input][messageKey];
+          });
+        }
+      }
+    }
+
+    return messages;
+  }
+
+  contactClick(): void {
+    if (!this.contactSellerForm.valid) {
+      console.log(" mark all as touched")
+      this.contactSellerForm.markAllAsTouched();
+      this.validationMessage = this.invalidInputs(this.contactSellerForm)
+      return;
+    }
+
+    if (this.contactSellerForm.valid) {
+      this.matSnackBar.open("Your message has been sent", 'Close', {
+        duration: 2000
+      });
+      
+      this.contactSellerForm.reset();
+    }
+    
   }
 
   ngOnDestroy(): void {

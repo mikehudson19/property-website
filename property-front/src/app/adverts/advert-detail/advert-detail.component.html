@@ -1,29 +1,94 @@
 <div class="container grid-container mt-4" *ngIf="advert">
 
-  <div class="img bd-placeholder-img">
+  <div class="img-container">
     <a><i class="fas fa-chevron-left mr-5"></i></a>
     <img src="../../../assets/headline-image.jpg" alt="" />
     <a><i class="fas fa-chevron-right ml-5"></i></a>
   </div>
 
-      <div class="main card">
-        <div class="card-body">
-          <h5 class="card-title h2">{{ advert.price | currency: "ZAR":"symbol-narrow" }}</h5>
-          <h6 class="card-title my-4 h4">{{ advert.title }}</h6>
-          <p class="card-text">{{ advert.province }}, {{ advert.city }}</p>
-        </div>
-      </div>
+  <div class="content-container">
 
-      <div class="detail card">
-        <div class="card-body">
-          <p class="card-text">{{ advert.details }}</p>
+    <div class="detail-container">
+      <div class="">
+        <div class="">
+          <h2>{{ advert.title }}</h2>
+          <h1>{{ advert.price | currency: "ZAR":"symbol-narrow" }}</h1>
+          <p class="">{{ advert.province }}, {{ advert.city }}</p>
+  
+          <div class="icons">
+            <div class="icon-container">
+              <i class="fa fa-solid fa-bed"></i>
+              <span>{{ advert.bedrooms }}</span>
+            </div>
+            <div class="icon-container">
+              <i class="fa fa-solid fa-toilet"></i>
+              <span>{{ advert.bathrooms }}</span>
+            </div>
+            <div class="icon-container">
+              <i class="fa fa-solid fa-car"></i>
+              <span>{{ advert.parkingSpaces }}</span>
+            </div>
+          </div>
         </div>
       </div>
+      
+      <mat-divider></mat-divider>
 
-      <div class="contact card">
-        <div class="card-body">
-          <h5 class="card-title">Contact Seller Component</h5>
-        </div>
+      <div class="advert-details">
+          <p [innerHtml]="advert.details"></p>
       </div>
+    </div>
+   
+
+    <div class="contact-card">
+      <h5 class="">Contact Seller Component</h5>
+      <form action="" [formGroup]="contactSellerForm">
+        <div class="form-group">
+          <input formControlName="name" 
+               placeholder="Your name" 
+               class="form-control" 
+               type="text" 
+               [ngClass]="{ 'is-invalid': validationMessage && validationMessage.name }">
+          <span class="invalid-feedback">
+            {{ validationMessage.name }}
+          </span>
+        </div>
+        <div class="form-group">
+          <input formControlName="email" 
+                  placeholder="Your email" 
+                  class="form-control" 
+                  type="text" 
+                  [ngClass]="{ 'is-invalid': validationMessage && validationMessage.email }">
+          <span class="invalid-feedback">
+            {{ validationMessage.email }}
+          </span>
+        </div>
+        <div class="form-group">
+          <input formControlName="contactNumber" 
+                  placeholder="Your cell number" 
+                  class="form-control" 
+                  type="text"
+                  [ngClass]="{ 'is-invalid': validationMessage && validationMessage.contactNumber }">
+          <span class="invalid-feedback">
+            {{ validationMessage.contactNumber }}
+          </span>
+        </div>
+        <div class="form-group">
+          <textarea formControlName="message" 
+                    placeholder="Your message" 
+                    class="form-control"
+                    [ngClass]="{ 'is-invalid': validationMessage && validationMessage.message }">
+          </textarea>
+          <span class="invalid-feedback">
+            {{ validationMessage.message }}
+          </span>
+        </div>
+        
+        
+        <button class="btn btn-outline-dark btn-sm btn-block" (click)="contactClick()">Contact</button>
+      </form>
+    </div>
+  </div>
+      
 
 </div>

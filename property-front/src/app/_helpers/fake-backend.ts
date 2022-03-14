@@ -112,7 +112,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       user.lastName = lastName;
       user.email = email;
       user.contactNumber = contactNumber;
-      console.log(contactNumber)
+
       return ok({
         id: user.id,
         email: email,

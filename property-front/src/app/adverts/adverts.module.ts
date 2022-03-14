@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AllAdvertsComponent } from "./all-adverts/all-adverts.component";
 import { AdvertDetailComponent } from "./advert-detail/advert-detail.component";
 import { SharedModule } from "@app/shared/shared.module";
+import { NgMaterialModule } from "@app/shared/ng-material/ng-material.module";
 
 @NgModule({
   declarations: [

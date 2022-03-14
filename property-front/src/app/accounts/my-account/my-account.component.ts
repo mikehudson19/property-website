@@ -126,20 +126,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
     for (const input in formgroup.controls) {
       const control = formgroup.controls[input];
 
-      // If the passwords don't match, assign error message.
-      if (control instanceof FormGroup && control.errors) {
-        Object.keys(control.errors).map((messageKey) => {
-          messages[input] = this.validationMessages[input][messageKey];
-        });
-      }
-
-      // If the password field doesn't meet the requirements, assign error message.
-      if (control instanceof FormGroup) {
-        const nestedGroupMessages = this.invalidInputs(control);
-        Object.assign(messages, nestedGroupMessages);
-      }
-
-      // If any of the other fields don't meet the requirements, assign error message.
+      // If any of the fields don't meet the requirements, assign error message.
       if (this.validationMessages[input]) {
         messages[input] = "";
         if (control.errors && (control.dirty || control.touched)) {

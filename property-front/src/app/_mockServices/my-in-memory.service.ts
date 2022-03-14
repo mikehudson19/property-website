@@ -12,7 +12,7 @@ export class MyInMemoryService implements InMemoryDbService {
         province: "Western Cape",
         city: "Jeffries Bay",
         details:
-          "2 bedrooms with the main leading out to garden with french doors, unit has a beautiful full bathroom. Generous sized living area open plan lounge/ dining and kitchen with sliding doors leading out on to the private  garden and covered patio area. Complex offers tennis court 3 pools active club house fiber and 24 hour security, access control, Douglasdale village shopping center a walk away.",
+          "2 bedrooms with the main leading out to garden with french doors, unit has a beautiful full bathroom. Generous sized living area open plan lounge/ dining and kitchen with sliding doors leading out on to the private  garden and covered patio area. Complex offers tennis court 3 pools active club house fiber and 24 hour security, access control, Douglasdale village shopping center a walk away.<br><br> The unit comes with one covered parking with plenty of visitors parking for your guests. Complex has 24 hour security and a beautiful pool area with braai facilities for those hot summer days. <br><br> This is a ground floor apartment, parking is close to the unit one is covered and second one is not. In a well maintained complex, which is close to schools, shops and transport. Apartment has modern finishes. Unit is fibre ready. Kitchen has space for two under counter appliances. Main bathroom has a shower. The second bathroom has a shower and separate bath. Complex has play areas for the kids. Easy access to the highway to get to work.",
         price: 940000,
         status: "Live",
         bedrooms: 2,
