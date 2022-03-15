@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { CustomValidators } from '@app/_helpers/customValidators';
 import { InMemoryAdvertService } from '@app/_mockServices/inMemoryAdvert.service';
 import { IAdvert } from '@app/_models/IAdvert';
 import { AdvertService } from '@app/_services/advert.service';
@@ -27,7 +28,8 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
       required: "Your name is required."
     },
     message: {
-      required: "A message is required"
+      required: "A message is required",
+      spaceStart: "Your message cannot start with a space"
     },
     email: {
       required: "Your email address is required.",
@@ -35,7 +37,8 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
 
     },
     contactNumber: {
-      required: "Your contact number is required."
+      required: "Your contact number is required.",
+      onlyNumbers: "Your contact number can only contain numbers"
     }
   };
 
@@ -49,9 +52,9 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
 
     this.contactSellerForm = this.formBuilder.group({
       name: ["", Validators.required],
-      email: ["", Validators.required],
-      contactNumber: ["", Validators.required],
-      message: ["", Validators.required]
+      email: ["", [Validators.required, Validators.email]],
+      contactNumber: ["", [Validators.required, CustomValidators.onlyNumbers]],
+      message: ["", [Validators.required, CustomValidators.spaceStartValidator]]
     })
 
     this.sub.add(
@@ -97,7 +100,6 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
 
   contactClick(): void {
     if (!this.contactSellerForm.valid) {
-      console.log(" mark all as touched")
       this.contactSellerForm.markAllAsTouched();
       this.validationMessage = this.invalidInputs(this.contactSellerForm)
       return;
@@ -109,6 +111,7 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
       });
       
       this.contactSellerForm.reset();
+      return;
     }
     
   }

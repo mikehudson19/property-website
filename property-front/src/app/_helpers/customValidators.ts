@@ -23,7 +23,7 @@ export class CustomValidators {
     static spaceStartValidator(
       control: AbstractControl
     ): { [key: string]: boolean } | null {
-      if (/[\s]/.test(control.value[0])) {
+      if (/[\s]/.test(control.value)) {
         return { 'spaceStart': true };
       }
       return null;
