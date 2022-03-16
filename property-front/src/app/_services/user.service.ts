@@ -23,6 +23,7 @@ export class UserService {
     }
 
     getAuthUser(): Observable<IUser> {
+        /** TODO: Fix - this is returning null at the moment */
         return this._http.get<IUser>(`${environment.apiUrl}/${this.apiEndpoint}/auth`);
     }
 

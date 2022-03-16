@@ -20,7 +20,8 @@ const users: User[] = [
     firstName: "Test",
     lastName: "User",
     // password: "test",
-    contactNumber: "0765698964"
+    contactNumber: "0765698964",
+    favourites: [1, 2]
   },
   {
     id: 2,
@@ -85,6 +86,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         lastName: user.lastName,
         contactNumber: user.contactNumber,
         token: "fake-jwt-token",
+        favourites: user.favourites
       });
     }
 

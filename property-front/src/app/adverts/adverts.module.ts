@@ -7,13 +7,15 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AllAdvertsComponent } from "./all-adverts/all-adverts.component";
 import { AdvertDetailComponent } from "./advert-detail/advert-detail.component";
 import { SharedModule } from "@app/shared/shared.module";
+import { FavouriteAdvertsComponent } from './favourite-adverts/favourite-adverts.component';
 
 @NgModule({
   declarations: [
     MyAdvertsComponent,
     EditAdvertComponent,
     AllAdvertsComponent,
-    AdvertDetailComponent
+    AdvertDetailComponent,
+    FavouriteAdvertsComponent
   ],
   imports: [
     CommonModule, 

@@ -15,6 +15,15 @@
   width: 75%;
   margin-right: 2.5rem;
 
+  .top-part {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  
+
   h2 {
     margin: 0;
   }

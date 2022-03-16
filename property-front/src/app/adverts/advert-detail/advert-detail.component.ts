@@ -5,6 +5,8 @@ import { ActivatedRoute } from '@angular/router';
 import { CustomValidators } from '@app/_helpers/customValidators';
 import { InMemoryAdvertService } from '@app/_mockServices/inMemoryAdvert.service';
 import { IAdvert } from '@app/_models/IAdvert';
+import { IUser } from '@app/_models/IUser';
+import { AuthenticationService, UserService } from '@app/_services';
 import { AdvertService } from '@app/_services/advert.service';
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -20,6 +22,8 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
   id: number;
   advert: IAdvert;
   validationMessage: { [key: string]: string } = {};
+  authUser: IUser;
+  isFavourite: boolean;
 
   contactSellerForm: FormGroup;
 
@@ -46,7 +50,9 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
               private _inMemAdService: InMemoryAdvertService,
               private _advertService: AdvertService,
               private matSnackBar: MatSnackBar,
-              private formBuilder: FormBuilder) { }
+              private formBuilder: FormBuilder,
+              private authService: AuthenticationService,
+              private userService: UserService) { }
 
   ngOnInit(): void {
 
@@ -76,7 +82,38 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
     // this._advertService  
     .getAdvert(id).subscribe((advert => {
         this.advert = advert;
+
+        this.determineFavourite();
       }))
+  }
+
+  determineFavourite(): void {
+    const authUserId = this.authService.currentUserValue.id;
+
+    this.userService.getUser(authUserId)
+      .subscribe(user => {
+        this.authUser = user;
+        console.log("useroo", this.authUser)
+        if (this.authUser.favourites.includes(this.advert.id)) this.isFavourite = true;
+
+      });
+
+
+    console.log(this.isFavourite);
+  }
+
+  addToFavourites(): void {
+    // Get the current user
+    const authUserId = this.authService.currentUserValue.id;
+
+    this.userService.getUser(authUserId).subscribe(user => {
+      user.favourites.push(this.advert.id);
+
+      this.userService.updateUser(user).subscribe();
+
+    })
+    // Update the current user's favourites array
+    // Save the current user
   }
 
   invalidInputs(formgroup: FormGroup) {

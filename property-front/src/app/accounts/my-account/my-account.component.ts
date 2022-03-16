@@ -145,7 +145,6 @@ export class MyAccountComponent implements OnInit, OnDestroy {
 
     this._userService.getUser(userId)
       .subscribe((user) => {
-        console.log(user);
         this.authUser = user;
 
         this.displayUser();

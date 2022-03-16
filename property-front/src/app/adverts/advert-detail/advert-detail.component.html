@@ -9,7 +9,7 @@
   <div class="content-container">
 
     <div class="detail-container">
-      <div class="">
+      <div class="top-part">
         <div class="">
           <h2>{{ advert.title }}</h2>
           <h1>{{ advert.price | currency: "ZAR":"symbol-narrow" }}</h1>
@@ -30,6 +30,7 @@
             </div>
           </div>
         </div>
+        <button class="favourite-button" (click)="addToFavourites()">{{ isFavourite ? "Remove from favourites" : "Add to favourites" }}</button>
       </div>
       
       <mat-divider></mat-divider>
