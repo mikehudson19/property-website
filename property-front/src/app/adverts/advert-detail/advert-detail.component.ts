@@ -93,27 +93,31 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
     this.userService.getUser(authUserId)
       .subscribe(user => {
         this.authUser = user;
-        console.log("useroo", this.authUser)
         if (this.authUser.favourites.includes(this.advert.id)) this.isFavourite = true;
 
       });
 
-
-    console.log(this.isFavourite);
   }
 
   addToFavourites(): void {
-    // Get the current user
     const authUserId = this.authService.currentUserValue.id;
 
     this.userService.getUser(authUserId).subscribe(user => {
-      user.favourites.push(this.advert.id);
 
-      this.userService.updateUser(user).subscribe();
+      if (!this.isFavourite) {
+        user.favourites.push(this.advert.id);
+        this.userService.updateUser(user).subscribe();
+        return;
+      }
 
+      if (this.isFavourite) {
+        const newFavourites = user.favourites.filter(element => element !== this.advert.id);
+        this.isFavourite = false;
+        user.favourites = newFavourites;
+        this.userService.updateUser(user).subscribe();
+        return;
+      }
     })
-    // Update the current user's favourites array
-    // Save the current user
   }
 
   invalidInputs(formgroup: FormGroup) {

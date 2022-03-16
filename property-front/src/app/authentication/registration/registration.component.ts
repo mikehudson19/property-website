@@ -197,8 +197,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       this.registrationForm.get("email").value.trim(),
       this.registrationForm.get("contactNumber").value.trim(),
       this.registrationForm.get("passwords.password").value.trim(),
-      this.registrationForm.get("passwords.confirmPass").value.trim()
+      this.registrationForm.get("passwords.confirmPass").value.trim(),
     );
+
+    user.favourites = [];
 
     // In Memory API backend for testing
     this._inMemUserService

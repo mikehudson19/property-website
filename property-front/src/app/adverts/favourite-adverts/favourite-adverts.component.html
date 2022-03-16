@@ -1,5 +1,12 @@
-<div class="container">
+<div  *ngIf="adverts" class="container">
     <h1>Your favourite adverts</h1>
+
+    <div class="no-adverts" *ngIf="adverts.length == 0">
+      <!-- <h2 *ngIf="loading">Finding your favourtites...</h2> -->
+      <h2 *ngIf="!loading">You currently have no favourites.</h2>
+      <button *ngIf="adverts.length == 0" class="btn btn-info" [routerLink]="['/alladverts']">Browse adverts</button>
+    </div>
+
     <div class="adverts-container">
         <div class="mb-3" *ngIf="adverts && adverts.length > 0">
             <a
