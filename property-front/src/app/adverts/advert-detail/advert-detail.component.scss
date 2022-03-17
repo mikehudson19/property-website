@@ -91,3 +91,13 @@ img {
     }
   }
 }
+
+button {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+
+  mat-icon {
+    padding-left: 4px;
+  }
+}
