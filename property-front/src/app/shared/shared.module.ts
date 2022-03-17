@@ -4,24 +4,29 @@ import { SearchComponent } from './search/search.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { TruncateTextPipe } from '@app/_helpers/truncate-text.pipe';
 import { NgMaterialModule } from './ng-material/ng-material.module';
+import { AdvertCardLargeComponent } from './advert-card-large/advert-card-large.component';
+import { RouterModule } from '@angular/router';
 
 
 
 @NgModule({
   declarations: [
     SearchComponent,
-    TruncateTextPipe
+    TruncateTextPipe,
+    AdvertCardLargeComponent
   ],
   imports: [
     CommonModule,
     ReactiveFormsModule,
     FormsModule,
-    NgMaterialModule
+    NgMaterialModule,
+    RouterModule
   ],
   exports: [
     SearchComponent,
     TruncateTextPipe,
-    NgMaterialModule
+    NgMaterialModule,
+    AdvertCardLargeComponent
   ]
 })
 export class SharedModule { }

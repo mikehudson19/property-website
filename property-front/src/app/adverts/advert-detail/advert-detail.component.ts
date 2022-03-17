@@ -96,27 +96,26 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
         if (this.authUser.favourites.includes(this.advert.id)) this.isFavourite = true;
 
       });
-
   }
 
-  addToFavourites(): void {
+  toggleFavourite(): void {
     const authUserId = this.authService.currentUserValue.id;
 
     this.userService.getUser(authUserId).subscribe(user => {
 
       if (!this.isFavourite) {
         user.favourites.push(this.advert.id);
-        this.userService.updateUser(user).subscribe();
-        return;
-      }
-
-      if (this.isFavourite) {
+        this.isFavourite = true;
+      } else {
         const newFavourites = user.favourites.filter(element => element !== this.advert.id);
         this.isFavourite = false;
         user.favourites = newFavourites;
-        this.userService.updateUser(user).subscribe();
-        return;
       }
+
+      this.userService.updateUser(user).subscribe();
+      this.matSnackBar.open(`${this.isFavourite ? "Added to" : "Removed from"} your favourites`, "Close", {
+        duration: 2000
+      })
     })
   }
 

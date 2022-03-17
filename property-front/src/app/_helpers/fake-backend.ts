@@ -21,7 +21,7 @@ const users: User[] = [
     lastName: "User",
     // password: "test",
     contactNumber: "0765698964",
-    favourites: []
+    favourites: [1]
   },
   {
     id: 2,
@@ -30,7 +30,8 @@ const users: User[] = [
     firstName: "Test2",
     lastName: "Test2Suranme",
     // confirmPass: "test2",
-    contactNumber: "0824593652"
+    contactNumber: "0824593652",
+    favourites: []
   },
 ];
 

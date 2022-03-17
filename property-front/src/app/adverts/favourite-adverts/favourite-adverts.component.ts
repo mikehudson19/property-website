@@ -11,7 +11,8 @@ import { map } from 'rxjs/operators';
 })
 export class FavouriteAdvertsComponent implements OnInit {
 
-  adverts: IAdvert[];
+  adverts: IAdvert[] = [];
+  isLoading = true;
 
   constructor(private authService: AuthenticationService,
               private advertService: AdvertService,
@@ -36,7 +37,10 @@ export class FavouriteAdvertsComponent implements OnInit {
               return filtered;
             })
           )
-          .subscribe(ads => this.adverts = ads);
+          .subscribe(ads => {
+            this.adverts = ads;
+            this.isLoading = false;
+          });
       })
   }
 
