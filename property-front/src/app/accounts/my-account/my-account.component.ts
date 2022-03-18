@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { Form, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
+import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { CustomValidators } from "@app/_helpers/customValidators";
 import { User } from "@app/_models";
@@ -63,8 +64,8 @@ export class MyAccountComponent implements OnInit, OnDestroy {
     private _userService: UserService,
     private _router: Router,
     private authService: AuthenticationService,
-    private matDialog: MatDialog 
-  ) {}
+    private matDialog: MatDialog,
+    private matSnackBar: MatSnackBar) {}
 
   ngOnInit(): void {
     this.manageAccountForm = this._formBuilder.group({
@@ -161,6 +162,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   }
 
   updateUser(): void {
+
     /** TODO: Change the way this updates */
     const userToUpdate: IUser = { 
       id: this.authUser.id,
@@ -170,12 +172,25 @@ export class MyAccountComponent implements OnInit, OnDestroy {
       contactNumber: this.manageAccountForm.get("contactNumber").value,
     };
 
+    if (this.authUser.firstName === userToUpdate.firstName &&
+        this.authUser.lastName === userToUpdate.lastName && 
+        this.authUser.email === userToUpdate.email && 
+        this.authUser.contactNumber === userToUpdate.contactNumber ) {
+          this.matSnackBar.open("No changes were detected", "Close", {
+            duration: 2000
+          })
+          return;
+        }
+
     this._userService.updateUser(userToUpdate)
       .subscribe((user) => {
         this._router
           .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
           .then(() => {
             this._router.navigate(["/myaccount"]);
+            this.matSnackBar.open("You profile has been updated", "Close", {
+              duration: 2000
+            })
           });
       });
   }

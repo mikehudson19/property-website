@@ -100,6 +100,7 @@
             name="submit"
             class="btn btn-outline-success btn-lg btn-block"
             (click)="updateUser()"
+            [disabled]="!manageAccountForm.touched"
           >
             Save changes
           </button>
@@ -109,16 +110,6 @@
           >
             Cancel
           </a>
-
-          <!-- <div
-            class="alert alert-warning text-center mt-3"
-            *ngIf="alertMessage && alertMessage.length > 0"
-          >
-            <div>{{ alertMessage }}</div>
-            <div class="mt-2">
-            </div>
-          </div> -->
-
         </form>
       </div>
     </div>
