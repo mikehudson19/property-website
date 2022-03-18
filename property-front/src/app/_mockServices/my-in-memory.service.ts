@@ -8,7 +8,7 @@ export class MyInMemoryService implements InMemoryDbService {
       {
         id: 3,
         userId: 2,
-        title: "2 Bedroom Apartment (Mock API)",
+        title: "2 Bedroom Apartment",
         province: "Western Cape",
         city: "Jeffries Bay",
         details:
@@ -22,7 +22,7 @@ export class MyInMemoryService implements InMemoryDbService {
       {
         id: 1,
         userId: 1,
-        title: "3 Bedroom House (Mock API)",
+        title: "3 Bedroom House",
         province: "Gauteng",
         city: "Johannesburg",
         details:
@@ -36,7 +36,7 @@ export class MyInMemoryService implements InMemoryDbService {
       {
         id: 2,
         userId: 1,
-        title: "2 Bedroom House (Mock API)",
+        title: "2 Bedroom House",
         province: "Gauteng",
         city: "Johannesburg",
         details:

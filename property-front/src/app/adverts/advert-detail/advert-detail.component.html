@@ -7,6 +7,10 @@
 
   </div>
 
+  <div class="img-preview-container">
+    <div *ngFor="let img of images" class="img-preview" (click)="selectImage(img)"><div [ngClass]="getClass(img)"></div><img [src]="img"/></div>
+  </div>
+
   <div class="content-container">
 
     <div class="detail-container">

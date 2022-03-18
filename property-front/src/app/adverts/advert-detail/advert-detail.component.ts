@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { CDK_CONNECTED_OVERLAY_SCROLL_STRATEGY_PROVIDER_FACTORY } from '@angular/cdk/overlay/overlay-directives';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
@@ -11,15 +12,12 @@ import { AdvertService } from '@app/_services/advert.service';
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
-import { NguCarousel, NguCarouselConfig, NguCarouselStore } from '@ngu/carousel';
-
 @Component({
   selector: 'app-advert-detail',
   templateUrl: './advert-detail.component.html',
   styleUrls: ['./advert-detail.component.scss']
 })
 export class AdvertDetailComponent implements OnInit, OnDestroy {
-
 
   images = [
     '../../../assets/headline-image.jpg',
@@ -105,16 +103,26 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
 
   cycleBackward(): void {
     this.imageIndex--;
-    console.log("imageIndex", this.imageIndex)
-    console.log("images length", this.images.length)
     if (this.imageIndex < this.images.length && this.imageIndex >= 0) {
-      console.log(" running")
       this.imageSrc = this.images[this.imageIndex];
     } else {
-      console.log(this.images.length - 1);
       this.imageSrc = this.images[this.images.length - 1];
       this.imageIndex = this.images.length - 1;
     }
+  }
+
+  getClass(img): string {
+    if (this.imageSrc == img) {
+      return;
+    } else {
+      return 'overlay';
+    }
+  }
+
+  selectImage(img): void {
+    const newIndex = this.images.findIndex(image => image === img );
+    this.imageIndex = newIndex;
+    this.imageSrc = img;
   }
 
   getAdvert(id: number): void {
