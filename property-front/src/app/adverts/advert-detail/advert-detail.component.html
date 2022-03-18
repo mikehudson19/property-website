@@ -1,9 +1,10 @@
 <div class="container grid-container mt-4" *ngIf="advert">
 
   <div class="img-container">
-    <a><i class="fas fa-chevron-left mr-5"></i></a>
-    <img src="../../../assets/headline-image.jpg" alt="" />
-    <a><i class="fas fa-chevron-right ml-5"></i></a>
+    <a><i class="fas fa-chevron-left mr-5" (click)="cycleBackward()"></i></a>
+    <img [src]='imageSrc' alt="" />
+    <a><i class="fas fa-chevron-right ml-5" (click)="cycleForward()"></i></a>
+
   </div>
 
   <div class="content-container">

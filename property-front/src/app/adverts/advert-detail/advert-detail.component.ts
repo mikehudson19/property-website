@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
@@ -11,12 +11,27 @@ import { AdvertService } from '@app/_services/advert.service';
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 
+import { NguCarousel, NguCarouselConfig, NguCarouselStore } from '@ngu/carousel';
+
 @Component({
   selector: 'app-advert-detail',
   templateUrl: './advert-detail.component.html',
   styleUrls: ['./advert-detail.component.scss']
 })
 export class AdvertDetailComponent implements OnInit, OnDestroy {
+
+
+  images = [
+    '../../../assets/headline-image.jpg',
+    '../../../assets/image-1.jpg',
+    '../../../assets/image-2.jpg',
+    '../../../assets/image-3.jpg',
+    '../../../assets/image-4.jpg',
+    '../../../assets/image-5.jpg',
+  ];
+
+  imageSrc = '../../../assets/headline-image.jpg';
+  imageIndex = 0;
 
   sub: Subscription = new Subscription();
   id: number;
@@ -75,6 +90,31 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
     .subscribe(x => {
       this.validationMessage = this.invalidInputs(this.contactSellerForm);
     })
+
+}
+
+  cycleForward(): void {
+    this.imageIndex++;
+    if (this.imageIndex < this.images.length) {
+      this.imageSrc = this.images[this.imageIndex];
+    } else {
+      this.imageSrc = this.images[0];
+      this.imageIndex = 0;
+    }
+  }
+
+  cycleBackward(): void {
+    this.imageIndex--;
+    console.log("imageIndex", this.imageIndex)
+    console.log("images length", this.images.length)
+    if (this.imageIndex < this.images.length && this.imageIndex >= 0) {
+      console.log(" running")
+      this.imageSrc = this.images[this.imageIndex];
+    } else {
+      console.log(this.images.length - 1);
+      this.imageSrc = this.images[this.images.length - 1];
+      this.imageIndex = this.images.length - 1;
+    }
   }
 
   getAdvert(id: number): void {
@@ -82,7 +122,6 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
     // this._advertService  
     .getAdvert(id).subscribe((advert => {
         this.advert = advert;
-
         this.determineFavourite();
       }))
   }
