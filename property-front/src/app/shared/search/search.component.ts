@@ -75,6 +75,8 @@ export class SearchComponent implements OnInit {
           this.cities = cities;
         })
       })
+
+      this.assignClass();
   }
 
   onSearch(): void {
@@ -109,6 +111,15 @@ export class SearchComponent implements OnInit {
     this.router.navigate(
       ['/alladverts']
     )
+  }
+
+  assignClass() {
+    const url = this.router.url;
+    if (url == "/home") {
+      return 'class1';
+    } else {
+      return 'class2';
+    }
   }
 
 }

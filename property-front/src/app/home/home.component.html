@@ -1,59 +1,8 @@
-<div class="container">
-  <h1>Find your dream mountain home with Mountain Prop</h1>
-  <div class="search">
-    <app-search></app-search>
+<div class="hero-container">
+  <div class="overlay">
+    <h1>Find your dream mountain home</h1>
+    <div class="search">
+      <app-search></app-search>
+    </div>
   </div>
-
-  <div class="featured" *ngIf="adverts">
-    <a class="card" href="" *ngFor="let advert of adverts" [routerLink]="['/advertdetail', advert.id]">
-      <div class="card-image">
-        <img src="../assets/headline-image.jpg" alt="">
-      </div>
-      <div class="card-content">
-        <h2>{{ advert.title }}</h2>
-        <p>{{ advert.details | truncateText: 180 }}</p>
-        <p>{{ advert.province }}, {{ advert.city }}</p>
-        <div class="icons">
-          <div class="icon-container">
-            <i class="fa fa-solid fa-bed"></i>
-            <span>{{ advert.bedrooms }}</span>
-          </div>
-          <div class="icon-container">
-            <i class="fa fa-solid fa-toilet"></i>
-            <span>{{ advert.bathrooms }}</span>
-          </div>
-          <div class="icon-container">
-            <i class="fa fa-solid fa-car"></i>
-            <span>{{ advert.parkingSpaces }}</span>
-          </div>
-        </div>
-      </div>
-    </a>
-  </div>
-
-  <div class="actions">
-      <div class="action">
-        <h4>Buy</h4>
-        <p>With us, finding and buying your dream mountain home has never been easier</p>
-        <a routerLink="/registration"><button class="btn btn-outline-secondary btn-sm">Register</button></a>
-      </div>
-      
-      <mat-divider [vertical]="true"></mat-divider>
-      
-      <div class="action">
-        <h4>Sell</h4>
-        <p>We'll make sure that you get everything you want and deserve from the sale</p>
-        <a routerLink="/registration"><button class="btn btn-outline-secondary btn-sm">Register</button></a>
-      </div>
-      
-      <mat-divider [vertical]="true"></mat-divider>
-
-      <div class="action">
-        <h4>Login</h4>
-        <p>You've been here before? Login below and welcome back!</p>
-        <a routerLink="/login"><button class="btn btn-outline-secondary btn-sm">Login</button></a>    
-      </div>
-
-  </div>
-
 </div>
