@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { IAdvert } from '@app/_models/IAdvert';
+import { IUser } from '@app/_models/IUser';
+import { AuthenticationService } from '@app/_services';
 import { AdvertService } from '@app/_services/advert.service';
 
 @Component({
@@ -9,10 +12,23 @@ import { AdvertService } from '@app/_services/advert.service';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private advertService: AdvertService) { }
+  currentUser: IUser;
+
+  constructor(private advertService: AdvertService,
+              private authService: AuthenticationService,
+              private router: Router) {
+    this.authService.currentUser.subscribe(
+      (x) => (this.currentUser = x)
+    );
+   }
 
   ngOnInit(): void {
 
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(["/login"]);
   }
 
 }
