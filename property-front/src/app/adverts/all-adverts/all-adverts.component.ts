@@ -17,6 +17,7 @@ export class AllAdvertsComponent implements OnInit {
   orderBy: string = 'None';
   preFilledTerms: any;
   advertsToSend: IAdvert[] = [];
+  loading: boolean = true;
 
   constructor(private _inMemAdService: InMemoryAdvertService,
               private _advertService: AdvertService,
@@ -34,8 +35,10 @@ export class AllAdvertsComponent implements OnInit {
         advertSubscription.subscribe(adverts => {
           if (hasParams) {
             this.adverts = this.filterAdverts(adverts, this.preFilledTerms.params);
+            this.loading = false;
           } else {
             this.adverts = adverts;
+            this.loading = false;
           }
         })
       })
@@ -78,13 +81,19 @@ export class AllAdvertsComponent implements OnInit {
     /** @Note: If there was an API, this would be done there.  */
 
     const hasKeyword = searchTerms.hasOwnProperty("keyword");
+    const hasProvince = searchTerms.hasOwnProperty("province");
+    const hasCity = searchTerms.hasOwnProperty("city");
+    const hasMinPrice = searchTerms.hasOwnProperty("minPrice");
+    const hasMaxPrice = searchTerms.hasOwnProperty("maxPrice");
+    const { keyword } = searchTerms;
 
     this.advertsToSend = [];
 
     adverts.forEach(advert => {
       
-      if (hasKeyword) {
-        const { keyword } = searchTerms;
+      if (hasKeyword && ( !hasCity && !hasProvince && !hasMinPrice && !hasMaxPrice)) {
+       if (advert.details.includes(keyword)) this.advertsToSend.push(advert);
+      } else if (hasKeyword && ( hasCity || hasProvince || hasMinPrice || hasMaxPrice) ) {
         if (advert.details.includes(keyword)) {
           this.filterSomeMore(advert, searchTerms);
         } else {

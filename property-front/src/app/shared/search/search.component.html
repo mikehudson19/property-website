@@ -1,8 +1,7 @@
-<div class="container-fluid mt-4" [ngClass]="assignClass()">
-  <div class="alert row">
-    <form action="" class="form row" (ngSubmit)="onSearch()" [formGroup]="searchForm">
+<div class="" [ngClass]="assignClass()">
+    <form action="" class="form" (ngSubmit)="onSearch()" [formGroup]="searchForm">
       <div class="filters">
-        <div class="col">
+        <div class="">
           <select name="province" id="" class="custom-select" formControlName="province">
             <option value="" disabled selected hidden>Province</option>
             <option>Gauteng</option>
@@ -19,14 +18,14 @@
           </select>
         </div>
   
-        <div class="from-group col">
+        <div class="">
           <select name="city" id="" class="custom-select" formControlName="city" *ngIf="cities">
             <option value="" disabled selected hidden>City</option>
             <option *ngFor="let city of cities">{{ city }}</option>
           </select>
         </div>
   
-        <div class="col">
+        <div class="">
           <select name="minPrice" id="" class="custom-select" formControlName="minPrice">
             <option value="" disabled selected hidden>Min. Price</option>
             <option>100000</option>
@@ -35,7 +34,7 @@
           </select>
         </div>
   
-        <div class="col">
+        <div class="">
           <select name="maxPrice" id="" class="custom-select" formControlName="maxPrice">
             <option value="" disabled selected hidden>Max. Price</option>
             <option>5000000</option>
@@ -45,7 +44,7 @@
       </div>
 
       <div class="bottom-row">
-        <div class="col input-group">
+        <div class="input-group">
           <input
             type="text"
             placeholder="Enter your search term..."
@@ -54,15 +53,11 @@
           />
         </div>
 
-        <div class="button-div">
+        <div class="buttons">
           <button type="button" class="btn btn-light search" (click)="onSearch()">Search</button>
-
           <button type="button" class="btn btn-light reset" (click)="resetClick()">Reset</button>
         </div>
-       
       </div>
 
-    
   </form>
-  </div>
 </div>

@@ -11,7 +11,7 @@ import { AuthenticationService } from "@app/_services";
 export class HeaderComponent implements AfterContentChecked {
   currentUser: User;  
 
-  home;
+  home: boolean;
 
   constructor(
     private _router: Router,

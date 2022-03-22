@@ -32,6 +32,14 @@
       </div>
     </div>
 
+    
+    <div class="no-adverts" *ngIf="adverts.length == 0">
+      <h2 *ngIf="loading">Finding adverts...</h2>
+      <h2 *ngIf="!loading">There aren't any adverts that meet your search criteria.</h2>
+      <!-- <button *ngIf="adverts.length == 0" class="btn btn-info" [routerLink]="['/editadvert', 0]">Create New Advert</button> -->
+
+    </div>
+
     <div class="mb-3" *ngIf="adverts && adverts.length > 0">
       <app-advert-card-large *ngFor="let advert of adverts" [advert]="advert"></app-advert-card-large>
     </div>

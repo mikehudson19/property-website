@@ -1,13 +1,14 @@
 form {
     display: flex;
     flex-direction: column;
-    row-gap: 5px;
-    padding: 6px 0;
+    row-gap: 8px;
+    padding: 18px;
 }
 
 .filters {
     display: flex;
-    flex-direction: row ;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
 
 .alert {
@@ -20,7 +21,7 @@ form {
     flex-direction: row;
 }
 
-.button-div {
+.buttons {
     padding-right: 1rem;
     display: flex;
     flex-direction: row;

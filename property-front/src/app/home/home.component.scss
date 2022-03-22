@@ -7,8 +7,7 @@ h1 {
 
 .hero-container {
     background: rgba(231, 231, 231, 0.459) url(../../assets/hero-image.jpg);
-    // width: 100vw;
-    height: 100vh;
+    height: 96.1vh;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
@@ -21,11 +20,11 @@ h1 {
 
 .overlay {
     background-color: rgba(0, 0, 0, 0.20);
-  height: 100%;
-  width: 100%;
-  position: relative;
-  top: 0;
-  left: 0;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    top: 0;
+    left: 0;
 }
 
 img {
@@ -34,6 +33,10 @@ img {
 
 .navbar-nav {
     a {
-        color: rgb(240, 240, 240);
+        color: rgb(14, 14, 14);
+    }
+
+    a:hover {
+        color: rgb(221, 221, 221);
     }
 }
