@@ -1,5 +1,5 @@
 ﻿import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { environment } from '@environments/environment';
 import { User } from '@app/_models';
@@ -21,6 +21,12 @@ export class UserService {
     getUser(id: number): Observable<any> {
         return this._http.get<any>(`${environment.apiUrl}/${this.apiEndpoint}/${id}`)
     }
+
+    saveUser(user: User): Observable<User> {
+        /** @TODO: This call the save the user isn't saving the user correctly - or, it's maybe saving the user to the users array on the in mem service, not the fake-backend */
+        const headers = new HttpHeaders({ 'Content-Type' : 'application/json' })
+        return this._http.post<User>(`${environment.apiUrl}/${this.apiEndpoint}`, user, { headers : headers });
+      }
 
     getAuthUser(): Observable<IUser> {
         /** TODO: Fix - this is returning null at the moment */

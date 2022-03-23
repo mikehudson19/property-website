@@ -59,7 +59,6 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
   };
 
   constructor(private _route: ActivatedRoute,
-              private _inMemAdService: InMemoryAdvertService,
               private _advertService: AdvertService,
               private matSnackBar: MatSnackBar,
               private formBuilder: FormBuilder,
@@ -125,8 +124,7 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
   }
 
   getAdvert(id: number): void {
-    this._inMemAdService
-    // this._advertService  
+    this._advertService  
     .getAdvert(id).subscribe((advert => {
         this.advert = advert;
         this.determineFavourite();

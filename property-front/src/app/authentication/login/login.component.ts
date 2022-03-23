@@ -37,8 +37,7 @@ export class LoginComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _route: ActivatedRoute,
     private _router: Router,
-    private _authenticationService: AuthenticationService,
-    private _inMemUserService: InMemoryUserService
+    private _authenticationService: AuthenticationService
   ) {
     // redirect to home if already logged in
     if (this._authenticationService.currentUserValue) {

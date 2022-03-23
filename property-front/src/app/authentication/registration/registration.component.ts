@@ -203,7 +203,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     user.favourites = [];
 
     // In Memory API backend for testing
-    this._inMemUserService
+    // this._inMemUserService
+    this._userService
       .saveUser(user)
       .subscribe();
 

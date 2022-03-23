@@ -78,7 +78,6 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
   constructor(
     private _formBuilder: FormBuilder,
     private _route: ActivatedRoute,
-    private _inMemAdService: InMemoryAdvertService,
     private _router: Router,
     private _advertService: AdvertService,
     private _locationService: LocationService,
