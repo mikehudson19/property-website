@@ -117,6 +117,7 @@
                      class="form-control" 
                      autocomplete="off" 
                      id="bathrooms" 
+                     min="0"
                      placeholder="Bathrooms"
                      [ngClass]="{
                       'is-invalid': validationMessage && validationMessage.bathrooms
@@ -132,6 +133,7 @@
                      class="form-control" 
                      autocomplete="off" 
                      id="parkingSpaces" 
+                     min="0"
                      placeholder="Parkings"
                      [ngClass]="{
                       'is-invalid': validationMessage && validationMessage.parkingSpaces
