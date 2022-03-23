@@ -11,6 +11,7 @@ import { AuthenticationService, UserService } from "@app/_services";
 import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { PasswordDialogComponent } from "../password-dialog/password-dialog.component";
+import { invalidInputs } from "@app/shared/utils";
 
 @Component({
   selector: "app-my-account",
@@ -28,22 +29,22 @@ export class MyAccountComponent implements OnInit, OnDestroy {
 
   validationMessages: {} = {
     firstName: {
-      required: "A forename is required.",
-      minlength: "Your firstName need to be at least 1 character long.",
-      multipleSpaceValidator: "Your firstName cannot contain multiple spaces.",
-      maxlength: "Your forename cannot be longer than 100 characters",
-      noNumbers: "Your forename cannot contain any numbers",
-      noSpecialChar: "Your forename cannot contain any special characters",
-      spaceStart: "Your forename cannot start with a space",
+      required: "A first name is required.",
+      minlength: "Your first name need to be at least 1 character long.",
+      multipleSpaceValidator: "Your first name cannot contain multiple spaces.",
+      maxlength: "Your first name cannot be longer than 100 characters",
+      noNumbers: "Your first name cannot contain any numbers",
+      noSpecialChar: "Your first name cannot contain any special characters",
+      spaceStart: "Your first name cannot start with a space",
     },
     lastName: {
-      required: "Your lastName is required",
-      minlength: "Your lastName needs to be at least 3 characters long.",
-      multipleSpaceValidator: "Your lastName cannot contain multiple spaces.",
-      spaceStart: "Your lastName cannot start with a space",
-      maxlength: "Your lastName cannot be longer than 100 characters",
-      noNumbers: "Your lastName cannot contain any numbers",
-      noSpecialChar: "Your lastName cannot contain any special characters",
+      required: "Your last name is required",
+      minlength: "Your last name needs to be at least 3 characters long.",
+      multipleSpaceValidator: "Your last name cannot contain multiple spaces.",
+      spaceStart: "Your last name cannot start with a space",
+      maxlength: "Your last name cannot be longer than 100 characters",
+      noNumbers: "Your last name cannot contain any numbers",
+      noSpecialChar: "Your last name cannot contain any special characters",
     },
     email: {
       required: "Your email address is required.",
@@ -116,29 +117,10 @@ export class MyAccountComponent implements OnInit, OnDestroy {
     this.sub = this.manageAccountForm.valueChanges
       .pipe(debounceTime(600))
       .subscribe(
-        (value) => (this.validationMessage = this.invalidInputs(this.manageAccountForm))
+        (value) => (this.validationMessage = invalidInputs(this.manageAccountForm, this.validationMessages))
       );
 
     this.getAuthUser();
-  }
-
-  invalidInputs(formgroup: FormGroup) {
-    let messages = {};
-    for (const input in formgroup.controls) {
-      const control = formgroup.controls[input];
-
-      // If any of the fields don't meet the requirements, assign error message.
-      if (this.validationMessages[input]) {
-        messages[input] = "";
-        if (control.errors && (control.dirty || control.touched)) {
-          Object.keys(control.errors).map((messageKey) => {
-            messages[input] = this.validationMessages[input][messageKey];
-          });
-        }
-      }
-    }
-
-    return messages;
   }
 
   getAuthUser(): void {

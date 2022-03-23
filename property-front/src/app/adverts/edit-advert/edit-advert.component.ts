@@ -13,6 +13,7 @@ import { CustomValidators } from '@app/_helpers/customValidators';
 import { ILocation } from '@app/_models/ILocation';
 import { AuthenticationService } from "@app/_services";
 import jwt_decode from "jwt-decode";
+import { invalidInputs } from "@app/shared/utils";
 
 @Component({
   selector: "app-edit-advert",
@@ -144,27 +145,9 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
         .pipe(debounceTime(600))
         .subscribe(
           (value) =>
-            (this.validationMessage = this.invalidInputs(this.editAdvertForm))
+            (this.validationMessage = invalidInputs(this.editAdvertForm, this.validationMessages))
         )
     );
-  }
-
-  invalidInputs(formgroup: FormGroup) {
-    let messages = {};
-    for (const input in formgroup.controls) {
-      const control = formgroup.controls[input];
-
-      if (this.validationMessages[input]) {
-        messages[input] = "";
-        if (control.errors && (control.dirty || control.touched)) {
-          Object.keys(control.errors).map((messageKey) => {
-            messages[input] = this.validationMessages[input][messageKey];
-          });
-        }
-      }
-    }
-    console.log(messages)
-    return messages;
   }
 
   getCities(): void {
@@ -250,7 +233,7 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
     } else {
       this.alertMessage = "Please ensure the form is valid.";
       this.editAdvertForm.markAllAsTouched();
-      this.validationMessage = this.invalidInputs(this.editAdvertForm)
+      this.validationMessage = invalidInputs(this.editAdvertForm, this.validationMessages);
       setTimeout(() => {
         this.alertMessage = "";
       }, 2000);

@@ -4,9 +4,9 @@ import { Router } from "@angular/router";
 import { CustomValidators } from "@app/_helpers/customValidators";
 import { User } from "@app/_models/user";
 import { AuthenticationService, UserService } from "@app/_services";
-import { InMemoryUserService } from "@app/_mockServices/inMemoryUser.service";
 import { Subscription } from 'rxjs';
 import { debounceTime } from "rxjs/operators";
+import { invalidInputs } from "@app/shared/utils";
 
 @Component({
   templateUrl: "./registration.component.html",
@@ -72,13 +72,13 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   constructor(
     private _formBuilder: FormBuilder,
-    private _inMemUserService: InMemoryUserService,
     private _userService: UserService,
     private _router: Router,
     private _authenticationService: AuthenticationService
   ) {}
 
   ngOnInit(): void {
+
     this.registrationForm = this._formBuilder.group({
       forenames: [
         "",
@@ -144,40 +144,40 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     this.sub = this.registrationForm.valueChanges
       .pipe(debounceTime(600))
       .subscribe(
-        (value) => (this.message = this.invalidInputs(this.registrationForm))
+        (value) => (this.message = invalidInputs(this.registrationForm, this.validationMessages))
       );
   }
 
-  invalidInputs(formgroup: FormGroup) {
-    let messages = {};
-    for (const input in formgroup.controls) {
-      const control = formgroup.controls[input];
+  // invalidInputs(formgroup: FormGroup) {
+  //   let messages = {};
+  //   for (const input in formgroup.controls) {
+  //     const control = formgroup.controls[input];
 
-      // If the passwords don't match, assign error message.
-      if (control instanceof FormGroup && control.errors) {
-        Object.keys(control.errors).map((messageKey) => {
-          messages[input] = this.validationMessages[input][messageKey];
-        });
-      }
+  //     // If the passwords don't match, assign error message.
+  //     if (control instanceof FormGroup && control.errors) {
+  //       Object.keys(control.errors).map((messageKey) => {
+  //         messages[input] = this.validationMessages[input][messageKey];
+  //       });
+  //     }
 
-      // If the password field doesn't meet the requirements, assign error message.
-      if (control instanceof FormGroup) {
-        const nestedGroupMessages = this.invalidInputs(control);
-        Object.assign(messages, nestedGroupMessages);
-      }
+  //     // If the password field doesn't meet the requirements, assign error message.
+  //     if (control instanceof FormGroup) {
+  //       const nestedGroupMessages = this.invalidInputs(control);
+  //       Object.assign(messages, nestedGroupMessages);
+  //     }
 
-      // If any of the other fields don't meet the requirements, assign error message.
-      if (this.validationMessages[input]) {
-        messages[input] = "";
-        if (control.errors && (control.dirty || control.touched)) {
-          Object.keys(control.errors).map((messageKey) => {
-            messages[input] = this.validationMessages[input][messageKey];
-          });
-        }
-      }
-    }
-    return messages;
-  }
+  //     // If any of the other fields don't meet the requirements, assign error message.
+  //     if (this.validationMessages[input]) {
+  //       messages[input] = "";
+  //       if (control.errors && (control.dirty || control.touched)) {
+  //         Object.keys(control.errors).map((messageKey) => {
+  //           messages[input] = this.validationMessages[input][messageKey];
+  //         });
+  //       }
+  //     }
+  //   }
+  //   return messages;
+  // }
 
   onSubmit(): void {
     this.loading = true;
@@ -202,8 +202,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
     user.favourites = [];
 
-    // In Memory API backend for testing
-    // this._inMemUserService
     this._userService
       .saveUser(user)
       .subscribe();

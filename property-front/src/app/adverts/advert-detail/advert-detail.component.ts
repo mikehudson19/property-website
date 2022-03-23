@@ -2,6 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
+import { invalidInputs } from '@app/shared/utils';
 import { CustomValidators } from '@app/_helpers/customValidators';
 import { InMemoryAdvertService } from '@app/_mockServices/inMemoryAdvert.service';
 import { IAdvert } from '@app/_models/IAdvert';
@@ -84,7 +85,7 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
     this.contactSellerForm.valueChanges
     .pipe(debounceTime(500))
     .subscribe(x => {
-      this.validationMessage = this.invalidInputs(this.contactSellerForm);
+      this.validationMessage = invalidInputs(this.contactSellerForm, this.validationMessages);
     })
 
 }
@@ -163,29 +164,10 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
     })
   }
 
-  invalidInputs(formgroup: FormGroup) {
-    let messages = {};
-    for (const input in formgroup.controls) {
-      const control = formgroup.controls[input];
-
-      // If any of the fields don't meet the requirements, assign error message.
-      if (this.validationMessages[input]) {
-        messages[input] = "";
-        if (control.errors && (control.dirty || control.touched)) {
-          Object.keys(control.errors).map((messageKey) => {
-            messages[input] = this.validationMessages[input][messageKey];
-          });
-        }
-      }
-    }
-
-    return messages;
-  }
-
   contactClick(): void {
     if (!this.contactSellerForm.valid) {
       this.contactSellerForm.markAllAsTouched();
-      this.validationMessage = this.invalidInputs(this.contactSellerForm)
+      this.validationMessage = invalidInputs(this.contactSellerForm, this.validationMessages);
       return;
     }
 

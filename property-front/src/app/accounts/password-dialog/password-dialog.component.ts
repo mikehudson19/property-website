@@ -5,6 +5,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { CustomValidators } from '@app/_helpers/customValidators';
 import { UserService } from '@app/_services';
 import { debounceTime, delay } from 'rxjs/operators';
+import { invalidInputs } from '@app/shared/utils';
 
 @Component({
   selector: 'app-password-dialog',
@@ -65,7 +66,7 @@ export class PasswordDialogComponent implements OnInit {
     this.editPasswordForm.valueChanges
       .pipe(debounceTime(800))
       .subscribe(() => {
-        this.validationMessage = this.invalidInputs(this.editPasswordForm);
+        this.validationMessage = invalidInputs(this.editPasswordForm, this.validationMessages);
       })
   }
 
@@ -83,7 +84,7 @@ export class PasswordDialogComponent implements OnInit {
 
     if (!this.editPasswordForm.valid) {
       this.editPasswordForm.markAllAsTouched();
-      this.validationMessage = this.invalidInputs(this.editPasswordForm);
+      this.validationMessage = invalidInputs(this.editPasswordForm, this.validationMessages);
       return;
     }
 
@@ -110,37 +111,4 @@ export class PasswordDialogComponent implements OnInit {
   closeDialog() {
     this.dialogRef.close();
   }
-
-  invalidInputs(formgroup: FormGroup) {
-    let messages = {};
-    for (const input in formgroup.controls) {
-      const control = formgroup.controls[input];
-
-      // If the passwords don't match, assign error message.
-      if (control instanceof FormGroup && control.errors) {
-        Object.keys(control.errors).map((messageKey) => {
-          messages[input] = this.validationMessages[input][messageKey];
-        });
-      }
-
-      // If the password field doesn't meet the requirements, assign error message.
-      if (control instanceof FormGroup) {
-        const nestedGroupMessages = this.invalidInputs(control);
-        Object.assign(messages, nestedGroupMessages);
-      }
-
-      // If any of the other fields don't meet the requirements, assign error message.
-      if (this.validationMessages[input]) {
-        messages[input] = "";
-        if (control.errors && (control.dirty || control.touched)) {
-          Object.keys(control.errors).map((messageKey) => {
-            messages[input] = this.validationMessages[input][messageKey];
-          });
-        }
-      }
-    }
-    
-    return messages;
-  }
-
 }

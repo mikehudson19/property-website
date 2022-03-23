@@ -2,10 +2,9 @@
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { debounceTime, first } from "rxjs/operators";
-
 import { AuthenticationService } from "@app/_services";
-import { InMemoryUserService } from "@app/_mockServices/inMemoryUser.service";
 import { CustomValidators } from "@app/_helpers/customValidators";
+import { invalidInputs } from "@app/shared/utils";
 
 @Component({
   templateUrl: "login.component.html",
@@ -64,28 +63,10 @@ export class LoginComponent implements OnInit {
 
     this.loginForm.valueChanges
       .pipe(debounceTime(600))
-      .subscribe(
-        (value) => (this.message = this.invalidInputs(this.loginForm))
-      );
-  }
-
-  invalidInputs(formgroup: FormGroup) {
-    let messages = {};
-    for (const input in formgroup.controls) {
-      const control = formgroup.controls[input];
-
-      // If any of the other fields don't meet the requirements, assign error message.
-      if (this.validationMessages[input]) {
-        messages[input] = "";
-        if (control.errors && (control.dirty || control.touched)) {
-          Object.keys(control.errors).map((messageKey) => {
-            messages[input] = this.validationMessages[input][messageKey];
-          });
-          // return messages;
-        }
+      .subscribe(value => {
+        this.message = invalidInputs(this.loginForm, this.validationMessages)
       }
-    }
-    return messages;
+      );
   }
 
   // convenience getter for easy access to form fields
