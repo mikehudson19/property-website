@@ -2,9 +2,7 @@ import { Component, Inject, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { Router } from '@angular/router';
 import { CustomValidators } from '@app/_helpers/customValidators';
-import { IUser } from '@app/_models/IUser';
 import { UserService } from '@app/_services';
 import { debounceTime, delay } from 'rxjs/operators';
 
@@ -21,8 +19,7 @@ export class PasswordDialogComponent implements OnInit {
 
   validationMessages: {} = {
     currentPassword: {
-      required: "Your current password is required",
-      incorrectPassword: "The password you entered is incorrect"
+      required: "Your current password is required"
     },
     passwords: {
       match: "Your passwords must match",
@@ -45,12 +42,10 @@ export class PasswordDialogComponent implements OnInit {
               @Inject(MAT_DIALOG_DATA) public data: any,
               public dialogRef: MatDialogRef<PasswordDialogComponent>,
               private _userService: UserService,
-              private _router: Router,
               private matSnackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.buildForm();
-    
   }
 
   buildForm() {
@@ -81,10 +76,17 @@ export class PasswordDialogComponent implements OnInit {
     this.validationMessage = {};
 
     if (currentPassword !== this.data.user.password) {
-      this.editPasswordForm.get("currentPassword").setErrors({ required: true });
+      this.editPasswordForm.get("currentPassword").setErrors({ currentPassword: true });
       this.validationMessage = { currentPassword: "Password is not right, it is so not right"}
       return;
     } 
+
+    if (!this.editPasswordForm.valid) {
+      this.editPasswordForm.markAllAsTouched();
+      this.validationMessage = this.invalidInputs(this.editPasswordForm);
+      console.log(this.editPasswordForm)
+      return;
+    }
 
     const passwordToUpdate: {} = { 
         id: this.data.user.id,

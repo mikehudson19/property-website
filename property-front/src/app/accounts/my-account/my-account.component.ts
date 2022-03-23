@@ -203,29 +203,6 @@ export class MyAccountComponent implements OnInit, OnDestroy {
     })
   }
 
-  updatePassword(): void {
-    const passwords: IPasswords = {
-      currentPassword: this.manageAccountForm.get("currentPassword").value,
-      password: this.manageAccountForm.get("passwords.password").value,
-      confirmPass: this.manageAccountForm.get("passwords.confirmPass").value
-    }
-
-    this._userService.updateUserPassword(passwords).subscribe(data => {
-      this.successMessage = "Your password was successfully updated."
-          setTimeout (() => {
-            this.successMessage = '';
-        }, 2500);
-
-       this.afterSave();
-    },
-    error => {
-      this.error = error;
-      setTimeout (() => {
-        this.error = '';
-     }, 2500);
-    })
-  }
-
   afterSave(): void {
     this.manageAccountForm.patchValue({
       currentPassword: '',
