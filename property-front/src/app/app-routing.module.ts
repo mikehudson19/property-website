@@ -12,7 +12,6 @@ import { UnsavedGuard } from './adverts/unsaved.guard';
 import { HomeComponent } from './home/home.component';
 import { AdvertDetailComponent } from './adverts/advert-detail/advert-detail.component';
 import { MyAccountComponent } from './accounts/my-account/my-account.component';
-import { SellerAccountComponent } from './accounts/seller-account/seller-account.component';
 import { FavouriteAdvertsComponent } from './adverts/favourite-adverts/favourite-adverts.component';
 
 const routes: Routes = [
@@ -25,7 +24,6 @@ const routes: Routes = [
     { path: 'alladverts', component: AllAdvertsComponent },
     { path: 'advertdetail/:id', component: AdvertDetailComponent },
     { path: 'myaccount', component: MyAccountComponent, canActivate: [ NotAuthGuard ] },
-    { path: 'selleraccount', component: SellerAccountComponent, canActivate: [ NotAuthGuard ] },
     { path: 'favourites', component: FavouriteAdvertsComponent, canActivate: [ NotAuthGuard ] },
 
     // otherwise redirect to home
