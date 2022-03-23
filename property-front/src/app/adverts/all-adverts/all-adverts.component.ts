@@ -1,7 +1,5 @@
-import { analyzeAndValidateNgModules } from '@angular/compiler';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { InMemoryAdvertService } from '@app/_mockServices/inMemoryAdvert.service';
 import { IAdvert } from '@app/_models/IAdvert';
 import { AdvertService } from '@app/_services/advert.service';
 

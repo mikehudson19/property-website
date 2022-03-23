@@ -1,18 +1,14 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Form, FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { ActivatedRoute, ParamMap, Router } from "@angular/router";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
 import { IAdvert } from "@app/_models/IAdvert";
-import { InMemoryAdvertService } from "@app/_mockServices/inMemoryAdvert.service";
-import { InMemoryLocationService } from "@app/_mockServices/inMemoryLocation.service";
 import { Subject, Subscription } from "rxjs";
 import { Advert } from "@app/_models/advert";
 import { debounceTime } from "rxjs/operators";
 import { AdvertService } from "@app/_services/advert.service";
 import { LocationService } from "@app/_services/location.service";
 import { CustomValidators } from '@app/_helpers/customValidators';
-import { ILocation } from '@app/_models/ILocation';
 import { AuthenticationService } from "@app/_services";
-import jwt_decode from "jwt-decode";
 import { invalidInputs } from "@app/shared/utils";
 
 @Component({

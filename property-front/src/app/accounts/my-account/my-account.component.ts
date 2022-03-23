@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { Form, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { MatDialog } from "@angular/material/dialog";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Router } from "@angular/router";
 import { CustomValidators } from "@app/_helpers/customValidators";
-import { User } from "@app/_models";
-import { IPasswords } from '@app/_models/IPasswords';
 import { IUser } from '@app/_models/IUser';
 import { AuthenticationService, UserService } from "@app/_services";
 import { Subscription } from "rxjs";

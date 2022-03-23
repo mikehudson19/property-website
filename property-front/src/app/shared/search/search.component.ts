@@ -1,11 +1,8 @@
-import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { ISearchTerms } from '@app/_models/ISearchTerms';
-import { AdvertService } from '@app/_services/advert.service';
 import { LocationService } from '@app/_services/location.service';
-import { filter, map } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-search',

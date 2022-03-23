@@ -1,4 +1,4 @@
-import { AfterContentChecked, AfterViewInit, Component, OnInit } from "@angular/core";
+import { AfterContentChecked, Component } from "@angular/core";
 import { Router } from "@angular/router";
 import { User } from "@app/_models/user";
 import { AuthenticationService } from "@app/_services";

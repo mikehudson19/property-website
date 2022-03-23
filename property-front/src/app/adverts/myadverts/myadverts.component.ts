@@ -1,10 +1,6 @@
 ﻿import { Component, OnInit } from "@angular/core";
-import { first } from "rxjs/operators";
-
 import { User } from "@app/_models";
-import { UserService, AuthenticationService } from "@app/_services";
-import { InMemoryUserService } from "../../_mockServices/inMemoryUser.service";
-import { InMemoryAdvertService } from "@app/_mockServices/inMemoryAdvert.service";
+import { AuthenticationService } from "@app/_services";
 import { Router } from "@angular/router";
 import { IAdvert } from "@app/_models/IAdvert";
 import { AdvertService } from "@app/_services/advert.service";

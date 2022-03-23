@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-
 import { MyAdvertsComponent } from './adverts/myadverts/myadverts.component';
 import { LoginComponent } from './authentication/login/login.component';
 import { NotAuthGuard } from './_helpers';

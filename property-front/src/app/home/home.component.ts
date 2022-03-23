@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { IAdvert } from '@app/_models/IAdvert';
 import { IUser } from '@app/_models/IUser';
 import { AuthenticationService } from '@app/_services';
 import { AdvertService } from '@app/_services/advert.service';
