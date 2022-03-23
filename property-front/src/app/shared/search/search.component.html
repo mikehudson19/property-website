@@ -1,57 +1,40 @@
-<div class="" [ngClass]="assignClass()">
+<div [ngClass]="assignClass()">
     <form action="" class="form" (ngSubmit)="onSearch()" [formGroup]="searchForm">
       <div class="filters">
-        <div class="">
-          <select name="province" id="" class="custom-select" formControlName="province">
-            <option value="" disabled selected hidden>Province</option>
-            <option>Gauteng</option>
-            <option>North West</option>
-            <option>Western Cape</option>
-            <option>Northern Cape</option>
-            <option>Eastern Cape</option>
-            <option>Limpopo</option>
-            <option>Northern Province</option>
-            <option>Free State</option>
-            <option>Mpumalanga</option>
-
-            <!-- <option *ngFor="let prov of provinces">{{ prov }}</option> -->
-          </select>
-        </div>
+        <mat-form-field>
+          <mat-select name="province" id="" placeholder="Province" formControlName="province">
+            <mat-option [value]="prov" *ngFor="let prov of provinces">{{ prov }}</mat-option>
+          </mat-select>
+        </mat-form-field>
   
-        <div class="">
-          <select name="city" id="" class="custom-select" formControlName="city" *ngIf="cities">
-            <option value="" disabled selected hidden>City</option>
-            <option *ngFor="let city of cities">{{ city }}</option>
-          </select>
-        </div>
+        <mat-form-field>
+          <mat-select placeholder="City" name="city" id="" formControlName="city" >
+            <mat-option [value]="city" *ngFor="let city of cities">{{ city }}</mat-option>
+          </mat-select>
+        </mat-form-field>
   
-        <div class="">
-          <select name="minPrice" id="" class="custom-select" formControlName="minPrice">
-            <option value="" disabled selected hidden>Min. Price</option>
-            <option>100000</option>
-            <option>200000</option>
-            <option>300000</option> 
-          </select>
-        </div>
+        <mat-form-field>
+          <mat-select name="minPrice" id="" placeholder="Min Price" formControlName="minPrice">
+            <mat-option [value]="price" *ngFor="let price of prices">{{ price }}</mat-option>
+          </mat-select>
+        </mat-form-field>
   
-        <div class="">
-          <select name="maxPrice" id="" class="custom-select" formControlName="maxPrice">
-            <option value="" disabled selected hidden>Max. Price</option>
-            <option>5000000</option>
-            <option>6000000</option>
-          </select>
-        </div>
+        <mat-form-field>
+          <mat-select name="maxPrice" id="" placeholder="Max Price" formControlName="maxPrice">
+            <mat-option [value]="price" *ngFor="let price of prices">{{ price }}</mat-option>
+          </mat-select>
+        </mat-form-field>
       </div>
 
       <div class="bottom-row">
-        <div class="input-group">
-          <input
+        <mat-form-field>
+          <input matInput
             type="text"
             placeholder="Enter your search term..."
-            class="form-control"
             formControlName="keyword"
+            class="search-bar"
           />
-        </div>
+        </mat-form-field>
 
         <div class="buttons">
           <button type="button" class="btn btn-light search" (click)="onSearch()">Search</button>

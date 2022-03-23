@@ -84,7 +84,6 @@ export class PasswordDialogComponent implements OnInit {
     if (!this.editPasswordForm.valid) {
       this.editPasswordForm.markAllAsTouched();
       this.validationMessage = this.invalidInputs(this.editPasswordForm);
-      console.log(this.editPasswordForm)
       return;
     }
 

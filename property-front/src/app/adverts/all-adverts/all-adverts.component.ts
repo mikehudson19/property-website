@@ -19,8 +19,7 @@ export class AllAdvertsComponent implements OnInit {
   advertsToSend: IAdvert[] = [];
   loading: boolean = true;
 
-  constructor(private _inMemAdService: InMemoryAdvertService,
-              private _advertService: AdvertService,
+  constructor(private _advertService: AdvertService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {

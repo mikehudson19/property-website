@@ -17,11 +17,11 @@ export class SearchComponent implements OnInit {
   provinces = ['Gauteng', 'North West', 'Northern Cape', 'Western Cape', 'Eastern Cape', 'Limpopo', 'Free State', 'Mpumalanga', 'KwaZulu-Natal'];
   searchForm: FormGroup;
   cities: string[] = [];
+  prices = [];
 
   @Input() preFilledTerms: any;
 
-  constructor(private _advertService: AdvertService,
-              private _formBuilder: FormBuilder,
+  constructor(private _formBuilder: FormBuilder,
               private _locationService: LocationService,
               private router: Router,
               private route: ActivatedRoute) { }
@@ -40,8 +40,9 @@ export class SearchComponent implements OnInit {
       .subscribe((params: any) => {
         const queryParams = params.params;
         
-        this.searchForm.patchValue({
+        this.searchForm.setValue({
           province: queryParams.province ? queryParams.province : "",
+          city: queryParams.city ? queryParams.city : "",
           minPrice: queryParams.minPrice ? queryParams.minPrice : "",
           maxPrice: queryParams.maxPrice ? queryParams.maxPrice : "",
           keyword: queryParams.keyword ? queryParams.keyword : ""
@@ -77,6 +78,7 @@ export class SearchComponent implements OnInit {
       })
 
       this.assignClass();
+      this.generatePrices();
   }
 
   onSearch(): void {
@@ -119,6 +121,17 @@ export class SearchComponent implements OnInit {
       return 'class1';
     } else {
       return 'class2';
+    }
+  }
+
+  generatePrices() {
+    let price = 500000;
+    let count = 0;
+
+    for (let i = 0; count < 16; i++) {
+      this.prices.push(price);
+      price += 500000;
+      count++;
     }
   }
 
