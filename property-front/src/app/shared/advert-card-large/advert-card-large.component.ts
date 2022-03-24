@@ -1,5 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
 import { IUser } from '@app/_models/IUser';
 import { AuthenticationService, UserService } from '@app/_services';
 
@@ -13,22 +14,22 @@ export class AdvertCardLargeComponent implements OnInit {
   @Input() advert;
   authUser: IUser;
   isFavourite: boolean;
+  displayActions: boolean;
 
   constructor(private authService: AuthenticationService,
               private userService: UserService,
-              private matSnackBar: MatSnackBar) { }
+              private matSnackBar: MatSnackBar,
+              private router: Router) { }
 
   ngOnInit(): void {
-    this.determineFavourite();
-  }
 
-  determineFavourite(): void {
     const authUserId = this.authService.currentUserValue.id;
 
     this.userService.getUser(authUserId)
       .subscribe(user => {
         this.authUser = user;
-        if (this.authUser.favourites.includes(this.advert.id)) this.isFavourite = true;
+        this.authUser.favourites.includes(this.advert.id) ? this.isFavourite = true : this.isFavourite = false;
+        this.router.url === '/myadverts' ? this.displayActions = true : this.displayActions = false;
       });
   }
 

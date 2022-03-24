@@ -7,6 +7,7 @@ import { NgMaterialModule } from './ng-material/ng-material.module';
 import { AdvertCardLargeComponent } from './advert-card-large/advert-card-large.component';
 import { RouterModule } from '@angular/router';
 import { ContactFormComponent } from './contact-form/contact-form.component';
+import { AdvertActionsComponent } from './advert-actions/advert-actions.component';
 
 
 
@@ -15,7 +16,8 @@ import { ContactFormComponent } from './contact-form/contact-form.component';
     SearchComponent,
     TruncateTextPipe,
     AdvertCardLargeComponent,
-    ContactFormComponent
+    ContactFormComponent,
+    AdvertActionsComponent
   ],
   imports: [
     CommonModule,

@@ -12,17 +12,11 @@ import { IUser } from "@app/_models/IUser";
 })
 export class MyAdvertsComponent implements OnInit {
   loading: boolean = false;
-  users: User[];
   adverts: IAdvert[] = [];
-  message: string;
-  advertToDeleteId: number;
-  advert: IAdvert;
   currentUser: IUser;
 
-  constructor(
-    private _router: Router,
-    private _advertService: AdvertService,
-    private _authService: AuthenticationService
+  constructor(private _advertService: AdvertService,
+              private _authService: AuthenticationService
   ) {}
 
   ngOnInit() {
@@ -32,59 +26,6 @@ export class MyAdvertsComponent implements OnInit {
     .subscribe((adverts) => {
       this.loading = false;
       this.adverts = adverts
-    });
-  }
-
-  onDelete(advertId: number): void {
-    this.advertToDeleteId = advertId;
-  }
-
-  onConfirm(): void {
-    this._advertService
-      .deleteAdvert(this.advertToDeleteId)
-      .subscribe(() => {
-        this._router
-          .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
-          .then(() => {
-            this._router.navigate(["/myadverts"]);
-          });
-      });
-  }
-
-  onCancel(): void {
-    this.message = "";
-  }
-
-  changeStatus(advertToUpdateId: number): void {
-    this._advertService
-    .getAdvert(advertToUpdateId).subscribe((advert) => {
-      this.advert = advert;
-
-      let newStatus: string;
-      if (this.advert.status === "Live") {
-        newStatus = "Hidden";
-      } else {
-        newStatus = "Live"; 
-      }
-
-      const updatedAdvert = { ...this.advert, ...{ status: newStatus } };
-
-      this._advertService
-        .updateAdvert(updatedAdvert)
-        .subscribe(() => {
-          this._advertService.getUserAdverts(this.currentUser.id)
-          .subscribe((adverts) => {
-            this.loading = false;
-            this.adverts = adverts;
-            this._router
-              .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
-              .then(() => {
-                this._router.navigate(["/myadverts"]);
-              });
-          });
-        });
-
-      
     });
   }
 }

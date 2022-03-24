@@ -1,0 +1,43 @@
+<div class="container">
+    <span
+      class="badge py-2 px-3"
+      [ngClass]="{
+        'badge-success': advert.status == 'Live',
+        'badge-warning': advert.status == 'Hidden'
+      }"
+      >{{ advert.status }}</span>
+    <div class="dropdown">
+      <button
+        class="btn btn-info btn-sm dropdown-toggle"
+        type="button"
+        id="dropdownMenuButton"
+        data-toggle="dropdown"
+        aria-haspopup="true"
+        aria-expanded="false"
+      >
+        Actions
+      </button>
+
+      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+        <a
+          *ngIf="advert.status == 'Live'"
+          class="dropdown-item small"
+          (click)="changeStatus(advert.id)"
+          >Hide Advert</a
+        >
+        <a
+          *ngIf="advert.status == 'Hidden'"
+          class="dropdown-item small"
+          (click)="changeStatus(advert.id)"
+          >Show Advert</a
+        >
+        <div class="dropdown-divider"></div>
+        <a
+          class="dropdown-item small"
+          [routerLink]="['/editadvert', advert.id]"
+          >Edit Advert</a
+        >
+        <a class="dropdown-item small" (click)="openDeleteDialog()">Delete Advert</a>
+      </div>
+    </div>
+  </div> 

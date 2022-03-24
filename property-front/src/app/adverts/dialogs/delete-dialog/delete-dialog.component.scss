@@ -1,0 +1,22 @@
+.container {
+    min-height: 8rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+h2 {
+    margin-bottom: 0;
+}
+
+.titles {
+    text-align: center;
+}
+
+.actions {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    column-gap: 16px;
+    justify-content: center;
+}

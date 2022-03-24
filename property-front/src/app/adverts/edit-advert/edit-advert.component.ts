@@ -33,12 +33,12 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
   exitConfirm: boolean = false;
 
   images = [
-    '../../../assets/headline-image.jpg',
     '../../../assets/image-1.jpg',
     '../../../assets/image-2.jpg',
     '../../../assets/image-3.jpg',
     '../../../assets/image-4.jpg',
     '../../../assets/image-5.jpg',
+    '../../../assets/image-6.jpg'
   ];
 
   constructor(
@@ -166,7 +166,6 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       this.randomHeadlineImage(),
       'Live',
       currentUser.id,
-      
     );
 
     this._advertService

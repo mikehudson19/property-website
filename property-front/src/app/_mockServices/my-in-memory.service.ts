@@ -19,12 +19,12 @@ export class MyInMemoryService implements InMemoryDbService {
         bathrooms: 2,
         parkingSpaces: 1,
         images: [
-          '../../../assets/headline-image.jpg',
           '../../../assets/image-1.jpg',
           '../../../assets/image-2.jpg',
           '../../../assets/image-3.jpg',
           '../../../assets/image-4.jpg',
           '../../../assets/image-5.jpg',
+          '../../../assets/image-6.jpg',
         ],
         headlineImage: '../../../assets/image-1.jpg'
       
@@ -43,12 +43,12 @@ export class MyInMemoryService implements InMemoryDbService {
         bathrooms: 2,
         parkingSpaces: 2,
         images: [
-          '../../../assets/headline-image.jpg',
           '../../../assets/image-1.jpg',
           '../../../assets/image-2.jpg',
           '../../../assets/image-3.jpg',
           '../../../assets/image-4.jpg',
           '../../../assets/image-5.jpg',
+          '../../../assets/image-6.jpg',
         ],
         headlineImage: '../../../assets/image-2.jpg'
       
@@ -67,12 +67,12 @@ export class MyInMemoryService implements InMemoryDbService {
         bathrooms: 1,
         parkingSpaces: 2,
         images: [
-          '../../../assets/headline-image.jpg',
           '../../../assets/image-1.jpg',
           '../../../assets/image-2.jpg',
           '../../../assets/image-3.jpg',
           '../../../assets/image-4.jpg',
           '../../../assets/image-5.jpg',
+          '../../../assets/image-6.jpg',
         ],
         headlineImage: '../../../assets/image-5.jpg' 
       },

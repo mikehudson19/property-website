@@ -6,7 +6,7 @@
                     <a [routerLink]="['/advertdetail', advert.id]"><img [src]="advert.headlineImage" alt="" /></a>
                 </div>
             </div>
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <div class="card-body">
                 <h1 class="card-title h4">{{ advert.price | currency: "ZAR":"symbol-narrow" }}</h1>
                 <a class="card-text h5" [routerLink]="['/advertdetail', advert.id]">{{ advert.title }}</a>
@@ -30,6 +30,10 @@
                     <mat-icon (click)="toggleFavourite(advert.id)">{{ isFavourite ? "favorite" : "favorite_border"}}</mat-icon>
                 </div>
                 </div>
+            </div>  
+
+            <div *ngIf="displayActions" class="col-md-2">
+                <app-advert-actions [advert]="advert"></app-advert-actions>
             </div>
         </div>
     </div>
