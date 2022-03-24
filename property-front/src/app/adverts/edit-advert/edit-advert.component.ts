@@ -32,6 +32,15 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
   canExit$: Subject<boolean> = new Subject<boolean>(); 
   exitConfirm: boolean = false;
 
+  images = [
+    '../../../assets/headline-image.jpg',
+    '../../../assets/image-1.jpg',
+    '../../../assets/image-2.jpg',
+    '../../../assets/image-3.jpg',
+    '../../../assets/image-4.jpg',
+    '../../../assets/image-5.jpg',
+  ];
+
   constructor(
     private _formBuilder: FormBuilder,
     private _route: ActivatedRoute,
@@ -153,14 +162,22 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       this.editAdvertForm.get("bedrooms").value,
       this.editAdvertForm.get("bathrooms").value,
       this.editAdvertForm.get("parkingSpaces").value,
+      this.images,    
+      this.randomHeadlineImage(),
       'Live',
       currentUser.id,
+      
     );
 
     this._advertService
     .createAdvert(advert).subscribe({
       next: () => this.afterSave(),
     });
+  }
+
+  randomHeadlineImage(): string {
+    const randomNum = Math.floor(Math.random() * 5);
+    return this.images[randomNum];
   }
 
   updateAdvert(): void {

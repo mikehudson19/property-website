@@ -17,7 +17,17 @@ export class MyInMemoryService implements InMemoryDbService {
         status: "Live",
         bedrooms: 2,
         bathrooms: 2,
-        parkingSpaces: 1
+        parkingSpaces: 1,
+        images: [
+          '../../../assets/headline-image.jpg',
+          '../../../assets/image-1.jpg',
+          '../../../assets/image-2.jpg',
+          '../../../assets/image-3.jpg',
+          '../../../assets/image-4.jpg',
+          '../../../assets/image-5.jpg',
+        ],
+        headlineImage: '../../../assets/image-1.jpg'
+      
       },
       {
         id: 1,
@@ -31,7 +41,17 @@ export class MyInMemoryService implements InMemoryDbService {
         status: "Live",
         bedrooms: 3,
         bathrooms: 2,
-        parkingSpaces: 2
+        parkingSpaces: 2,
+        images: [
+          '../../../assets/headline-image.jpg',
+          '../../../assets/image-1.jpg',
+          '../../../assets/image-2.jpg',
+          '../../../assets/image-3.jpg',
+          '../../../assets/image-4.jpg',
+          '../../../assets/image-5.jpg',
+        ],
+        headlineImage: '../../../assets/image-2.jpg'
+      
       },
       {
         id: 2,
@@ -45,9 +65,17 @@ export class MyInMemoryService implements InMemoryDbService {
         status: "Live",
         bedrooms: 2,
         bathrooms: 1,
-        parkingSpaces: 2
+        parkingSpaces: 2,
+        images: [
+          '../../../assets/headline-image.jpg',
+          '../../../assets/image-1.jpg',
+          '../../../assets/image-2.jpg',
+          '../../../assets/image-3.jpg',
+          '../../../assets/image-4.jpg',
+          '../../../assets/image-5.jpg',
+        ],
+        headlineImage: '../../../assets/image-5.jpg' 
       },
-      
     ];
 
 

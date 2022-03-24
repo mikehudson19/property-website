@@ -12,6 +12,8 @@ export class Advert implements IAdvert {
     public bedrooms: number,
     public bathrooms: number,
     public parkingSpaces: number,
+    public images: string[],
+    public headlineImage: string,
     public status?: string,
     /** @Note: shouldnt need this once the userId gets assigned via the API */
     public userId?: number,

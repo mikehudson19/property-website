@@ -1,8 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Advert } from '@app/_models/advert';
 import { IAdvert } from '@app/_models/IAdvert';
-import { ISearchTerms } from '@app/_models/ISearchTerms';
 import { environment } from '@environments/environment';
 import { Observable, of } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -74,7 +72,9 @@ export class AdvertService {
       status: '',
       bedrooms: null,
       bathrooms: null,
-      parkingSpaces: null
+      parkingSpaces: null,
+      images: [],
+      headlineImage: ''
     }
   }
 

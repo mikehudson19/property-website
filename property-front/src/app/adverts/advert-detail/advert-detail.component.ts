@@ -6,6 +6,7 @@ import { IUser } from '@app/_models/IUser';
 import { AuthenticationService, UserService } from '@app/_services';
 import { AdvertService } from '@app/_services/advert.service';
 import { Subscription } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 @Component({
   selector: 'app-advert-detail',
@@ -14,23 +15,15 @@ import { Subscription } from 'rxjs';
 })
 export class AdvertDetailComponent implements OnInit, OnDestroy {
 
-  images = [
-    '../../../assets/headline-image.jpg',
-    '../../../assets/image-1.jpg',
-    '../../../assets/image-2.jpg',
-    '../../../assets/image-3.jpg',
-    '../../../assets/image-4.jpg',
-    '../../../assets/image-5.jpg',
-  ];
-
-  imageSrc = '../../../assets/headline-image.jpg';
-  imageIndex = 0;
+  headlineImage;
+  headlineImgIndex = 0;
 
   sub: Subscription = new Subscription();
   id: number;
   advert: IAdvert;
   authUser: IUser;
   isFavourite: boolean;
+  imagesLoaded: boolean;
 
   constructor(private _route: ActivatedRoute,
               private _advertService: AdvertService,
@@ -48,27 +41,27 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
 }
 
   cycleForward(): void {
-    this.imageIndex++;
-    if (this.imageIndex < this.images.length) {
-      this.imageSrc = this.images[this.imageIndex];
+    this.headlineImgIndex++;
+    if (this.headlineImgIndex < this.advert.images.length) {
+      this.advert.headlineImage = this.advert.images[this.headlineImgIndex];
     } else {
-      this.imageSrc = this.images[0];
-      this.imageIndex = 0;
+      this.advert.headlineImage = this.advert.images[0];
+      this.headlineImgIndex = 0;
     }
   }
 
   cycleBackward(): void {
-    this.imageIndex--;
-    if (this.imageIndex < this.images.length && this.imageIndex >= 0) {
-      this.imageSrc = this.images[this.imageIndex];
+    this.headlineImgIndex--;
+    if (this.headlineImgIndex < this.advert.images.length && this.headlineImgIndex >= 0) {
+      this.advert.headlineImage = this.advert.images[this.headlineImgIndex];
     } else {
-      this.imageSrc = this.images[this.images.length - 1];
-      this.imageIndex = this.images.length - 1;
+      this.advert.headlineImage = this.advert.images[this.advert.images.length - 1];
+      this.headlineImgIndex = this.advert.images.length - 1;
     }
   }
 
   getClass(img): string {
-    if (this.imageSrc == img) {
+    if (this.advert.headlineImage == img) {
       return;
     } else {
       return 'overlay';
@@ -76,16 +69,25 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
   }
 
   selectImage(img): void {
-    const newIndex = this.images.findIndex(image => image === img );
-    this.imageIndex = newIndex;
-    this.imageSrc = img;
+    const newIndex = this.advert.images.findIndex(image => image === img );
+    this.headlineImgIndex = newIndex;
+    this.advert.headlineImage = img;
   }
 
   getAdvert(id: number): void {
     this._advertService  
-    .getAdvert(id).subscribe((advert => {
+    .getAdvert(id)
+    .pipe(
+      tap(advert => {
+        const headlineImgIndex = advert.images.findIndex(image => image == advert.headlineImage);
+        advert.images.splice(headlineImgIndex, 1);
+        advert.images.unshift(advert.headlineImage);
+      })
+    )
+    .subscribe((advert => {
         this.advert = advert;
         this.determineFavourite();
+        this.imagesLoaded = true;
       }))
   }
 

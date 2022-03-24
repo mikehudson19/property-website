@@ -1,21 +1,22 @@
 <div class="container grid-container mt-4" *ngIf="advert">
 
-  <div class="img-container">
-    <a><i class="fas fa-chevron-left mr-5" (click)="cycleBackward()"></i></a>
-    <img [src]='imageSrc' alt="" />
-    <a><i class="fas fa-chevron-right ml-5" (click)="cycleForward()"></i></a>
-
+  <div *ngIf="imagesLoaded">
+    <div class="img-container">
+      <a><i class="fas fa-chevron-left mr-5" (click)="cycleBackward()"></i></a>
+      <img [src]='advert.headlineImage' alt="" />
+      <a><i class="fas fa-chevron-right ml-5" (click)="cycleForward()"></i></a>
+    </div>
+  
+    <div class="img-preview-container">
+      <div *ngFor="let img of advert.images" class="img-preview" (click)="selectImage(img)"><div [ngClass]="getClass(img)"></div><img [src]="img"/></div>
+    </div>
   </div>
-
-  <div class="img-preview-container">
-    <div *ngFor="let img of images" class="img-preview" (click)="selectImage(img)"><div [ngClass]="getClass(img)"></div><img [src]="img"/></div>
-  </div>
+  
 
   <div class="content-container">
-
     <div class="detail-container">
       <div class="top-part">
-        <div class="">
+        <div>
           <h2>{{ advert.title }}</h2>
           <h1>{{ advert.price | currency: "ZAR":"symbol-narrow" }}</h1>
           <p class="">{{ advert.province }}, {{ advert.city }}</p>

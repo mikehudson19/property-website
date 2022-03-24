@@ -9,5 +9,7 @@ export interface IAdvert {
   userId?: number,
   bedrooms: number,
   bathrooms: number,
-  parkingSpaces: number
+  parkingSpaces: number,
+  images: string[],
+  headlineImage: string
 }
