@@ -6,7 +6,7 @@
                     <a [routerLink]="['/advertdetail', advert.id]"><img [src]="advert.headlineImage" alt="" /></a>
                 </div>
             </div>
-            <div class="col-md-6">
+            <div [ngClass]="displayActions ? 'col-md-6' : 'col-md-8'">
                 <div class="card-body">
                 <h1 class="card-title h4">{{ advert.price | currency: "ZAR":"symbol-narrow" }}</h1>
                 <a class="card-text h5" [routerLink]="['/advertdetail', advert.id]">{{ advert.title }}</a>
