@@ -1,15 +1,11 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
-import { invalidInputs } from '@app/shared/utils';
-import { CustomValidators } from '@app/_helpers/customValidators';
 import { IAdvert } from '@app/_models/IAdvert';
 import { IUser } from '@app/_models/IUser';
 import { AuthenticationService, UserService } from '@app/_services';
 import { AdvertService } from '@app/_services/advert.service';
 import { Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
 
 @Component({
   selector: 'app-advert-detail',
@@ -33,60 +29,22 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
   sub: Subscription = new Subscription();
   id: number;
   advert: IAdvert;
-  validationMessage: { [key: string]: string } = {};
   authUser: IUser;
   isFavourite: boolean;
-
-  contactSellerForm: FormGroup;
-
-  // validationMessages: {} = {
-  //   name: {
-  //     required: "Your name is required."
-  //   },
-  //   message: {
-  //     required: "A message is required",
-  //     spaceStart: "Your message cannot start with a space"
-  //   },
-  //   email: {
-  //     required: "Your email address is required.",
-  //     email: "This must be a valid email address."
-
-  //   },
-  //   contactNumber: {
-  //     required: "Your contact number is required.",
-  //     onlyNumbers: "Your contact number can only contain numbers"
-  //   }
-  // };
 
   constructor(private _route: ActivatedRoute,
               private _advertService: AdvertService,
               private matSnackBar: MatSnackBar,
-              private formBuilder: FormBuilder,
               private authService: AuthenticationService,
               private userService: UserService) { }
 
   ngOnInit(): void {
-
-    this.contactSellerForm = this.formBuilder.group({
-      name: ["", Validators.required],
-      email: ["", [Validators.required, Validators.email]],
-      contactNumber: ["", [Validators.required, CustomValidators.onlyNumbers]],
-      message: ["", [Validators.required, CustomValidators.spaceStartValidator]]
-    })
-
     this.sub.add(
       this._route.paramMap.subscribe((params) => {
         this.id = +params.get("id");
         this.getAdvert(this.id);
       })
     );
-
-    this.contactSellerForm.valueChanges
-    .pipe(debounceTime(500))
-    .subscribe(x => {
-      this.validationMessage = invalidInputs(this.contactSellerForm);
-    })
-
 }
 
   cycleForward(): void {
@@ -163,26 +121,7 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
     })
   }
 
-  contactClick(): void {
-    if (!this.contactSellerForm.valid) {
-      this.contactSellerForm.markAllAsTouched();
-      this.validationMessage = invalidInputs(this.contactSellerForm);
-      return;
-    }
-
-    if (this.contactSellerForm.valid) {
-      this.matSnackBar.open("Your message has been sent", 'Close', {
-        duration: 2000
-      });
-      
-      this.contactSellerForm.reset();
-      return;
-    }
-    
-  }
-
   ngOnDestroy(): void {
     if (this.sub) this.sub.unsubscribe();
   }
-
 }

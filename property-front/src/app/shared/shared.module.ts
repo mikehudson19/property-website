@@ -6,6 +6,7 @@ import { TruncateTextPipe } from '@app/_helpers/truncate-text.pipe';
 import { NgMaterialModule } from './ng-material/ng-material.module';
 import { AdvertCardLargeComponent } from './advert-card-large/advert-card-large.component';
 import { RouterModule } from '@angular/router';
+import { ContactFormComponent } from './contact-form/contact-form.component';
 
 
 
@@ -13,7 +14,8 @@ import { RouterModule } from '@angular/router';
   declarations: [
     SearchComponent,
     TruncateTextPipe,
-    AdvertCardLargeComponent
+    AdvertCardLargeComponent,
+    ContactFormComponent
   ],
   imports: [
     CommonModule,
@@ -26,7 +28,8 @@ import { RouterModule } from '@angular/router';
     SearchComponent,
     TruncateTextPipe,
     NgMaterialModule,
-    AdvertCardLargeComponent
+    AdvertCardLargeComponent,
+    ContactFormComponent
   ]
 })
 export class SharedModule { }
