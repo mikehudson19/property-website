@@ -32,46 +32,6 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
   canExit$: Subject<boolean> = new Subject<boolean>(); 
   exitConfirm: boolean = false;
 
-  // validationMessages: {} = {
-  //   title: {
-  //     required: "An advert title is required.",
-  //     minlength: "Your advert title must be at least 10 characters long.",
-  //     maxlength: "Your advert title cannot be longer than 100 characters",
-  //     multipleSpaceValidator: "Your advert title cannot have consecutive spaces"
-  //   },
-  //   province: {
-  //     required: "Your province is required.",
-  //   },
-  //   city: {
-  //     required: "Your city is required.",
-  //   },
-  //   details: {
-  //     required: "Advert details are required.",
-  //     minlength: "Your advert details need to be at least 10 characters long.",
-  //     maxlength: "Your advert details cannot be longer than 1000 characters.",
-  //     multipleSpaceValidator: "Your advert details cannot have consecutive spaces"
-  //   },
-  //   price: {
-  //     required: "An advert price is required.",
-  //     min: "The minimum advert price is R10 000",
-  //     max: "The maximum advert price is R100,000,000",
-  //     noSpaceValidator: "Your price cannot contain spaces",
-  //     onlyNumbers: "Your price can only contain numbers"
-  //   },
-  //   bedrooms: {
-  //     required: "Bedrooms are required",
-  //     min: "Cannot be less than 0"
-  //   },
-  //   bathrooms: {
-  //     required: "Bathrooms are required",
-  //     min: "Cannot be less than 0"
-  //   },
-  //   parkingSpaces: {
-  //     required: "Parkings are required",
-  //     min: "Cannot be less than 0"
-  //   }
-  // };
-
   constructor(
     private _formBuilder: FormBuilder,
     private _route: ActivatedRoute,
