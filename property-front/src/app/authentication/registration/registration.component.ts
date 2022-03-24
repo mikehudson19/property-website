@@ -22,53 +22,53 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   fieldTextType: boolean = false;
   sub: Subscription;
 
-  validationMessages: {} = {
-    forenames: {
-      required: "Your forenames are required.",
-      minlength: "Your forenames need to be at least 1 character long.",
-      multipleSpaceValidator: "Your forenames cannot contain multiple spaces.",
-      maxlength: "Your forename cannot be longer than 100 characters",
-      noNumbers: "Your forename cannot contain any numbers",
-      noSpecialChar: "Your forename cannot contain any special characters",
-      spaceStart: "Your forename cannot start with a space"
-    },
-    surname: {
-      required: "Your surname is required",
-      minlength: "Your surname needs to be at least 3 characters long.",
-      multipleSpaceValidator: "Your forenames cannot contain multiple spaces.",
-      spaceStart: "Your surname cannot start with a space",
-      maxlength: "Your surname cannot be longer than 100 characters",
-      noNumbers: "Your surname cannot contain any numbers",
-      noSpecialChar: "Your surname cannot contain any special characters",
-    },
-    email: {
-      required: "Your email address is required.",
-      minlength: "Your email address must be at least 6 characters long",
-      noSpaceValidator: "Your email address cannot contain spaces.",
-      email: "This must be a valid email address.",
-      maxlength: "Your email cannot be longer than 100 characters",
-    },
-    contactNumber: {
-      required: "Your contact number is required",
-      onlyNumbers: "Your contact number can only contain numbers",
-      spaceStart: "Your contact number can't start with a space"
-    },
-    passwords: {
-      match: "Your passwords must match.",
-    },
-    password: {
-      required: "A password is required.",
-      minlength: "Your password needs to be at least 8 characters long.",
-      maxlength: "Your password cannot be longer than 100 characters.",
-      noSpaceValidator: "Your password cannot contain spaces.",
-      passwordNumber: "Your password must contain at least one number.",
-      passwordUpperCase:
-        "Your password must contain at leat one uppercase character.",
-    },
-    confirmPass: {
-      required: "Please confirm your password.",
-    },
-  };
+  // validationMessages: {} = {
+  //   forenames: {
+  //     required: "Your forenames are required.",
+  //     minlength: "Your forenames need to be at least 1 character long.",
+  //     multipleSpaceValidator: "Your forenames cannot contain multiple spaces.",
+  //     maxlength: "Your forename cannot be longer than 100 characters",
+  //     noNumbers: "Your forename cannot contain any numbers",
+  //     noSpecialChar: "Your forename cannot contain any special characters",
+  //     spaceStart: "Your forename cannot start with a space"
+  //   },
+  //   surname: {
+  //     required: "Your surname is required",
+  //     minlength: "Your surname needs to be at least 3 characters long.",
+  //     multipleSpaceValidator: "Your forenames cannot contain multiple spaces.",
+  //     spaceStart: "Your surname cannot start with a space",
+  //     maxlength: "Your surname cannot be longer than 100 characters",
+  //     noNumbers: "Your surname cannot contain any numbers",
+  //     noSpecialChar: "Your surname cannot contain any special characters",
+  //   },
+  //   email: {
+  //     required: "Your email address is required.",
+  //     minlength: "Your email address must be at least 6 characters long",
+  //     noSpaceValidator: "Your email address cannot contain spaces.",
+  //     email: "This must be a valid email address.",
+  //     maxlength: "Your email cannot be longer than 100 characters",
+  //   },
+  //   contactNumber: {
+  //     required: "Your contact number is required",
+  //     onlyNumbers: "Your contact number can only contain numbers",
+  //     spaceStart: "Your contact number can't start with a space"
+  //   },
+  //   passwords: {
+  //     match: "Your passwords must match.",
+  //   },
+  //   password: {
+  //     required: "A password is required.",
+  //     minlength: "Your password needs to be at least 8 characters long.",
+  //     maxlength: "Your password cannot be longer than 100 characters.",
+  //     noSpaceValidator: "Your password cannot contain spaces.",
+  //     passwordNumber: "Your password must contain at least one number.",
+  //     passwordUpperCase:
+  //       "Your password must contain at leat one uppercase character.",
+  //   },
+  //   confirmPass: {
+  //     required: "Please confirm your password.",
+  //   },
+  // };
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -80,7 +80,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
 
     this.registrationForm = this._formBuilder.group({
-      forenames: [
+      firstName: [
         "",
         [
           Validators.required,
@@ -92,7 +92,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
           CustomValidators.spaceStartValidator
         ],
       ],
-      surname: [
+      lastName: [
         "",
         [
           Validators.required,
@@ -144,7 +144,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     this.sub = this.registrationForm.valueChanges
       .pipe(debounceTime(600))
       .subscribe(
-        (value) => (this.message = invalidInputs(this.registrationForm, this.validationMessages))
+        (value) => (this.message = invalidInputs(this.registrationForm))
       );
   }
 
@@ -161,8 +161,8 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     }
 
     const user = new User(
-      this.registrationForm.get("forenames").value.trim(),
-      this.registrationForm.get("surname").value.trim(),
+      this.registrationForm.get("firstName").value.trim(),
+      this.registrationForm.get("lastName").value.trim(),
       this.registrationForm.get("email").value.trim(),
       this.registrationForm.get("contactNumber").value.trim(),
       this.registrationForm.get("passwords.password").value.trim(),

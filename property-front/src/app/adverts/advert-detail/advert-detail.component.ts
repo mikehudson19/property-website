@@ -39,24 +39,24 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
 
   contactSellerForm: FormGroup;
 
-  validationMessages: {} = {
-    name: {
-      required: "Your name is required."
-    },
-    message: {
-      required: "A message is required",
-      spaceStart: "Your message cannot start with a space"
-    },
-    email: {
-      required: "Your email address is required.",
-      email: "This must be a valid email address."
+  // validationMessages: {} = {
+  //   name: {
+  //     required: "Your name is required."
+  //   },
+  //   message: {
+  //     required: "A message is required",
+  //     spaceStart: "Your message cannot start with a space"
+  //   },
+  //   email: {
+  //     required: "Your email address is required.",
+  //     email: "This must be a valid email address."
 
-    },
-    contactNumber: {
-      required: "Your contact number is required.",
-      onlyNumbers: "Your contact number can only contain numbers"
-    }
-  };
+  //   },
+  //   contactNumber: {
+  //     required: "Your contact number is required.",
+  //     onlyNumbers: "Your contact number can only contain numbers"
+  //   }
+  // };
 
   constructor(private _route: ActivatedRoute,
               private _advertService: AdvertService,
@@ -84,7 +84,7 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
     this.contactSellerForm.valueChanges
     .pipe(debounceTime(500))
     .subscribe(x => {
-      this.validationMessage = invalidInputs(this.contactSellerForm, this.validationMessages);
+      this.validationMessage = invalidInputs(this.contactSellerForm);
     })
 
 }
@@ -166,7 +166,7 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
   contactClick(): void {
     if (!this.contactSellerForm.valid) {
       this.contactSellerForm.markAllAsTouched();
-      this.validationMessage = invalidInputs(this.contactSellerForm, this.validationMessages);
+      this.validationMessage = invalidInputs(this.contactSellerForm);
       return;
     }
 

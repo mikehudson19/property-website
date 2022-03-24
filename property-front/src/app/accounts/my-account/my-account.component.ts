@@ -25,38 +25,38 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   error: string = '';
   successMessage: string = '';
 
-  validationMessages: {} = {
-    firstName: {
-      required: "A first name is required.",
-      minlength: "Your first name need to be at least 1 character long.",
-      multipleSpaceValidator: "Your first name cannot contain multiple spaces.",
-      maxlength: "Your first name cannot be longer than 100 characters",
-      noNumbers: "Your first name cannot contain any numbers",
-      noSpecialChar: "Your first name cannot contain any special characters",
-      spaceStart: "Your first name cannot start with a space",
-    },
-    lastName: {
-      required: "Your last name is required",
-      minlength: "Your last name needs to be at least 3 characters long.",
-      multipleSpaceValidator: "Your last name cannot contain multiple spaces.",
-      spaceStart: "Your last name cannot start with a space",
-      maxlength: "Your last name cannot be longer than 100 characters",
-      noNumbers: "Your last name cannot contain any numbers",
-      noSpecialChar: "Your last name cannot contain any special characters",
-    },
-    email: {
-      required: "Your email address is required.",
-      minlength: "Your email address must be at least 6 characters long",
-      noSpaceValidator: "Your email address cannot contain spaces.",
-      email: "This must be a valid email address.",
-      maxlength: "Your email cannot be longer than 100 characters",
-    },
-    contactNumber: {
-      required: "Your email address is required.",
-      onlyNumbers: "Your contact number can only contain numbers",
-      spaceStart: "Your contact number cannot start with a space"
-    }
-  };
+  // validationMessages: {} = {
+  //   firstName: {
+  //     required: "A first name is required.",
+  //     minlength: "Your first name need to be at least 1 character long.",
+  //     multipleSpaceValidator: "Your first name cannot contain multiple spaces.",
+  //     maxlength: "Your first name cannot be longer than 100 characters",
+  //     noNumbers: "Your first name cannot contain any numbers",
+  //     noSpecialChar: "Your first name cannot contain any special characters",
+  //     spaceStart: "Your first name cannot start with a space",
+  //   },
+  //   lastName: {
+  //     required: "Your last name is required",
+  //     minlength: "Your last name needs to be at least 3 characters long.",
+  //     multipleSpaceValidator: "Your last name cannot contain multiple spaces.",
+  //     spaceStart: "Your last name cannot start with a space",
+  //     maxlength: "Your last name cannot be longer than 100 characters",
+  //     noNumbers: "Your last name cannot contain any numbers",
+  //     noSpecialChar: "Your last name cannot contain any special characters",
+  //   },
+  //   email: {
+  //     required: "Your email address is required.",
+  //     minlength: "Your email address must be at least 6 characters long",
+  //     noSpaceValidator: "Your email address cannot contain spaces.",
+  //     email: "This must be a valid email address.",
+  //     maxlength: "Your email cannot be longer than 100 characters",
+  //   },
+  //   contactNumber: {
+  //     required: "Your email address is required.",
+  //     onlyNumbers: "Your contact number can only contain numbers",
+  //     spaceStart: "Your contact number cannot start with a space"
+  //   }
+  // };
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -115,7 +115,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
     this.sub = this.manageAccountForm.valueChanges
       .pipe(debounceTime(600))
       .subscribe(
-        (value) => (this.validationMessage = invalidInputs(this.manageAccountForm, this.validationMessages))
+        (value) => (this.validationMessage = invalidInputs(this.manageAccountForm))
       );
 
     this.getAuthUser();

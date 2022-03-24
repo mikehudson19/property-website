@@ -19,18 +19,18 @@ export class LoginComponent implements OnInit {
   message: { [key: string]: string } = {};
   fieldTextType: boolean = false;
 
-  validationMessages: {} = {
-    email: {
-      required: "Your email address is required.",
-      minlength: "Your email address must be at least 6 characters long",
-      noSpaceValidator: "Your email address cannot contain spaces.",
-      email: "This must be a valid email address.",
-      maxlength: "Your email cannot be longer than 100 characters",
-    },
-    password: {
-      required: "A password is required.",
-    },
-  };
+  // validationMessages: {} = {
+  //   email: {
+  //     required: "Your email address is required.",
+  //     minlength: "Your email address must be at least 6 characters long",
+  //     noSpaceValidator: "Your email address cannot contain spaces.",
+  //     email: "This must be a valid email address.",
+  //     maxlength: "Your email cannot be longer than 100 characters",
+  //   },
+  //   password: {
+  //     required: "A password is required.",
+  //   },
+  // };
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -64,7 +64,7 @@ export class LoginComponent implements OnInit {
     this.loginForm.valueChanges
       .pipe(debounceTime(600))
       .subscribe(value => {
-        this.message = invalidInputs(this.loginForm, this.validationMessages)
+        this.message = invalidInputs(this.loginForm)
       }
       );
   }

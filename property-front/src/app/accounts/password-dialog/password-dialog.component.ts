@@ -18,26 +18,26 @@ export class PasswordDialogComponent implements OnInit {
   fieldTextType: boolean = false;
   validationMessage: { [key: string]: string } = {};
 
-  validationMessages: {} = {
-    currentPassword: {
-      required: "Your current password is required"
-    },
-    passwords: {
-      match: "Your passwords must match",
-    },
-    password: {
-      required: "A password is required",
-      minlength: "Your password needs to be at least 8 characters long",
-      maxlength: "Your password cannot be longer than 100 characters",
-      noSpaceValidator: "Your password cannot contain spaces",
-      passwordNumber: "Your password must contain at least one number",
-      passwordUpperCase:
-        "Your password must contain at leat one uppercase character",
-    },
-    confirmPass: {
-      required: "Please confirm your password",
-    },
-  };
+  // validationMessages: {} = {
+  //   currentPassword: {
+  //     required: "Your current password is required"
+  //   },
+  //   passwords: {
+  //     match: "Your passwords must match",
+  //   },
+  //   password: {
+  //     required: "A password is required",
+  //     minlength: "Your password needs to be at least 8 characters long",
+  //     maxlength: "Your password cannot be longer than 100 characters",
+  //     noSpaceValidator: "Your password cannot contain spaces",
+  //     passwordNumber: "Your password must contain at least one number",
+  //     passwordUpperCase:
+  //       "Your password must contain at leat one uppercase character",
+  //   },
+  //   confirmPass: {
+  //     required: "Please confirm your password",
+  //   },
+  // };
 
   constructor(private _formBuilder: FormBuilder,
               @Inject(MAT_DIALOG_DATA) public data: any,
@@ -66,7 +66,7 @@ export class PasswordDialogComponent implements OnInit {
     this.editPasswordForm.valueChanges
       .pipe(debounceTime(800))
       .subscribe(() => {
-        this.validationMessage = invalidInputs(this.editPasswordForm, this.validationMessages);
+        this.validationMessage = invalidInputs(this.editPasswordForm);
       })
   }
 
@@ -84,7 +84,7 @@ export class PasswordDialogComponent implements OnInit {
 
     if (!this.editPasswordForm.valid) {
       this.editPasswordForm.markAllAsTouched();
-      this.validationMessage = invalidInputs(this.editPasswordForm, this.validationMessages);
+      this.validationMessage = invalidInputs(this.editPasswordForm);
       return;
     }
 
