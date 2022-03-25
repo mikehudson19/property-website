@@ -20,15 +20,6 @@ export class CustomValidators {
         return null;
       }
 
-    static spaceStartValidator(
-      control: AbstractControl
-    ): { [key: string]: boolean } | null {
-      if (/[\s]/.test(control.value)) {
-        return { 'spaceStart': true };
-      }
-      return null;
-    }
-
     static noSpecialChars (control: AbstractControl): { [key: string]: boolean } | null {
       if (/[!@#$%^&*(),.?":{}|<>±§_+~`=\/]/g.test(control.value)) {
         return { 'noSpecialChar' : true }

@@ -41,7 +41,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
           CustomValidators.multipleSpaceValidator,
           CustomValidators.noSpecialChars,
           CustomValidators.noNumbers,
-          CustomValidators.spaceStartValidator
         ],
       ],
       lastName: [
@@ -50,7 +49,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(100),
-          CustomValidators.spaceStartValidator,
           CustomValidators.multipleSpaceValidator,
           CustomValidators.noSpecialChars,
           CustomValidators.noNumbers,
@@ -71,7 +69,6 @@ export class RegistrationComponent implements OnInit, OnDestroy {
         [
           Validators.required,
           CustomValidators.onlyNumbers,
-          CustomValidators.spaceStartValidator,
         ]
       ],
       passwords: this._formBuilder.group(

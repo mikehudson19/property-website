@@ -24,7 +24,7 @@ export class ContactFormComponent implements OnInit {
       name: ["", Validators.required],
       email: ["", [Validators.required, Validators.email]],
       contactNumber: ["", [Validators.required, CustomValidators.onlyNumbers]],
-      message: ["", [Validators.required, CustomValidators.spaceStartValidator]]
+      message: ["", [Validators.required]]
     })
 
     this.contactSellerForm.valueChanges

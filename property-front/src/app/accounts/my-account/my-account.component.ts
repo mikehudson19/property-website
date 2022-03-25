@@ -44,7 +44,6 @@ export class MyAccountComponent implements OnInit, OnDestroy {
           CustomValidators.multipleSpaceValidator,
           CustomValidators.noSpecialChars,
           CustomValidators.noNumbers,
-          CustomValidators.spaceStartValidator,
         ],
       ],
       lastName: [
@@ -53,7 +52,6 @@ export class MyAccountComponent implements OnInit, OnDestroy {
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(100),
-          CustomValidators.spaceStartValidator,
           CustomValidators.multipleSpaceValidator,
           CustomValidators.noSpecialChars,
           CustomValidators.noNumbers,
@@ -73,8 +71,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
         "",
         [
           Validators.required,
-          CustomValidators.onlyNumbers,
-          CustomValidators.spaceStartValidator
+          CustomValidators.onlyNumbers
         ]
       ]
     });
@@ -113,10 +110,10 @@ export class MyAccountComponent implements OnInit, OnDestroy {
     /** TODO: Change the way this updates */
     const userToUpdate: IUser = { 
       id: this.authUser.id,
-      firstName: this.manageAccountForm.get("firstName").value,
-      lastName: this.manageAccountForm.get("lastName").value,
-      email: this.manageAccountForm.get("email").value,
-      contactNumber: this.manageAccountForm.get("contactNumber").value,
+      firstName: this.manageAccountForm.get("firstName").value.trim(),
+      lastName: this.manageAccountForm.get("lastName").value.trim(),
+      email: this.manageAccountForm.get("email").value.trim(),
+      contactNumber: this.manageAccountForm.get("contactNumber").value.trim(),
     };
 
     if (this.authUser.firstName === userToUpdate.firstName &&

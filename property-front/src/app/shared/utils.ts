@@ -21,7 +21,7 @@ export function invalidInputs(formgroup: FormGroup) {
 
       // If any of the other fields don't meet the requirements, assign error message.
       if (validationMessages[input]) {
-        messages[input] = "";
+        messages[input] = ""; 
         if (control.errors && (control.dirty || control.touched)) {
           console.log("validationMessages",validationMessages);
 
@@ -43,13 +43,11 @@ const validationMessages: {} = {
     maxlength: "Your first name cannot be longer than 100 characters",
     noNumbers: "Your first name cannot contain any numbers",
     noSpecialChar: "Your first name cannot contain any special characters",
-    spaceStart: "Your first name cannot start with a space",
   },
   lastName: {
     required: "Your last name is required",
     minlength: "Your last name needs to be at least 3 characters long.",
     multipleSpaceValidator: "Your last name cannot contain multiple spaces.",
-    spaceStart: "Your last name cannot start with a space",
     maxlength: "Your last name cannot be longer than 100 characters",
     noNumbers: "Your last name cannot contain any numbers",
     noSpecialChar: "Your last name cannot contain any special characters",
@@ -64,7 +62,6 @@ const validationMessages: {} = {
   contactNumber: {
     required: "Your contact number is required.",
     onlyNumbers: "Your contact number can only contain numbers",
-    spaceStart: "Your contact number cannot start with a space"
   },
   currentPassword: {
     required: "Your current password is required"
@@ -89,7 +86,6 @@ const validationMessages: {} = {
   },
   message: {
     required: "A message is required",
-    spaceStart: "Your message cannot start with a space"
   },
   title: {
     required: "An advert title is required.",
