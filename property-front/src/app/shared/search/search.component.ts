@@ -40,8 +40,8 @@ export class SearchComponent implements OnInit {
         this.searchForm.setValue({
           province: queryParams.province ? queryParams.province : "",
           city: queryParams.city ? queryParams.city : "",
-          minPrice: queryParams.minPrice ? queryParams.minPrice : "",
-          maxPrice: queryParams.maxPrice ? queryParams.maxPrice : "",
+          minPrice: +queryParams.minPrice ? +queryParams.minPrice : null,
+          maxPrice: +queryParams.maxPrice ? +queryParams.maxPrice : null,
           keyword: queryParams.keyword ? queryParams.keyword : ""
         })
 
