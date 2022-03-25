@@ -22,14 +22,14 @@
         <a
           *ngIf="advert.status == 'Live'"
           class="dropdown-item small"
-          (click)="changeStatus(advert.id)"
+          (click)="changeStatus()"
           >Hide Advert</a
         >
         <a
           *ngIf="advert.status == 'Hidden'"
           class="dropdown-item small"
-          (click)="changeStatus(advert.id)"
-          >Show Advert</a
+          (click)="changeStatus()"
+          >Unhide Advert</a
         >
         <div class="dropdown-divider"></div>
         <a
