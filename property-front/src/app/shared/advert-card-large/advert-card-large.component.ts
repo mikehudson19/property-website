@@ -15,6 +15,7 @@ export class AdvertCardLargeComponent implements OnInit {
   authUser: IUser;
   isFavourite: boolean;
   displayActions: boolean;
+  isLoading: boolean = true;
 
   constructor(private authService: AuthenticationService,
               private userService: UserService,
@@ -30,6 +31,7 @@ export class AdvertCardLargeComponent implements OnInit {
         this.authUser = user;
         this.authUser.favourites.includes(this.advert.id) ? this.isFavourite = true : this.isFavourite = false;
         this.router.url === '/myadverts' ? this.displayActions = true : this.displayActions = false;
+        this.isLoading  = false;
       });
   }
 

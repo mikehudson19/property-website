@@ -1,7 +1,7 @@
 ﻿import { Component, OnInit } from "@angular/core";
-import { User } from "@app/_models";
+
 import { AuthenticationService } from "@app/_services";
-import { Router } from "@angular/router";
+
 import { IAdvert } from "@app/_models/IAdvert";
 import { AdvertService } from "@app/_services/advert.service";
 import { IUser } from "@app/_models/IUser";

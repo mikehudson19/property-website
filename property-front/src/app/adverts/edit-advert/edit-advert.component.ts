@@ -10,6 +10,8 @@ import { LocationService } from "@app/_services/location.service";
 import { CustomValidators } from '@app/_helpers/customValidators';
 import { AuthenticationService } from "@app/_services";
 import { invalidInputs } from "@app/shared/utils";
+import { MatDialog } from "@angular/material/dialog";
+import { UnsavedChangesDialogComponent } from "../dialogs/unsaved-changes-dialog/unsaved-changes-dialog.component";
 
 @Component({
   selector: "app-edit-advert",
@@ -30,7 +32,6 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
   } = {};
   alertMessage: string = "";
   canExit$: Subject<boolean> = new Subject<boolean>(); 
-  exitConfirm: boolean = false;
 
   images = [
     '../../../assets/image-1.jpg',
@@ -47,7 +48,8 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
     private _router: Router,
     private _advertService: AdvertService,
     private _locationService: LocationService,
-    private authenticationService: AuthenticationService
+    private authenticationService: AuthenticationService,
+    private matDialog: MatDialog
   ) {}
 
   ngOnInit(): void {
@@ -113,6 +115,15 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
             (this.validationMessage = invalidInputs(this.editAdvertForm))
         )
     );
+  }
+
+  unsavedChanges(){
+   const dialogRef = this.matDialog.open(UnsavedChangesDialogComponent, {});
+
+   dialogRef.afterClosed()
+    .subscribe(choice => {
+      this.canExit$.next(choice);
+   })
   }
 
   getCities(): void {
@@ -218,10 +229,9 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
     this._router.navigate(["/myadverts"]);
   }
 
-  choose(choice: boolean): void {
-    this.canExit$.next(choice);
-    if (choice == false) this.exitConfirm = false;
-  }
+  // choose(choice: boolean): void {
+  //   this.canExit$.next(choice);
+  // }
 
   ngOnDestroy(): void {
     if (this.sub) this.sub.unsubscribe();

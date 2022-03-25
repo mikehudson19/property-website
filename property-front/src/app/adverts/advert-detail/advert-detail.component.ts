@@ -24,6 +24,7 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
   authUser: IUser;
   isFavourite: boolean;
   imagesLoaded: boolean;
+  isLoading: boolean = true;
 
   constructor(private _route: ActivatedRoute,
               private _advertService: AdvertService,
@@ -98,7 +99,7 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
       .subscribe(user => {
         this.authUser = user;
         if (this.authUser.favourites.includes(this.advert.id)) this.isFavourite = true;
-
+        this.isLoading = false;
       });
   }
 

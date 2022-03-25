@@ -18,7 +18,7 @@ export class UnsavedGuard implements CanActivate, CanDeactivate<unknown> {
     currentState: RouterStateSnapshot,
     nextState?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       if (component.editAdvertForm.dirty) {
-        component.exitConfirm = true;
+        component.unsavedChanges();
         return component.canExit$;
       }
       return true;

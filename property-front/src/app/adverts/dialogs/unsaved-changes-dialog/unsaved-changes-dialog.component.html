@@ -1,0 +1,11 @@
+<div class="container">
+    <div class="headings">
+        <h2>Are you sure you want to exit, you're going to lose your changes!</h2>
+        <p>(Think of how much effort you put into this, don't throw it away now!)</p>
+    </div>
+    
+    <div class="actions">
+        <button class="btn btn-primary btn-sm" mat-dialog-close (click)="choose(true)">Yeah, I'm over it!</button>
+        <button class="btn btn-danger btn-sm" mat-dialog-close (click)="choose(false)">Actually no, I'll keep it!</button>
+    </div>
+</div>

@@ -27,7 +27,7 @@
                             <span>{{ advert.parkingSpaces }}</span>
                         </div>
                     </div>
-                    <mat-icon (click)="toggleFavourite(advert.id)">{{ isFavourite ? "favorite" : "favorite_border"}}</mat-icon>
+                    <mat-icon *ngIf="!isLoading" (click)="toggleFavourite(advert.id)">{{ isFavourite ? "favorite" : "favorite_border"}}</mat-icon>
                 </div>
                 </div>
             </div>  
