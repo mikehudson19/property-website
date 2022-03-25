@@ -10,7 +10,7 @@
     <div class="adverts-container">
         <div class="mb-3" *ngIf="adverts && adverts.length > 0">
             <div *ngFor="let advert of adverts">
-              <app-advert-card-large [advert]="advert"></app-advert-card-large>
+              <app-advert-card-large [advert]="advert" (advertIdEvent)="removeUnfavouritedAd($event)"></app-advert-card-large>
             </div>
           </div>
     </div>

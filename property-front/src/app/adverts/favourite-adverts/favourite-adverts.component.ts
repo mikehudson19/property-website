@@ -44,4 +44,9 @@ export class FavouriteAdvertsComponent implements OnInit {
       })
   }
 
+  removeUnfavouritedAd(id) {
+    const adToRemove = this.adverts.findIndex(advert => advert.id === id);
+    this.adverts.splice(adToRemove, 1);
+  }
+
 }

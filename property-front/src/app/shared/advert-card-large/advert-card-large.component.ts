@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Router } from '@angular/router';
 import { IUser } from '@app/_models/IUser';
@@ -12,6 +12,8 @@ import { AuthenticationService, UserService } from '@app/_services';
 export class AdvertCardLargeComponent implements OnInit {
 
   @Input() advert;
+  @Output() advertIdEvent = new EventEmitter<number>();
+
   authUser: IUser;
   isFavourite: boolean;
   displayActions: boolean;
@@ -47,6 +49,7 @@ export class AdvertCardLargeComponent implements OnInit {
         const newFavourites = user.favourites.filter(element => element !== this.advert.id);
         this.isFavourite = false;
         user.favourites = newFavourites;
+        this.advertIdEvent.emit(id);
       }
 
       this.userService.updateUser(user).subscribe();
