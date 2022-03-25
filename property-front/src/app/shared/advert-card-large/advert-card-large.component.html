@@ -10,7 +10,7 @@
                 <div class="card-body">
                 <h1 class="card-title h4">{{ advert.price | currency: "ZAR":"symbol-narrow" }}</h1>
                 <a class="card-text h5" [routerLink]="['/advertdetail', advert.id]">{{ advert.title }}</a>
-                <p class="card-text">{{ advert.details | truncateText: 275 }}</p>
+                <p class="card-text" [innerHtml]="advert.details | truncateText: 275" ></p>
                 <p>{{ advert.province }}, {{ advert.city}}</p>
                 <div class="icon-cont-max">
                     <div class="icons">

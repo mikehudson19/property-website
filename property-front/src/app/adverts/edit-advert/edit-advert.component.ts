@@ -57,38 +57,44 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       title: [
         this.advert?.title,
         [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(100),
-          CustomValidators.multipleSpaceValidator
+          // Validators.required,
+          // Validators.minLength(10),
+          // Validators.maxLength(100),
+          // CustomValidators.multipleSpaceValidator
         ],
       ],
-      province: [this.advert?.province, [Validators.required]],
-      city: [this.advert?.city, [Validators.required]],
+      province: [this.advert?.province, [
+        // Validators.required
+      ]],
+      city: [this.advert?.city, [
+        // Validators.required
+      ]],
       details: [
         this.advert?.details,
         [
           Validators.required,
           Validators.minLength(10),
-          Validators.maxLength(1000),
-          CustomValidators.multipleSpaceValidator
+          // Validators.maxLength(1000),
+          // CustomValidators.multipleSpaceValidator
         ],
       ],
       price: [
         this.advert?.price,
-        [Validators.required, Validators.min(10000), Validators.max(100000000), CustomValidators.noSpaceValidator, CustomValidators.onlyNumbers],
+        [
+          // Validators.required, Validators.min(10000), Validators.max(100000000), CustomValidators.noSpaceValidator, CustomValidators.onlyNumbers
+        ],
       ],
       bedrooms: [
         this.advert?.bedrooms,
-        [Validators.required, Validators.min(0)]
+        // [Validators.required, Validators.min(0)]
       ],
       bathrooms: [
         this.advert?.bathrooms,
-        [Validators.required, Validators.min(0)]
+        // [Validators.required, Validators.min(0)]
       ],
       parkingSpaces: [
         this.advert?.parkingSpaces,
-        [Validators.required, Validators.min(0)]
+        // [Validators.required, Validators.min(0)]
       ]
     });
 
@@ -111,8 +117,12 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       this.editAdvertForm.valueChanges
         .pipe(debounceTime(600))
         .subscribe(
-          (value) =>
+          (value) => {
             (this.validationMessage = invalidInputs(this.editAdvertForm))
+            
+            // const result = this.addBreaksToAdvertDetails(this.editAdvertForm.get("details").value.trim());
+            // console.log(result);
+          }
         )
     );
   }
@@ -163,13 +173,14 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
   createAdvert(): void {
     /** @TODO: Hack for now - need to move this userId to the API at some stage */
     const currentUser = this.authenticationService.currentUserValue;
+    const advertDetails = this.addBreaksToAdvertDetails(this.editAdvertForm.get("details").value.trim());
 
     const advert = new Advert(
       this.editAdvertForm.get("title").value.trim(),
       this.editAdvertForm.get("province").value.trim(),
       this.editAdvertForm.get("city").value.trim(),
       this.editAdvertForm.get("price").value.trim(),
-      this.editAdvertForm.get("details").value.trim(),
+      advertDetails,
       this.editAdvertForm.get("bedrooms").value,
       this.editAdvertForm.get("bathrooms").value,
       this.editAdvertForm.get("parkingSpaces").value,
@@ -229,11 +240,19 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
     this._router.navigate(["/myadverts"]);
   }
 
-  // choose(choice: boolean): void {
-  //   this.canExit$.next(choice);
-  // }
-
   ngOnDestroy(): void {
     if (this.sub) this.sub.unsubscribe();
+  }
+
+  addBreaksToAdvertDetails(advertDetails: string): string {
+    const arr = advertDetails.split(/[\s][\s]/);
+
+    for (let i = 1; i < arr.length; i+=2) {
+      arr.splice(i, 0, '<br><br>')
+    }
+
+    const str = arr.join(' ');
+
+    return str;
   }
 }
