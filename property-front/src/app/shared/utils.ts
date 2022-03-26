@@ -34,7 +34,6 @@ export function invalidInputs(formgroup: FormGroup) {
     return messages;
   }
 
-
   
 const validationMessages: {} = {
   firstName: {

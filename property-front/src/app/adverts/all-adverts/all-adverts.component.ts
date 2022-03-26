@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { SearchComponent } from '@app/shared/search/search.component';
 import { IAdvert } from '@app/_models/IAdvert';
 import { AdvertService } from '@app/_services/advert.service';
+import { SearchDialogComponent } from '../dialogs/search-dialog/search-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -18,7 +21,8 @@ export class AllAdvertsComponent implements OnInit {
   loading: boolean = true;
 
   constructor(private _advertService: AdvertService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private matDialog: MatDialog) { }
 
   ngOnInit(): void {
   
@@ -72,6 +76,10 @@ export class AllAdvertsComponent implements OnInit {
       
       return (order === 'desc') ? (comparison * -1) : comparison;
     }
+  }
+
+  openSearchModal() {
+    this.matDialog.open(SearchComponent);
   }
 
   filterAdverts(adverts, searchTerms): IAdvert[] {

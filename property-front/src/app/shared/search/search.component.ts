@@ -16,7 +16,6 @@ export class SearchComponent implements OnInit {
   cities: string[] = [];
   prices = [];
 
-  @Input() preFilledTerms: any;
 
   constructor(private _formBuilder: FormBuilder,
               private _locationService: LocationService,

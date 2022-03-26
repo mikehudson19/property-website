@@ -2,13 +2,14 @@
   <div class="mt-4">
     <h1>All Adverts</h1>
     
-    <app-search [preFilledTerms]="preFilledTerms"></app-search>
+    <app-search class="search-bar"></app-search>
 
     <div class="d-flex flex-column align-items-end">
       <div class="btn-group">
+        <button class="btn btn-info search-button" (click)="openSearchModal()">Search</button>
         <button
           type="button"
-          class="btn btn-info dropdown-toggle"
+          class="btn btn-info dropdown-toggle sort-button"
           data-toggle="dropdown"
           aria-haspopup="true"
           aria-expanded="false"
