@@ -9,3 +9,22 @@ a:hover {
 img:hover {
     cursor: pointer;
 }
+
+.hamburger {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .navbar-nav { 
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+        color: black;
+    }
+
+    .hamburger:hover {
+        cursor: pointer;
+    }
+}

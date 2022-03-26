@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { MobileNavComponent } from '@app/shared/mobile-nav/mobile-nav.component';
 import { IUser } from '@app/_models/IUser';
 import { AuthenticationService } from '@app/_services';
 import { AdvertService } from '@app/_services/advert.service';
@@ -13,9 +15,9 @@ export class HomeComponent implements OnInit {
 
   currentUser: IUser;
 
-  constructor(private advertService: AdvertService,
-              private authService: AuthenticationService,
-              private router: Router) {
+  constructor(private authService: AuthenticationService,
+              private router: Router,
+              private matDialog: MatDialog) {
     this.authService.currentUser.subscribe(
       (x) => (this.currentUser = x)
     );
@@ -28,6 +30,12 @@ export class HomeComponent implements OnInit {
   logout() {
     this.authService.logout();
     this.router.navigate(["/login"]);
+  }
+
+  openMobileNavModal() {
+    this.matDialog.open(MobileNavComponent, {
+      data: this.currentUser
+    });
   }
 
 }

@@ -2,25 +2,25 @@
     <form action="" class="form" (ngSubmit)="onSearch()" [formGroup]="searchForm">
       <div class="filters">
         <mat-form-field>
-          <mat-select name="province" id="" placeholder="Province" formControlName="province">
+          <mat-select class="filter" name="province" id="" placeholder="Province" formControlName="province">
             <mat-option [value]="prov" *ngFor="let prov of provinces">{{ prov }}</mat-option>
           </mat-select>
         </mat-form-field>
   
         <mat-form-field>
-          <mat-select placeholder="City" name="city" id="" formControlName="city" >
+          <mat-select class="filter" placeholder="City" name="city" id="" formControlName="city" >
             <mat-option [value]="city" *ngFor="let city of cities">{{ city }}</mat-option>
           </mat-select>
         </mat-form-field>
   
         <mat-form-field>
-          <mat-select name="minPrice" id="" placeholder="Min Price" formControlName="minPrice">
+          <mat-select class="filter" name="minPrice" id="" placeholder="Min Price" formControlName="minPrice">
             <mat-option [value]="price" *ngFor="let price of prices">{{ price }}</mat-option>
           </mat-select>
         </mat-form-field>
   
         <mat-form-field>
-          <mat-select name="maxPrice" id="" placeholder="Max Price" formControlName="maxPrice">
+          <mat-select class="filter" name="maxPrice" id="" placeholder="Max Price" formControlName="maxPrice">
             <mat-option [value]="price" *ngFor="let price of prices">{{ price }}</mat-option>
           </mat-select>
         </mat-form-field>
@@ -30,7 +30,7 @@
         <mat-form-field>
           <input matInput
             type="text"
-            placeholder="Enter your search term..."
+            placeholder="Search term..."
             formControlName="keyword"
             class="search-bar"
           />

@@ -8,6 +8,7 @@ import { AdvertCardLargeComponent } from './advert-card-large/advert-card-large.
 import { RouterModule } from '@angular/router';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { AdvertActionsComponent } from './advert-actions/advert-actions.component';
+import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
 
 
 
@@ -17,7 +18,8 @@ import { AdvertActionsComponent } from './advert-actions/advert-actions.componen
     TruncateTextPipe,
     AdvertCardLargeComponent,
     ContactFormComponent,
-    AdvertActionsComponent
+    AdvertActionsComponent,
+    MobileNavComponent
   ],
   imports: [
     CommonModule,

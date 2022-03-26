@@ -1,5 +1,7 @@
 import { AfterContentChecked, Component } from "@angular/core";
+import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
+import { MobileNavComponent } from "@app/shared/mobile-nav/mobile-nav.component";
 import { User } from "@app/_models/user";
 import { AuthenticationService } from "@app/_services";
 
@@ -16,7 +18,8 @@ export class HeaderComponent implements AfterContentChecked {
   constructor(
     private _router: Router,
     private _authenticationService: AuthenticationService,
-    private router: Router
+    private router: Router,
+    private matDialog: MatDialog
   ) {
     this._authenticationService.currentUser.subscribe(
       (x) => (this.currentUser = x)
@@ -31,6 +34,12 @@ export class HeaderComponent implements AfterContentChecked {
     } else {
       this.home = false;
     }
+  }
+
+  openMobileNavModal() {
+    this.matDialog.open(MobileNavComponent, {
+      data: this.currentUser
+    });
   }
 
   logout() {

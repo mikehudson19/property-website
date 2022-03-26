@@ -1,0 +1,14 @@
+<nav class="navbar-container">
+    <mat-icon mat-dialog-close class="close">close</mat-icon>
+    <div class="navbar-items">
+        <a mat-dialog-close class="nav-item nav-link" routerLink="/home">Home</a>
+        <a mat-dialog-close class="nav-item nav-link" routerLink="/alladverts">Homes for sale</a>
+        <a mat-dialog-close class="nav-item nav-link" routerLink="/myadverts" *ngIf="currentUser">My Ads</a>
+        <a mat-dialog-close class="nav-item nav-link" routerLink="/myaccount" *ngIf="currentUser">My Profile</a>
+        <a mat-dialog-close class="nav-item nav-link" [routerLink]="['/editadvert', 0]" *ngIf="currentUser">Create Ad</a>
+        <a mat-dialog-close class="nav-item nav-link" routerLink="/favourites" *ngIf="currentUser">Favourites</a>
+        <a mat-dialog-close class="nav-item nav-link" routerLink="/login" *ngIf="!currentUser">Login</a>
+        <a mat-dialog-close class="nav-item nav-link" routerLink="/registration" *ngIf="!currentUser">Register</a>
+        <a mat-dialog-close class="nav-item nav-link" (click)="logout()" *ngIf="currentUser">Logout</a>
+    </div>
+  </nav>

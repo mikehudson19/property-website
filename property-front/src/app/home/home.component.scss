@@ -1,7 +1,8 @@
 h1 {
     text-align: center;
     color: white;
-    padding-top: 3rem;
+    padding: 3rem 2rem 0 2rem;
+
     font-size: 2rem;
 }
 
@@ -38,5 +39,23 @@ img {
 
     a:hover {
         color: rgb(221, 221, 221);
+    }
+}
+
+.hamburger {
+    display: none;
+}
+
+@media (max-width: 600px) {
+    .navbar-nav { 
+        display: none;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .hamburger:hover {
+        cursor: pointer;
     }
 }
