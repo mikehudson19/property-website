@@ -57,44 +57,38 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       title: [
         this.advert?.title,
         [
-          // Validators.required,
-          // Validators.minLength(10),
-          // Validators.maxLength(100),
-          // CustomValidators.multipleSpaceValidator
+          Validators.required,
+          Validators.minLength(10),
+          Validators.maxLength(100),
+          CustomValidators.multipleSpaceValidator
         ],
       ],
-      province: [this.advert?.province, [
-        // Validators.required
-      ]],
-      city: [this.advert?.city, [
-        // Validators.required
-      ]],
+      province: [this.advert?.province, [Validators.required]],
+      city: [this.advert?.city, [Validators.required]],
       details: [
         this.advert?.details,
         [
           Validators.required,
           Validators.minLength(10),
-          // Validators.maxLength(1000),
-          // CustomValidators.multipleSpaceValidator
+          Validators.maxLength(1000),
+          CustomValidators.multipleSpaceValidator
         ],
       ],
       price: [
         this.advert?.price,
-        [
-          // Validators.required, Validators.min(10000), Validators.max(100000000), CustomValidators.noSpaceValidator, CustomValidators.onlyNumbers
-        ],
+        [Validators.required, Validators.min(10000), Validators.max(100000000), CustomValidators.noSpaceValidator, CustomValidators.onlyNumbers],
       ],
       bedrooms: [
         this.advert?.bedrooms,
-        // [Validators.required, Validators.min(0)]
+        [Validators.required, Validators.min(0)]
       ],
       bathrooms: [
         this.advert?.bathrooms,
-        // [Validators.required, Validators.min(0)]
+        [Validators.required, Validators.min(0)]
       ],
       parkingSpaces: [
         this.advert?.parkingSpaces,
-        // [Validators.required, Validators.min(0)]
+        [Validators.required, Validators.min(0)]
       ]
     });
 
@@ -117,12 +111,8 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       this.editAdvertForm.valueChanges
         .pipe(debounceTime(600))
         .subscribe(
-          (value) => {
+          (value) =>
             (this.validationMessage = invalidInputs(this.editAdvertForm))
-            
-            // const result = this.addBreaksToAdvertDetails(this.editAdvertForm.get("details").value.trim());
-            // console.log(result);
-          }
         )
     );
   }
