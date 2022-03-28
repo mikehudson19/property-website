@@ -64,12 +64,9 @@ form {
 }
 
 @media (max-width: 600px) {
-    .filters {
-        flex-direction: column;
 
-        mat-form-field {
-            width: 100%;
-        }
+    .container {
+        width: 100%;
     }
 
     .bottom-row {
@@ -84,6 +81,14 @@ form {
 }
 
 @media (max-width: 930px) {
+    .filters {
+        flex-direction: column;
+
+        mat-form-field {
+            width: 100%;
+        }
+    }
+
     .bottom-row {
         flex-direction: column;
     }

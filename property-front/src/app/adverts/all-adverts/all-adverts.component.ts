@@ -4,7 +4,6 @@ import { ActivatedRoute } from '@angular/router';
 import { SearchComponent } from '@app/shared/search/search.component';
 import { IAdvert } from '@app/_models/IAdvert';
 import { AdvertService } from '@app/_services/advert.service';
-import { SearchDialogComponent } from '../dialogs/search-dialog/search-dialog.component';
 
 @Component({
   selector: 'app-home',

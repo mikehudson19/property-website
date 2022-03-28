@@ -3,4 +3,10 @@
   column-gap: 12px;
 }
 
+@media (max-width: 430px) {
+  .form-group-container {
+    flex-direction: column;
+  }
+}
+
 
