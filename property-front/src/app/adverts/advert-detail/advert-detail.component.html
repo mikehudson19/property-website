@@ -36,10 +36,9 @@
             </div>
           </div>
         </div>
-        <button class="btn btn-outline-info btn-sm" (click)="toggleFavourite()">{{ isFavourite ? "Remove from favourites" : "Add to favourites" }}
+        <button *ngIf="authUser" class="btn btn-outline-info btn-sm" (click)="toggleFavourite()">{{ isFavourite ? "Remove from favourites" : "Add to favourites" }}
           <mat-icon>{{ isFavourite ? "favorite" : "favorite_border"}}</mat-icon>
         </button>
-        <button class="btn btn-outline-info btn-sm contact-seller-btn" (click)="contactSeller()">Contact seller</button>
       </div>
       
       <mat-divider></mat-divider>

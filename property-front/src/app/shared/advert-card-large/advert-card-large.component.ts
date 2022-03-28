@@ -26,7 +26,11 @@ export class AdvertCardLargeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    const authUserId = this.authService.currentUserValue.id;
+    const authUserId = this.authService.currentUserValue?.id;
+
+    if (!authUserId) {
+      return;
+    }
 
     this.userService.getUser(authUserId)
       .subscribe(user => {

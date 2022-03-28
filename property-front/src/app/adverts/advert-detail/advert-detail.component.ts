@@ -93,7 +93,12 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
   }
 
   determineFavourite(): void {
-    const authUserId = this.authService.currentUserValue.id;
+    const authUserId = this.authService.currentUserValue?.id;
+
+    if (!authUserId) {
+      this.isLoading = false;
+      return;
+    } 
 
     this.userService.getUser(authUserId)
       .subscribe(user => {

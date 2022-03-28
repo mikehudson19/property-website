@@ -14,7 +14,6 @@ form {
     mat-form-field {
         width: 20%;
     }
-
 }
 
 .alert {
@@ -64,11 +63,6 @@ form {
 }
 
 @media (max-width: 600px) {
-
-    .container {
-        width: 100%;
-    }
-
     .bottom-row {
         flex-direction: column;
     }

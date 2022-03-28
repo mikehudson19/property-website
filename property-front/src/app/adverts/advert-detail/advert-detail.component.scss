@@ -1,6 +1,5 @@
 .container {
   padding-bottom: 2rem;
-  display: none;
 }
 
 .grid-container {
@@ -112,10 +111,6 @@ button {
   z-index: 2;
 }
 
-.contact-seller-btn {
-  display: none;
-}
-
 @media (max-width: 980px) {
 
   .detail-container {
@@ -147,14 +142,6 @@ button {
     a {
       display: none;
     }
-  }
-
-  // .contact-seller-btn {
-  //   display: block;
-  // }
-
-  .img-preview-container {
-    // display: none;
   }
 
   app-contact-form {
