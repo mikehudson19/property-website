@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { ActivatedRoute } from '@angular/router';
 import { IAdvert } from '@app/_models/IAdvert';
@@ -7,6 +8,7 @@ import { AuthenticationService, UserService } from '@app/_services';
 import { AdvertService } from '@app/_services/advert.service';
 import { Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
+import { ContactSellerDialogComponent } from '../dialogs/contact-seller-dialog/contact-seller-dialog.component';
 
 @Component({
   selector: 'app-advert-detail',
@@ -30,7 +32,8 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
               private _advertService: AdvertService,
               private matSnackBar: MatSnackBar,
               private authService: AuthenticationService,
-              private userService: UserService) { }
+              private userService: UserService,
+              private matDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.sub.add(
@@ -106,6 +109,11 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
         if (this.authUser.favourites.includes(this.advert.id)) this.isFavourite = true;
         this.isLoading = false;
       });
+  }
+
+  
+  openContactDialog() {
+    this.matDialog.open(ContactSellerDialogComponent);
   }
 
   toggleFavourite(): void {

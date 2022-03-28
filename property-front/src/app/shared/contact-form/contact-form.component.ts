@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidators } from '@app/_helpers/customValidators';
 import { debounceTime } from 'rxjs/operators';
@@ -11,6 +11,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./contact-form.component.scss']
 })
 export class ContactFormComponent implements OnInit {
+
+  @Output() closeDialogEvent = new EventEmitter<boolean>();
 
   contactSellerForm: FormGroup; 
   validationMessage: { [key: string]: string } = {};
@@ -34,7 +36,6 @@ export class ContactFormComponent implements OnInit {
     })
 
   }
-
   
   contactClick(): void {
     if (!this.contactSellerForm.valid) {
@@ -48,6 +49,7 @@ export class ContactFormComponent implements OnInit {
         duration: 2000
       });
       
+      this.closeDialogEvent.emit(true);
       this.contactSellerForm.reset();
       return;
     }

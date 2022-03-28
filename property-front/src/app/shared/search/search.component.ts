@@ -1,5 +1,6 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from '@app/_services/location.service';
 import { map } from 'rxjs/operators';
@@ -10,6 +11,8 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./search.component.scss']
 })
 export class SearchComponent implements OnInit {
+
+  @Output() closeDialogEvent = new EventEmitter<boolean>();
 
   provinces = ['Gauteng', 'North West', 'Northern Cape', 'Western Cape', 'Eastern Cape', 'Limpopo', 'Free State', 'Mpumalanga', 'KwaZulu-Natal'];
   searchForm: FormGroup;
@@ -78,6 +81,9 @@ export class SearchComponent implements OnInit {
   }
 
   onSearch(): void {
+    // Send an event to the seperate dialog compnent 
+    // When that dialog component receives the event, the dialogRef.close() method is called
+    this.closeDialogEvent.emit(true);
     let queryParams: any = {};
   
     if (this.searchForm.get("province").value) queryParams.province = this.searchForm.get("province").value;

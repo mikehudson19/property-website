@@ -10,6 +10,8 @@ import { SharedModule } from "@app/shared/shared.module";
 import { FavouriteAdvertsComponent } from './favourite-adverts/favourite-adverts.component';
 import { DeleteDialogComponent } from './dialogs/delete-dialog/delete-dialog.component';
 import { UnsavedChangesDialogComponent } from './dialogs/unsaved-changes-dialog/unsaved-changes-dialog.component';
+import { SearchDialogComponent } from './dialogs/search-dialog/search-dialog.component';
+import { ContactSellerDialogComponent } from './dialogs/contact-seller-dialog/contact-seller-dialog.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +21,9 @@ import { UnsavedChangesDialogComponent } from './dialogs/unsaved-changes-dialog/
     AdvertDetailComponent,
     FavouriteAdvertsComponent,
     DeleteDialogComponent,
-    UnsavedChangesDialogComponent
+    UnsavedChangesDialogComponent,
+    SearchDialogComponent,
+    ContactSellerDialogComponent
   ],
   imports: [
     CommonModule, 

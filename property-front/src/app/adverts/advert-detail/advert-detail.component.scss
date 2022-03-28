@@ -111,6 +111,10 @@ button {
   z-index: 2;
 }
 
+.contact-btn {
+  display: none;
+}
+
 @media (max-width: 980px) {
 
   .detail-container {
@@ -145,8 +149,10 @@ button {
   }
 
   app-contact-form {
-    margin: 0 auto;
-    text-align: center;
-    width: 75%;
+    display: none;
+  }
+
+  .contact-btn {
+    display: block;
   }
 }

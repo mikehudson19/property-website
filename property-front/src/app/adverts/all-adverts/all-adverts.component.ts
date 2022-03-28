@@ -4,6 +4,7 @@ import { ActivatedRoute } from '@angular/router';
 import { SearchComponent } from '@app/shared/search/search.component';
 import { IAdvert } from '@app/_models/IAdvert';
 import { AdvertService } from '@app/_services/advert.service';
+import { SearchDialogComponent } from '../dialogs/search-dialog/search-dialog.component';
 
 @Component({
   selector: 'app-home',
@@ -78,7 +79,7 @@ export class AllAdvertsComponent implements OnInit {
   }
 
   openSearchModal() {
-    this.matDialog.open(SearchComponent);
+    this.matDialog.open(SearchDialogComponent);
   }
 
   filterAdverts(adverts, searchTerms): IAdvert[] {

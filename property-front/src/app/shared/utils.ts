@@ -23,7 +23,6 @@ export function invalidInputs(formgroup: FormGroup) {
       if (validationMessages[input]) {
         messages[input] = ""; 
         if (control.errors && (control.dirty || control.touched)) {
-          console.log("validationMessages",validationMessages);
 
           Object.keys(control.errors).map((messageKey) => {
             messages[input] = validationMessages[input][messageKey];
