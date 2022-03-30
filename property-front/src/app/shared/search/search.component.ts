@@ -1,6 +1,5 @@
-import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MatDialogRef } from '@angular/material/dialog';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LocationService } from '@app/_services/location.service';
 import { map } from 'rxjs/operators';
@@ -81,9 +80,7 @@ export class SearchComponent implements OnInit {
   }
 
   onSearch(): void {
-    // Send an event to the seperate dialog compnent 
-    // When that dialog component receives the event, the dialogRef.close() method is called
-    this.closeDialogEvent.emit(true);
+
     let queryParams: any = {};
   
     if (this.searchForm.get("province").value) queryParams.province = this.searchForm.get("province").value;
@@ -91,7 +88,8 @@ export class SearchComponent implements OnInit {
     if (this.searchForm.get("minPrice").value) queryParams.minPrice = this.searchForm.get("minPrice").value;
     if (this.searchForm.get("maxPrice").value) queryParams.maxPrice = this.searchForm.get("maxPrice").value;
     if (this.searchForm.get("keyword").value) queryParams.keyword = this.searchForm.get("keyword").value;
-
+    
+    this.closeDialogEvent.emit(true);
         this.router.navigate(
           ['/alladverts'],
           { queryParams }
