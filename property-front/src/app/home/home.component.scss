@@ -1,9 +1,9 @@
 h1 {
     text-align: center;
     color: white;
-    padding: 3rem 2rem 0 2rem;
+    padding: 4.5rem 2rem 0 2rem;
 
-    font-size: 2rem;
+    font-size: 2.1rem;
 }
 
 .hero-container {
@@ -32,13 +32,19 @@ img {
     height: 3.5rem;
 }
 
+.navbar {
+    background-color: rgba(255, 255, 255, 0.397);
+}
+
 .navbar-nav {
     a {
-        color: rgb(14, 14, 14);
+        color: rgb(32, 32, 32);
     }
 
     a:hover {
-        color: rgb(221, 221, 221);
+        color: rgb(22, 22, 22);
+        background-color: rgba(255, 255, 255, 0.623);
+        border-radius: 3px;
     }
 }
 
@@ -47,12 +53,21 @@ img {
 }
 
 @media (max-width: 600px) {
+    .navbar {
+        background-color: rgba(255, 255, 255, 0);
+        padding-left: 0;
+    }
+
     .navbar-nav { 
         display: none;
     }
 
     .hamburger {
+        position: absolute;
+        right: 18px;
+        top: 18px;
         display: block;
+        color: white;
     }
 
     .hamburger:hover {
