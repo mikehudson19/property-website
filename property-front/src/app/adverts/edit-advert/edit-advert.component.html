@@ -152,20 +152,17 @@
             </span>
           </div>
 
-          <button
+          <div class="actions">
+            <button
             type="submit"
             name="submit"
-            class="btn btn-outline-success btn-lg btn-block"
-            (click)="onSave()"
-          >
-            Publish {{ id > 0 ? 'Changes' : 'Advert' }}
-          </button>
-          <a
-            class="btn btn-outline-danger btn-lg btn-block"
-            routerLink="/myadverts"
-          >
-            Cancel
-          </a>
+            class="btn btn-outline-success btn-lg"
+            (click)="onSave()">
+            Publish
+            </button>
+            <button class="btn btn-outline-danger btn-lg"
+              routerLink="/myadverts">Cancel</button>
+          </div>
 
           <div
             class="alert alert-warning text-center mt-3"

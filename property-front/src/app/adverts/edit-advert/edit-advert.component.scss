@@ -3,6 +3,16 @@
   column-gap: 12px;
 }
 
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 2rem;
+
+  button {
+    width: 47%;
+  }
+}
+
 @media (max-width: 430px) {
   .form-group-container {
     flex-direction: column;

@@ -1,6 +1,9 @@
-.form-group-container {
+.actions {
   display: flex;
-  column-gap: 12px;
+  margin-top: 1rem;
+  justify-content: space-between;
+
+  button {
+    width: 47%;
+  }
 }
-
-

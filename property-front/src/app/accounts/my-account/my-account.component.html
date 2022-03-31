@@ -95,21 +95,19 @@
         >
           Change password
         </a>
+        <div class="actions">
           <button
-            type="submit"
-            name="submit"
-            class="btn btn-outline-success btn-lg btn-block"
-            (click)="updateUser()"
-            [disabled]="!manageAccountForm.touched"
-          >
-            Save changes
-          </button>
-          <a
-            class="btn btn-outline-danger btn-lg btn-block"
-            routerLink="/myadverts"
-          >
-            Cancel
-          </a>
+          type="submit"
+          name="submit"
+          class="btn btn-outline-success btn-lg"
+          (click)="updateUser()"
+          [disabled]="!manageAccountForm.touched">
+          Save</button>
+          <button
+            class="btn btn-outline-danger btn-lg"
+            routerLink="/myadverts">Cancel</button>
+        </div>
+          
         </form>
       </div>
     </div>
