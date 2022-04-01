@@ -8,13 +8,13 @@
     </div>
   
     <div class="img-preview-container">
-      <div *ngFor="let img of advert.images" class="img-preview" (click)="selectImage(img)"><div [ngClass]="getClass(img)"></div><img [src]="img"/></div>
+      <div *ngFor="let img of advert.images" class="img-preview" (click)="selectImage(img)"><div [ngClass]="imgOverlay(img)"></div><img [src]="img"/></div>
     </div>
   </div>
   
 
   <div *ngIf="!isLoading" class="content-container">
-    <div class="detail-container">
+    <div class="detail-container" [ngClass]="advertDetailWidth">
       <div class="top-part">
         <div>
           <h2>{{ advert.title }}</h2>
@@ -39,7 +39,7 @@
         <button *ngIf="authUser" class="btn btn-outline-info btn-sm" (click)="toggleFavourite()">{{ isFavourite ? "Remove from favourites" : "Add to favourites" }}
           <mat-icon>{{ isFavourite ? "favorite" : "favorite_border"}}</mat-icon>
         </button>
-        <button class="btn btn-outline-info btn-sm contact-btn" (click)="openContactDialog()">Contact seller</button>
+        <button *ngIf="!userIsSeller" class="btn btn-outline-info btn-sm contact-btn" (click)="openContactDialog()">Contact seller</button>
       </div>
       
       <mat-divider></mat-divider>
@@ -49,7 +49,7 @@
       </div>
     </div>
 
-    <app-contact-form></app-contact-form>
+    <app-contact-form *ngIf="!userIsSeller"></app-contact-form>
 
   </div>
 </div>

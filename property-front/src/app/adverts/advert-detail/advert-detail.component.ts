@@ -6,7 +6,7 @@ import { IAdvert } from '@app/_models/IAdvert';
 import { IUser } from '@app/_models/IUser';
 import { AuthenticationService, UserService } from '@app/_services';
 import { AdvertService } from '@app/_services/advert.service';
-import { Subscription } from 'rxjs';
+import { forkJoin, Subscription } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ContactSellerDialogComponent } from '../dialogs/contact-seller-dialog/contact-seller-dialog.component';
 
@@ -19,14 +19,14 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
 
   headlineImage;
   headlineImgIndex = 0;
-
   sub: Subscription = new Subscription();
-  id: number;
   advert: IAdvert;
   authUser: IUser;
   isFavourite: boolean;
   imagesLoaded: boolean;
   isLoading: boolean = true;
+  userIsSeller: boolean;
+  advertDetailWidth: string;
 
   constructor(private _route: ActivatedRoute,
               private _advertService: AdvertService,
@@ -36,10 +36,26 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
               private matDialog: MatDialog) { }
 
   ngOnInit(): void {
+
     this.sub.add(
       this._route.paramMap.subscribe((params) => {
-        this.id = +params.get("id");
-        this.getAdvert(this.id);
+        const id = +params.get("id");
+        const authUserId = this.authService.currentUserValue?.id;
+
+        let advertCall = this._advertService.getAdvert(id)
+                          .pipe(tap(advert => this.advertHeadlineImgToFront(advert)));
+
+        let authUserCall = this.userService.getUser(authUserId);
+
+        forkJoin([advertCall, authUserCall])
+          .subscribe(res => {
+            this.advert = res[0];
+            this.authUser = res[1];
+
+            this.isFavourite = this.determineFavourite();
+            this.userIsSeller = this.isUserSeller();
+            this.imagesLoaded = true;
+          });
       })
     );
 }
@@ -64,7 +80,13 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
     }
   }
 
-  getClass(img): string {
+  advertHeadlineImgToFront(advert: IAdvert): void {
+    const headlineImgIndex = advert.images.findIndex(image => image == advert.headlineImage);
+    advert.images.splice(headlineImgIndex, 1);
+    advert.images.unshift(advert.headlineImage);
+  }
+
+  imgOverlay(img): string {
     if (this.advert.headlineImage == img) {
       return;
     } else {
@@ -78,41 +100,12 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
     this.advert.headlineImage = img;
   }
 
-  getAdvert(id: number): void {
-    this._advertService  
-    .getAdvert(id)
-    .pipe(
-      tap(advert => {
-        const headlineImgIndex = advert.images.findIndex(image => image == advert.headlineImage);
-        advert.images.splice(headlineImgIndex, 1);
-        advert.images.unshift(advert.headlineImage);
-      })
-    )
-    .subscribe((advert => {
-        this.advert = advert;
-        this.determineFavourite();
-        this.imagesLoaded = true;
-      }))
+  determineFavourite(): boolean {
+    this.isLoading = false;
+    if (this.authUser.favourites.includes(this.advert.id)) return true;
   }
-
-  determineFavourite(): void {
-    const authUserId = this.authService.currentUserValue?.id;
-
-    if (!authUserId) {
-      this.isLoading = false;
-      return;
-    } 
-
-    this.userService.getUser(authUserId)
-      .subscribe(user => {
-        this.authUser = user;
-        if (this.authUser.favourites.includes(this.advert.id)) this.isFavourite = true;
-        this.isLoading = false;
-      });
-  }
-
   
-  openContactDialog() {
+  openContactDialog(): void {
     this.matDialog.open(ContactSellerDialogComponent);
   }
 
@@ -135,6 +128,15 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
         duration: 2000
       })
     })
+  }
+
+  isUserSeller(): boolean {
+    if (this.advert?.userId === this.authUser?.id) {
+      this.advertDetailWidth = 'full-width';
+      return true;
+    }
+    this.advertDetailWidth = 'part-width';
+    return false;
   }
 
   ngOnDestroy(): void {
