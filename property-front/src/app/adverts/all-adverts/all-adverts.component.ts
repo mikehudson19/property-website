@@ -49,13 +49,13 @@ export class AllAdvertsComponent implements OnInit {
   orderChoice(choice: string): void {
     if (choice === 'Ascending') {
       this.isAscending = true;
-      this.orderBy = 'Price | Low-to-High'
+      this.orderBy = 'Price | Ascending'
       this.adverts.sort(this.compare('asc'));
     }
  
     if (choice === 'Descending') {
       this.isAscending = false;
-      this.orderBy = 'Price | High-to-Low'
+      this.orderBy = 'Price | Descending'
       this.adverts.sort(this.compare('desc'));
     }
   }
