@@ -1,0 +1,26 @@
+.container {
+    min-height: 28vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+
+form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 2rem;
+
+    .form-group {
+        width: 100%;
+
+        input { 
+            width: 100%;
+        }
+    }
+    
+    .btn {
+        min-width: 8rem;    
+    }
+}

@@ -1,16 +1,20 @@
-﻿import { Component, OnInit } from "@angular/core";
-import { Router, ActivatedRoute } from "@angular/router";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { debounceTime, first } from "rxjs/operators";
-import { AuthenticationService } from "@app/_services";
-import { CustomValidators } from "@app/_helpers/customValidators";
-import { invalidInputs } from "@app/shared/utils";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { ActivatedRoute, Router } from '@angular/router';
+import { invalidInputs } from '@app/shared/utils';
+import { CustomValidators } from '@app/_helpers/customValidators';
+import { AuthenticationService } from '@app/_services';
+import { debounceTime, first } from 'rxjs/operators';
+import { RegisterDialogComponent } from '../register-dialog/register-dialog.component';
 
 @Component({
-  templateUrl: "login.component.html",
-  styleUrls: ["./login.component.scss"],
+  selector: 'app-login-dialog',
+  templateUrl: './login-dialog.component.html',
+  styleUrls: ['./login-dialog.component.scss']
 })
-export class LoginComponent implements OnInit {
+export class LoginDialogComponent implements OnInit {
+
   loginForm: FormGroup;
   loading = false;
   submitted = false;
@@ -23,7 +27,9 @@ export class LoginComponent implements OnInit {
     private _formBuilder: FormBuilder,
     private _route: ActivatedRoute,
     private _router: Router,
-    private _authenticationService: AuthenticationService
+    private _authenticationService: AuthenticationService,
+    private dialogRef: MatDialogRef<LoginDialogComponent>,
+    private matDialog: MatDialog
   ) {
     // redirect to home if already logged in
     if (this._authenticationService.currentUserValue) {
@@ -64,8 +70,9 @@ export class LoginComponent implements OnInit {
   onSubmit() {
     this.submitted = true;
 
-    // stop here if form is invalid
     if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      this.message = invalidInputs(this.loginForm);
       return;
     }
 
@@ -76,6 +83,7 @@ export class LoginComponent implements OnInit {
       .subscribe(
         (data) => {
           this._router.navigate(["myadverts"]);
+          this.dialogRef.close();
         },
         (error) => {
           this.error = error;
@@ -85,6 +93,10 @@ export class LoginComponent implements OnInit {
           this.loading = false;
         }
       );
+  }
+
+  registerClick(): void {
+    this.matDialog.open(RegisterDialogComponent);
   }
 
   toggleFieldTextType(): void {

@@ -8,8 +8,8 @@
       <a class="nav-item nav-link text-dark" routerLink="/myaccount" *ngIf="currentUser">My Profile</a>
       <a class="nav-item nav-link text-dark" [routerLink]="['/editadvert', 0]" *ngIf="currentUser">Create Ad</a>
       <a class="nav-item nav-link text-dark" routerLink="/favourites" *ngIf="currentUser">Favourites</a>
-      <a class="nav-item nav-link text-dark" routerLink="/login" *ngIf="!currentUser">Login</a>
-      <a class="nav-item nav-link text-dark" routerLink="/registration" *ngIf="!currentUser">Register</a>
+      <a class="nav-item nav-link text-dark" (click)="openLoginDialog()" *ngIf="!currentUser">Login</a>
+      <a class="nav-item nav-link text-dark" (click)="openRegistrationDialog()" *ngIf="!currentUser">Register</a>
       <a class="nav-item nav-link text-dark" (click)="logout()" *ngIf="currentUser">Logout</a>
   </div>
 </nav>

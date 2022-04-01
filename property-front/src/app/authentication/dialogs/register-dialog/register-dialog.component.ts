@@ -1,18 +1,22 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { CustomValidators } from "@app/_helpers/customValidators";
-import { User } from "@app/_models/user";
-import { AuthenticationService, UserService } from "@app/_services";
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog, MatDialogRef } from '@angular/material/dialog';
+import { Router } from '@angular/router';
+import { invalidInputs } from '@app/shared/utils';
+import { CustomValidators } from '@app/_helpers/customValidators';
+import { User } from '@app/_models/user';
+import { AuthenticationService, UserService } from '@app/_services';
 import { Subscription } from 'rxjs';
-import { debounceTime } from "rxjs/operators";
-import { invalidInputs } from "@app/shared/utils";
+import { debounceTime } from 'rxjs/operators';
+import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
 
 @Component({
-  templateUrl: "./registration.component.html",
-  styleUrls: ["./registration.component.scss"],
+  selector: 'app-register-dialog',
+  templateUrl: './register-dialog.component.html',
+  styleUrls: ['./register-dialog.component.scss']
 })
-export class RegistrationComponent implements OnInit, OnDestroy {
+export class RegisterDialogComponent implements OnInit {
+
   registrationForm: FormGroup;
   message: { [key: string]: string } = {};
   invalidSubmit: boolean = false;
@@ -26,63 +30,54 @@ export class RegistrationComponent implements OnInit, OnDestroy {
     private _formBuilder: FormBuilder,
     private _userService: UserService,
     private _router: Router,
-    private _authenticationService: AuthenticationService
-  ) {}
+    private _authenticationService: AuthenticationService,
+    private matDialog: MatDialog,
+    private dialogRef: MatDialogRef<RegisterDialogComponent>) { }
 
   ngOnInit(): void {
 
     this.registrationForm = this._formBuilder.group({
       firstName: [
         "",
-        [
-          Validators.required,
+        [ Validators.required,
           Validators.minLength(1),
           Validators.maxLength(100),
           CustomValidators.multipleSpaceValidator,
           CustomValidators.noSpecialChars,
-          CustomValidators.noNumbers,
-        ],
+          CustomValidators.noNumbers ],
       ],
       lastName: [
         "",
-        [
-          Validators.required,
+        [ Validators.required,
           Validators.minLength(3),
           Validators.maxLength(100),
           CustomValidators.multipleSpaceValidator,
           CustomValidators.noSpecialChars,
-          CustomValidators.noNumbers,
-        ],
+          CustomValidators.noNumbers ],
       ],
       email: [
         "",
-        [
-          Validators.required,
+        [ Validators.required,
           Validators.email,
           Validators.minLength(6),
           Validators.maxLength(100),
-          CustomValidators.noSpaceValidator,
-        ],
+          CustomValidators.noSpaceValidator ],
       ],
       contactNumber: [
         "", 
-        [
-          Validators.required,
-          CustomValidators.onlyNumbers,
-        ]
+        [ Validators.required,
+          CustomValidators.onlyNumbers ]
       ],
       passwords: this._formBuilder.group(
         {
           password: [
             "",
-            [
-              Validators.required,
+            [ Validators.required,
               Validators.minLength(8),
               Validators.maxLength(100),
               CustomValidators.noSpaceValidator,
               CustomValidators.passwordNumber,
-              CustomValidators.passwordUpperCase,
-            ],
+              CustomValidators.passwordUpperCase ],
           ],
           confirmPass: ["", Validators.required],
         },
@@ -129,6 +124,7 @@ export class RegistrationComponent implements OnInit, OnDestroy {
       .login(user.email, user.password) 
       .subscribe(
         (data) => {
+          this.dialogRef.close();
           this._router.navigate(["myadverts"]);
           this.loading = false;
         },
@@ -146,6 +142,10 @@ export class RegistrationComponent implements OnInit, OnDestroy {
 
   toggleFieldTextType(): void {
     this.fieldTextType = !this.fieldTextType;
+  }
+
+  loginClick(): void {
+    this.matDialog.open(LoginDialogComponent);
   }
 
   ngOnDestroy(): void {

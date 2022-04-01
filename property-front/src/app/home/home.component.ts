@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { Router } from '@angular/router';
+import { LoginDialogComponent } from '@app/authentication/dialogs/login-dialog/login-dialog.component';
+import { RegisterDialogComponent } from '@app/authentication/dialogs/register-dialog/register-dialog.component';
 import { MobileNavComponent } from '@app/shared/mobile-nav/mobile-nav.component';
 import { IUser } from '@app/_models/IUser';
 import { AuthenticationService } from '@app/_services';
@@ -29,7 +31,7 @@ export class HomeComponent implements OnInit {
 
   logout() {
     this.authService.logout();
-    this.router.navigate(["/login"]);
+    this.router.navigate(["/"]);
   }
 
   openMobileNavModal() {
@@ -38,4 +40,11 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  openLoginDialog() {
+    this.matDialog.open(LoginDialogComponent)
+  }
+
+  openRegistrationDialog(): void {
+    this.matDialog.open(RegisterDialogComponent);
+  }
 }
