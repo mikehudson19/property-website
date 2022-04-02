@@ -142,41 +142,16 @@
             </div>
           </div>
   
-          <button type="submit" name="submit" class="btn btn-secondary">
+          <button type="submit" name="submit" class="btn btn-info">
             <span
               *ngIf="loading"
               class="spinner-border spinner-border-sm mr-1"
             ></span>
             {{ loading ? "Registering" : "Register" }}
           </button>
-  
-          <div class="alert alert-danger mt-3" *ngIf="invalidSubmit">
-            Please ensure all fields are completed correctly.
-          </div>
         </form>
   
         <div class="mt-3">
           <p>Already have an account? <a class="mt-3 text-dark" mat-dialog-close (click)="loginClick()">Login Instead</a></p>
-        </div>
-  
-        <div class="alert alert-info mt-4" *ngIf="passRequirements">
-          <ul>
-            <li>
-              <small
-                >Your password needs to be between 8 and 100 characters in
-                length.</small
-              >
-            </li>
-            <li><small>Your password cannot contain spaces.</small></li>
-            <li>
-              <small>Your password must contain at least one number.</small>
-            </li>
-            <li>
-              <small
-                >Your password must contain at leat one uppercase
-                character.</small
-              >
-            </li>
-          </ul>
         </div>
   </div>

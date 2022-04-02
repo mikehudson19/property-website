@@ -9,6 +9,7 @@ import { AuthenticationService, UserService } from '@app/_services';
 import { Subscription } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
 import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
+import { PasswordReqDialogComponent } from '../password-req-dialog/password-req-dialog.component';
 
 @Component({
   selector: 'app-register-dialog',
@@ -93,16 +94,14 @@ export class RegisterDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    this.loading = true;
-
-    if (!this.registrationForm.valid) {
-      this.invalidSubmit = true;
-      setTimeout (() => {
-        this.invalidSubmit = false;
-     }, 1800);
-      this.loading = false;
+    console.log(this.registrationForm.valid);
+    if (this.registrationForm.invalid) {
+      this.registrationForm.markAllAsTouched();
+      this.message = invalidInputs(this.registrationForm);
       return;
     }
+    
+    this.loading = true;
 
     const user = new User(
       this.registrationForm.get("firstName").value.trim(),
@@ -137,7 +136,8 @@ export class RegisterDialogComponent implements OnInit {
   }
 
   showPassRequirements(): void {
-      this.passRequirements = !this.passRequirements;
+      // this.passRequirements = !this.passRequirements;
+      this.matDialog.open(PasswordReqDialogComponent);
   }
 
   toggleFieldTextType(): void {

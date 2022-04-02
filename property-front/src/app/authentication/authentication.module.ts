@@ -6,11 +6,12 @@ import { AppRoutingModule } from '@app/app-routing.module';
 import { LoginDialogComponent } from './dialogs/login-dialog/login-dialog.component';
 import { SharedModule } from '@app/shared/shared.module';
 import { RegisterDialogComponent } from './dialogs/register-dialog/register-dialog.component';
+import { PasswordReqDialogComponent } from './dialogs/password-req-dialog/password-req-dialog.component';
 
 
 
 @NgModule({
-  declarations: [LoginDialogComponent, RegisterDialogComponent],
+  declarations: [LoginDialogComponent, RegisterDialogComponent, PasswordReqDialogComponent],
   imports: [
     CommonModule,
     ReactiveFormsModule,

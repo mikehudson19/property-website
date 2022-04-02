@@ -7,8 +7,8 @@
         <a mat-dialog-close class="nav-item nav-link" routerLink="/myaccount" *ngIf="currentUser">My Profile</a>
         <a mat-dialog-close class="nav-item nav-link" [routerLink]="['/editadvert', 0]" *ngIf="currentUser">Create Ad</a>
         <a mat-dialog-close class="nav-item nav-link" routerLink="/favourites" *ngIf="currentUser">Favourites</a>
-        <a mat-dialog-close class="nav-item nav-link" routerLink="/login" *ngIf="!currentUser">Login</a>
-        <a mat-dialog-close class="nav-item nav-link" routerLink="/registration" *ngIf="!currentUser">Register</a>
+        <a mat-dialog-close class="nav-item nav-link" (click)="openLoginDialog()" *ngIf="!currentUser">Login</a>
+        <a mat-dialog-close class="nav-item nav-link" (click)="openRegistrationDialog()" *ngIf="!currentUser">Register</a>
         <a mat-dialog-close class="nav-item nav-link" (click)="logout()" *ngIf="currentUser">Logout</a>
     </div>
   </nav>
