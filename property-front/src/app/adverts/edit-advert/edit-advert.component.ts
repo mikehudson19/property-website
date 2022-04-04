@@ -70,8 +70,7 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
         [
           Validators.required,
           Validators.minLength(10),
-          Validators.maxLength(1000),
-          CustomValidators.multipleSpaceValidator
+          Validators.maxLength(1000)
         ],
       ],
       price: [
