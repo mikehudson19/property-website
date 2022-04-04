@@ -22,6 +22,10 @@ form {
     }
 }
 
+a:hover {
+    text-decoration: underline;
+}
+
 @media (max-width: 1560px) {
     .container {
         max-width: 40vw;

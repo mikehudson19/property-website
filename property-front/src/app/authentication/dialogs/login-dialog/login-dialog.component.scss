@@ -1,5 +1,5 @@
 .container {
-    min-height: 34vh;
+    min-height: 30vh;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -24,6 +24,10 @@ form {
     .btn {
         min-width: 8rem;    
     }
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 @media (max-width: 1560px) {
