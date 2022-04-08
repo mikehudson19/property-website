@@ -94,7 +94,6 @@ export class RegisterDialogComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.registrationForm.valid);
     if (this.registrationForm.invalid) {
       this.registrationForm.markAllAsTouched();
       this.message = invalidInputs(this.registrationForm);

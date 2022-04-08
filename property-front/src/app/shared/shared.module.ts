@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { ContactFormComponent } from './contact-form/contact-form.component';
 import { AdvertActionsComponent } from './advert-actions/advert-actions.component';
 import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
+import { AdminLayoutComponent } from './layout/admin-layout/admin-layout.component';
 
 
 
@@ -19,7 +20,8 @@ import { MobileNavComponent } from './mobile-nav/mobile-nav.component';
     AdvertCardLargeComponent,
     ContactFormComponent,
     AdvertActionsComponent,
-    MobileNavComponent
+    MobileNavComponent,
+    AdminLayoutComponent
   ],
   imports: [
     CommonModule,

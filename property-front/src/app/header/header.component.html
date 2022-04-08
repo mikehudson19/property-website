@@ -11,13 +11,6 @@
       <a class="nav-item nav-link text-dark" (click)="openLoginDialog()" *ngIf="!currentUser">Login</a>
       <a class="nav-item nav-link text-dark" (click)="openRegistrationDialog()" *ngIf="!currentUser">Register</a>
       <a class="nav-item nav-link text-dark" (click)="logout()" *ngIf="currentUser">Logout</a>
+      <a class="nav-item nav-link text-dark" [routerLink]="['/admin', 'user-list']" *ngIf="currentUser && currentUser.role === 'Admin'">Admin Portal</a>
   </div>
 </nav>
-
-<!-- @TODO: Implement this when admin code is done -->
-<!-- <nav class="navbar navbar-expand navbar-light bg-light" *ngIf="currentUser">
-  <div class="navbar-nav">
-      <a class="nav-item nav-link text-dark" routerLink="/home">User Management</a>
-      <a class="nav-item nav-link text-dark" routerLink="/">Advert Management</a>
-  </div>
-</nav> -->

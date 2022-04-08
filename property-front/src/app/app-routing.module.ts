@@ -9,6 +9,7 @@ import { HomeComponent } from './home/home.component';
 import { AdvertDetailComponent } from './adverts/advert-detail/advert-detail.component';
 import { MyAccountComponent } from './accounts/my-account/my-account.component';
 import { FavouriteAdvertsComponent } from './adverts/favourite-adverts/favourite-adverts.component';
+import { AdminLayoutComponent } from './shared/layout/admin-layout/admin-layout.component';
 
 const routes: Routes = [
     { path: '', component: HomeComponent },
@@ -19,13 +20,18 @@ const routes: Routes = [
     { path: 'advertdetail/:id', component: AdvertDetailComponent },
     { path: 'myaccount', component: MyAccountComponent, canActivate: [ NotAuthGuard ] },
     { path: 'favourites', component: FavouriteAdvertsComponent, canActivate: [ NotAuthGuard ] },
+    { path: 'admin', 
+      component: AdminLayoutComponent, 
+      children: [
+        { path: '', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) }
+    ]},         
 
     // otherwise redirect to home
     { path: '**', redirectTo: '' }
 ];
 
 @NgModule({
-    imports: [RouterModule.forRoot(routes)],
+    imports: [RouterModule.forRoot(routes, { initialNavigation: 'enabled' })],
     exports: [RouterModule]
 })
 export class AppRoutingModule { }

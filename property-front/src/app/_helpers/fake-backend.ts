@@ -11,6 +11,7 @@ import { Observable, of, throwError } from "rxjs";
 import { delay, mergeMap, materialize, dematerialize } from "rxjs/operators";
 
 import { User } from "@app/_models";
+import { UserRole } from "@app/_models/user-role.enum";
 
 const users: User[] = [
   {
@@ -21,7 +22,8 @@ const users: User[] = [
     lastName: "User",
     // password: "test",
     contactNumber: "0765698964",
-    favourites: [1]
+    favourites: [1],
+    role: UserRole.User
   },
   {
     id: 2,
@@ -31,7 +33,18 @@ const users: User[] = [
     lastName: "Test2Suranme",
     // confirmPass: "test2",
     contactNumber: "0824593652",
-    favourites: []
+    favourites: [],
+    role: UserRole.User
+  },
+  {
+    id: 3,
+    email: "admin@prop.com",
+    password: "admin",
+    firstName: "Admin",
+    lastName: "Admin",
+    contactNumber: "0824593652",
+    favourites: [],
+    role: UserRole.Admin
   },
 ];
 
@@ -87,7 +100,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         lastName: user.lastName,
         contactNumber: user.contactNumber,
         token: "fake-jwt-token",
-        favourites: user.favourites
+        favourites: user.favourites,
+        role: user.role
       });
     }
 
@@ -123,6 +137,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         lastName: lastName,
         contactNumber: contactNumber,
         token: "fake-jwt-token",
+        role: user.role
       });
     }
 
@@ -150,7 +165,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,
-        password: user.password
+        password: user.password,
+        role: user.role
       })
     }
 

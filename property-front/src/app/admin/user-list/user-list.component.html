@@ -1,0 +1,64 @@
+<div class="container">
+    <h1>User List</h1>
+
+    <div>
+        <mat-table #table class="lessons-table" [dataSource]="dataSource" matSort matSortDisableClear>
+  
+            <ng-container matColumnDef="firstName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>First Name</mat-header-cell>
+                <mat-cell *matCellDef="let user">{{user.firstName}}</mat-cell>
+            </ng-container>
+          
+            <ng-container matColumnDef="lastName">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Last Name</mat-header-cell>
+                <mat-cell class="description-cell"
+                          *matCellDef="let user">{{user.lastName}}</mat-cell>
+            </ng-container>
+          
+            <ng-container matColumnDef="email">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Email</mat-header-cell>
+                <mat-cell class="duration-cell"
+                          *matCellDef="let user">{{user.email}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="dateCreated">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Date Created</mat-header-cell>
+                <mat-cell class="duration-cell"
+                          *matCellDef="let user">{{user.dateCreated}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="contactNumber">
+                <mat-header-cell *matHeaderCellDef>Contact Number</mat-header-cell>
+                <mat-cell class="duration-cell"
+                          *matCellDef="let user">{{user.contactNumber}}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="role">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Role</mat-header-cell>
+                <mat-cell class="duration-cell"
+                          *matCellDef="let user">{{user.role}}</mat-cell>
+            </ng-container>
+
+            <!-- View Column -->
+            <ng-container matColumnDef="view">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let user"><a (click)="viewUser(user.id)"><mat-icon>account_circle</mat-icon></a></mat-cell>
+            </ng-container>
+        
+            <!-- Remove Column -->
+            <ng-container  matColumnDef="delete">
+                <mat-header-cell *matHeaderCellDef></mat-header-cell>
+                <mat-cell *matCellDef="let user"><a (click)="deleteUser(user.id)"><mat-icon>delete</mat-icon></a></mat-cell>
+            </ng-container>
+            
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            
+        </mat-table>
+
+        <mat-paginator [length]="1" [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+
+    </div>
+</div>

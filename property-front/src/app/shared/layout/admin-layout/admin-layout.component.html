@@ -1,0 +1,23 @@
+<h1>Admin Module</h1>
+
+<mat-sidenav-container>
+    <mat-sidenav class="sidenav" fixedToGap="56" mode="side" opened>
+        <mat-nav-list>
+            <a [routerLink]="['/admin', 'user-list']" mat-list-item>User List</a>
+        </mat-nav-list>
+        <mat-nav-list>
+            <a [routerLink]="['/admin', 'advert-list']" mat-list-item>Advert List</a>
+        </mat-nav-list>
+        <mat-nav-list>
+            <a mat-list-item>Other List</a>
+        </mat-nav-list>
+
+    </mat-sidenav>
+    <mat-sidenav-content>
+        <main>
+   
+            <router-outlet></router-outlet>
+        </main>
+    </mat-sidenav-content>
+
+</mat-sidenav-container>

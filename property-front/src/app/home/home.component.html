@@ -13,6 +13,7 @@
           <a class="nav-item nav-link" (click)="openLoginDialog()" *ngIf="!currentUser">Login</a>
           <a class="nav-item nav-link text-dark" (click)="openRegistrationDialog()" *ngIf="!currentUser">Register</a>
           <a class="nav-item nav-link" (click)="logout()" *ngIf="currentUser">Logout</a>
+          <a class="nav-item nav-link text-dark" [routerLink]="['/admin', 'user-list']" *ngIf="currentUser && currentUser.role === 'Admin'">Admin Portal</a>
       </div>
     </nav>
     <h1>Find your dream mountain home</h1>

@@ -10,6 +10,7 @@ import { Subscription } from "rxjs";
 import { debounceTime } from "rxjs/operators";
 import { PasswordDialogComponent } from "../password-dialog/password-dialog.component";
 import { invalidInputs } from "@app/shared/utils";
+import { UserRole } from "@app/_models/user-role.enum";
 
 @Component({
   selector: "app-my-account",
@@ -114,6 +115,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
       lastName: this.manageAccountForm.get("lastName").value.trim(),
       email: this.manageAccountForm.get("email").value.trim(),
       contactNumber: this.manageAccountForm.get("contactNumber").value.trim(),
+      role: UserRole.User
     };
 
     if (this.authUser.firstName === userToUpdate.firstName &&
