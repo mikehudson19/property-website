@@ -23,7 +23,8 @@ const users: User[] = [
     // password: "test",
     contactNumber: "0765698964",
     favourites: [1],
-    role: UserRole.User
+    role: UserRole.User,
+    dateCreated: new Date('1991-06-09')
   },
   {
     id: 2,
@@ -34,7 +35,8 @@ const users: User[] = [
     // confirmPass: "test2",
     contactNumber: "0824593652",
     favourites: [],
-    role: UserRole.User
+    role: UserRole.User,
+    dateCreated: new Date('1996-02-03')
   },
   {
     id: 3,
@@ -44,7 +46,8 @@ const users: User[] = [
     lastName: "Admin",
     contactNumber: "0824593652",
     favourites: [],
-    role: UserRole.Admin
+    role: UserRole.Admin,
+    dateCreated: new Date('1982-04-19')
   },
 ];
 

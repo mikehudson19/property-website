@@ -12,6 +12,7 @@ export class User implements IUser {
         public password?: string,
         public token?: string,
         public id?: number,
-        public favourites?: number[]
+        public favourites?: number[],
+        public dateCreated?: Date
     ){}
 }

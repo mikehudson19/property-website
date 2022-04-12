@@ -4,6 +4,7 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { User } from '@app/_models';
 import { UserRole } from '@app/_models/user-role.enum';
+import { UserService } from '@app/_services';
 
 @Component({
   selector: 'app-user-list',
@@ -18,52 +19,31 @@ export class UserListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  users: User[] = [
-    {
-      id: 1,
-      email: "test@test",
-      password: "test",
-      firstName: "Test",
-      lastName: "User",
-      contactNumber: "0765698964",
-      favourites: [1],
-      role: UserRole.User
-    },
-    {
-      id: 2,
-      email: "test2@test",
-      password: "test2",
-      firstName: "Test2",
-      lastName: "Test2Suranme",
-      contactNumber: "0824593652",
-      favourites: [],
-      role: UserRole.User
-    },
-    {
-      id: 3,
-      email: "admin@prop.com",
-      password: "admin",
-      firstName: "Admin",
-      lastName: "Admin",
-      contactNumber: "0824593652",
-      favourites: [],
-      role: UserRole.Admin
-    }
-  ];
+  users: User[] = [];
 
-  constructor() { }
+  constructor(private userService: UserService) { }
 
   ngOnInit(): void {
-    this.dataSource = new MatTableDataSource(this.users);
+    this.userService.getAll()
+    .subscribe(users => {
+      this.users = users;
+      this.dataSource = new MatTableDataSource(this.users);
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    })
   }
 
   ngAfterViewInit(): void {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+
+
   }
 
   viewUser(number) {}
 
-  deleteUser(number) {}
+  deleteUser(number) {
+    const index = this.users.indexOf(number);
+    this.users.splice(index);
+    this.dataSource = new MatTableDataSource(this.users);
+  }
 
 }

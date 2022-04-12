@@ -24,7 +24,7 @@
             <ng-container matColumnDef="dateCreated">
                 <mat-header-cell *matHeaderCellDef mat-sort-header>Date Created</mat-header-cell>
                 <mat-cell class="duration-cell"
-                          *matCellDef="let user">{{user.dateCreated}}</mat-cell>
+                          *matCellDef="let user">{{user.dateCreated | date:'M/d/yyyy' }}</mat-cell>
             </ng-container>
 
             <ng-container matColumnDef="contactNumber">

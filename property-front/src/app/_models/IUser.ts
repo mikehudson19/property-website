@@ -9,5 +9,6 @@ export interface IUser {
   password?: string,
   token?: string
   contactNumber?: string
-  favourites?: number[]
+  favourites?: number[],
+  dateCreated?: Date
 }
