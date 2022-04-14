@@ -1,0 +1,9 @@
+<div>
+    <div *ngIf="user">
+        <span>User Name:</span> <span>{{ user.firstName }}</span>
+        <span>User Email:</span> <span>{{ user.email }}</span>
+        <span>User Role:</span> <span>{{ user.role }}</span>
+
+        <button [routerLink]="['/admin', 'advert-list', user.id]">View user adverts</button>
+    </div>
+</div>

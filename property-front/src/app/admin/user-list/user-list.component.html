@@ -42,7 +42,7 @@
             <!-- View Column -->
             <ng-container matColumnDef="view">
                 <mat-header-cell *matHeaderCellDef></mat-header-cell>
-                <mat-cell *matCellDef="let user"><a (click)="viewUser(user.id)"><mat-icon>account_circle</mat-icon></a></mat-cell>
+                <mat-cell *matCellDef="let user"><a [routerLink]="['/admin', 'user-view', user.id]"><mat-icon>account_circle</mat-icon></a></mat-cell>
             </ng-container>
         
             <!-- Remove Column -->

@@ -38,11 +38,9 @@ export class UserListComponent implements OnInit {
 
   }
 
-  viewUser(number) {}
-
   deleteUser(number) {
-    const index = this.users.indexOf(number);
-    this.users.splice(index);
+    const newArray = this.users.filter(x => x.id !== number);
+    this.users = newArray;
     this.dataSource = new MatTableDataSource(this.users);
   }
 
