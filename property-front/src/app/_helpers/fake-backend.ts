@@ -24,7 +24,7 @@ const users: User[] = [
     contactNumber: "0765698964",
     favourites: [1],
     role: UserRole.User,
-    dateCreated: new Date('1991-06-09')
+    dateCreated: new Date('2021-06-09')
   },
   {
     id: 2,
@@ -36,7 +36,7 @@ const users: User[] = [
     contactNumber: "0824593652",
     favourites: [],
     role: UserRole.User,
-    dateCreated: new Date('1996-02-03')
+    dateCreated: new Date('2022-02-03')
   },
   {
     id: 3,
@@ -47,7 +47,7 @@ const users: User[] = [
     contactNumber: "0824593652",
     favourites: [],
     role: UserRole.Admin,
-    dateCreated: new Date('1982-04-19')
+    dateCreated: new Date('2021-04-19')
   },
 ];
 

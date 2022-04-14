@@ -26,8 +26,8 @@ export class MyInMemoryService implements InMemoryDbService {
           '../../../assets/image-5.jpg',
           '../../../assets/image-6.jpg',
         ],
-        headlineImage: '../../../assets/image-1.jpg'
-      
+        headlineImage: '../../../assets/image-1.jpg',
+        dateCreated: new Date('2022-01-05')
       },
       {
         id: 1,
@@ -50,7 +50,8 @@ export class MyInMemoryService implements InMemoryDbService {
           '../../../assets/image-5.jpg',
           '../../../assets/image-6.jpg',
         ],
-        headlineImage: '../../../assets/image-2.jpg'
+        headlineImage: '../../../assets/image-2.jpg',
+        dateCreated: new Date('2021-12-11')
       
       },
       {
@@ -74,7 +75,8 @@ export class MyInMemoryService implements InMemoryDbService {
           '../../../assets/image-5.jpg',
           '../../../assets/image-6.jpg',
         ],
-        headlineImage: '../../../assets/image-5.jpg' 
+        headlineImage: '../../../assets/image-5.jpg' ,
+        dateCreated: new Date('2022-03-17')
       },
     ];
 

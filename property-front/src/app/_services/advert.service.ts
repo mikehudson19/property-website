@@ -74,7 +74,8 @@ export class AdvertService {
       bathrooms: null,
       parkingSpaces: null,
       images: [],
-      headlineImage: ''
+      headlineImage: '',
+      dateCreated: new Date()
     }
   }
 

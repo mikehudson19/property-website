@@ -14,6 +14,7 @@ export class Advert implements IAdvert {
     public parkingSpaces: number,
     public images: string[],
     public headlineImage: string,
+    public dateCreated: Date,
     public status?: string,
     /** @Note: shouldnt need this once the userId gets assigned via the API */
     public userId?: number,

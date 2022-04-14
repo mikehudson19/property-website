@@ -1,9 +1,85 @@
-<div>
-    <div *ngIf="user">
-        <span>User Name:</span> <span>{{ user.firstName }}</span>
-        <span>User Email:</span> <span>{{ user.email }}</span>
-        <span>User Role:</span> <span>{{ user.role }}</span>
+<div class="container" *ngIf="user">
+    <h1>User details</h1>
 
-        <button [routerLink]="['/admin', 'advert-list', user.id]">View user adverts</button>
+    <div class="user-details">
+        <div>
+            <p>Name:</p>
+            <p>Surname:</p> 
+            <p>Email:</p>
+            <p>Role:</p>
+            <p>Contact number:</p>
+            <p>Date joined:</p>
+        </div>
+        
+        <div>
+            <p>{{ user.firstName }}</p>
+            <p>{{ user.firstName }}</p>
+            <p>{{ user.email }}</p>
+            <p>{{ user.role }}</p>
+            <p>{{ user.contactNumber }}</p>
+            <p>{{ user.dateCreated | date:'dd/MM/yyyy' }}</p>
+        </div>
+    </div>
+
+    <div class="user-adverts">
+        <h1>User adverts</h1>
+        <mat-table #table class="adverts-table" [dataSource]="dataSource" matSort matSortDisableClear>
+  
+            <ng-container matColumnDef="title">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Title</mat-header-cell>
+                <mat-cell *matCellDef="let advert">{{ advert.title }}</mat-cell>
+            </ng-container>
+          
+            <ng-container matColumnDef="province">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Province</mat-header-cell>
+                <mat-cell class="description-cell"
+                          *matCellDef="let advert">{{ advert.province }}</mat-cell>
+            </ng-container>
+          
+            <ng-container matColumnDef="city">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>City</mat-header-cell>
+                <mat-cell class="duration-cell"
+                          *matCellDef="let advert">{{ advert.city }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="price">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Price</mat-header-cell>
+                <mat-cell class="duration-cell"
+                          *matCellDef="let advert">{{ advert.price | currency:'ZAR':'symbol-narrow' }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                <mat-header-cell *matHeaderCellDef>Status</mat-header-cell>
+                <mat-cell class="duration-cell"
+                          *matCellDef="let advert">{{ advert.status }}</mat-cell>
+            </ng-container>
+
+            <ng-container matColumnDef="dateCreated">
+                <mat-header-cell *matHeaderCellDef mat-sort-header>Date Created</mat-header-cell>
+                <mat-cell class="duration-cell"
+                          *matCellDef="let advert">{{ advert.dateCreated | date:'dd/MM/yyyy' }}</mat-cell>
+            </ng-container>
+
+            <!-- View Column -->
+            <ng-container matColumnDef="view">
+                <mat-header-cell class="action-col" *matHeaderCellDef></mat-header-cell>
+                <mat-cell class="action-col" *matCellDef="let advert"><a><mat-icon>account_circle</mat-icon></a></mat-cell>
+            </ng-container>
+        
+            <!-- Remove Column -->
+            <ng-container  matColumnDef="delete">
+                <mat-header-cell class="action-col" *matHeaderCellDef></mat-header-cell>
+                <mat-cell  class="action-col" *matCellDef="let advert"><a><mat-icon>delete</mat-icon></a></mat-cell>
+            </ng-container>
+            
+            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+            
+            <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+            
+        </mat-table>
+
+        <mat-paginator [length]="1" [pageSize]="5"
+        [pageSizeOptions]="[5, 10, 20]"></mat-paginator>
+
     </div>
 </div>

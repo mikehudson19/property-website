@@ -12,4 +12,5 @@ export interface IAdvert {
   parkingSpaces: number,
   images: string[],
   headlineImage: string
+  dateCreated: Date
 }

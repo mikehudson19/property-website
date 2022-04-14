@@ -175,6 +175,7 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       this.editAdvertForm.get("parkingSpaces").value,
       this.images,    
       this.randomHeadlineImage(),
+      new Date(),
       'Live',
       currentUser.id,
     );

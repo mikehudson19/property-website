@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
 import { AdvertService } from '@app/_services/advert.service';
 
 @Component({
@@ -9,18 +8,13 @@ import { AdvertService } from '@app/_services/advert.service';
 })
 export class AdvertListComponent implements OnInit {
 
-  constructor(private route: ActivatedRoute,
-              private advertService: AdvertService) { }
+  constructor(private advertService: AdvertService) { }
 
-  ngOnInit(): void {
-    const userId = this.route.snapshot.params.id;
-    console.log("userId",userId);
-    
-    const adverts = userId ? this.advertService.getUserAdverts(+userId) : this.advertService.getAllAdverts();
+  ngOnInit(): void {    
+    const adverts = this.advertService.getAllAdverts();
 
     adverts.subscribe(adverts => {
       console.log(adverts);
     })
   }
-
 }

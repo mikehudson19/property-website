@@ -1,0 +1,23 @@
+.container {
+    margin: 1rem;
+}
+
+.user-details {
+    display: flex;
+    width: 100%;
+    margin-left: 22px;
+    margin-top: 8px;
+
+    div {
+        min-width: 15rem;
+    }
+}
+
+.user-adverts {
+    margin-top: 3rem;
+
+    .action-col {
+        max-width: 60px;
+    }
+}
+
