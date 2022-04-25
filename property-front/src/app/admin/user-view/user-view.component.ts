@@ -17,7 +17,7 @@ import { forkJoin, Observable } from 'rxjs';
 export class UserViewComponent implements OnInit {
 
   dataSource: MatTableDataSource<any>;
-  displayedColumns = ['title', 'province', 'city', 'price', 'status', 'dateCreated', 'view', 'delete' ];
+  displayedColumns = [ 'title', 'province', 'city', 'price', 'status', 'dateCreated', 'view', 'delete' ];
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;

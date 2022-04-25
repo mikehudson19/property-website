@@ -1,10 +1,13 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { User } from '@app/_models';
 import { UserRole } from '@app/_models/user-role.enum';
 import { UserService } from '@app/_services';
+import { map, tap } from 'rxjs/operators';
+import { DeleteConfirmDialogComponent } from '../dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
   selector: 'app-user-list',
@@ -21,10 +24,20 @@ export class UserListComponent implements OnInit {
 
   users: User[] = [];
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              private matDialog: MatDialog) { }
 
   ngOnInit(): void {
     this.userService.getAll()
+    .pipe(
+      tap(x => console.log(x)),
+      map(x => {
+        const newArr = x.filter(x => {
+          return x.role !== 'Admin';
+        })
+        return newArr;
+      })
+    )
     .subscribe(users => {
       this.users = users;
       this.dataSource = new MatTableDataSource(this.users);
@@ -33,15 +46,18 @@ export class UserListComponent implements OnInit {
     })
   }
 
-  ngAfterViewInit(): void {
-
-
-  }
+  ngAfterViewInit(): void {}
 
   deleteUser(number) {
-    const newArray = this.users.filter(x => x.id !== number);
-    this.users = newArray;
-    this.dataSource = new MatTableDataSource(this.users);
-  }
+    const dialogRef = this.matDialog.open(DeleteConfirmDialogComponent);
 
+    dialogRef.afterClosed()
+    .subscribe((x) => {
+      if (x) {
+        const newArray = this.users.filter(x => x.id !== number);
+        this.users = newArray;
+        this.dataSource = new MatTableDataSource(this.users);
+      };
+    });
+  }
 }
