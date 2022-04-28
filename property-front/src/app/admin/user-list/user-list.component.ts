@@ -4,9 +4,8 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { User } from '@app/_models';
-import { UserRole } from '@app/_models/user-role.enum';
 import { UserService } from '@app/_services';
-import { map, tap } from 'rxjs/operators';
+import { map } from 'rxjs/operators';
 import { DeleteConfirmDialogComponent } from '../dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
@@ -30,9 +29,8 @@ export class UserListComponent implements OnInit {
   ngOnInit(): void {
     this.userService.getAll()
     .pipe(
-      tap(x => console.log(x)),
-      map(x => {
-        const newArr = x.filter(x => {
+      map(users => {
+        const newArr = users.filter(x => {
           return x.role !== 'Admin';
         })
         return newArr;
@@ -48,16 +46,20 @@ export class UserListComponent implements OnInit {
 
   ngAfterViewInit(): void {}
 
-  deleteUser(number) {
-    const dialogRef = this.matDialog.open(DeleteConfirmDialogComponent);
+  deleteUser(userId) {
+    const dialogRef = this.matDialog.open(DeleteConfirmDialogComponent, {
+      data: {
+        type: "user",
+        id: userId
+      }
+    });
 
     dialogRef.afterClosed()
-    .subscribe((x) => {
-      if (x) {
-        const newArray = this.users.filter(x => x.id !== number);
-        this.users = newArray;
+    .subscribe((users) => {
+      if (users) {
+        this.users = users.filter(user => user.role !== "Admin");
         this.dataSource = new MatTableDataSource(this.users);
-      };
+      }
     });
   }
 }

@@ -67,7 +67,9 @@ export class FakeBackendInterceptor implements HttpInterceptor {
       .pipe(dematerialize());
 
     function handleRoute() {
- 
+      console.log("handleRoute")
+      console.log("method",method);
+      console.log("url",url)
       switch (true) {
         case url.endsWith("/users/authenticate") && method === "POST":
           return authenticate();
@@ -81,6 +83,8 @@ export class FakeBackendInterceptor implements HttpInterceptor {
           return updatePassword();
         case url.endsWith("/users") && method === "POST":
           return createUser();
+        case url.includes("/users") && !url.endsWith("/users") && method === "DELETE":
+          return deleteUser();
         default:
           // pass through any requests not handled above
           return next.handle(request);
@@ -171,6 +175,22 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         password: user.password,
         role: user.role
       })
+    }
+
+    function deleteUser() {
+      const startPoint = url.lastIndexOf("/") + 1;
+      const endPoint = url.length;
+      const userId = url.slice(startPoint, endPoint);
+
+      const index = users.findIndex(element => element.id === +userId);
+
+      if (index === -1) {
+        return;
+      }
+
+      users.splice(index, 1);
+
+      return ok(users);
     }
 
     // helper functions

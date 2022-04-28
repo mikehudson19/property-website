@@ -1,13 +1,15 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute, Route, Router } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { IAdvert } from '@app/_models/IAdvert';
 import { IUser } from '@app/_models/IUser';
 import { UserService } from '@app/_services';
 import { AdvertService } from '@app/_services/advert.service';
-import { forkJoin, Observable } from 'rxjs';
+import { forkJoin } from 'rxjs';
+import { DeleteConfirmDialogComponent } from '../dialogs/delete-confirm-dialog/delete-confirm-dialog.component';
 
 @Component({
   selector: 'app-user-view',
@@ -27,12 +29,12 @@ export class UserViewComponent implements OnInit {
 
   constructor(private userService: UserService,
               private route: ActivatedRoute,
-              private advertService: AdvertService) { }
+              private advertService: AdvertService,
+              private matDialog: MatDialog) { }
 
   ngOnInit(): void {
 
     const userId = this.route.snapshot.params.id;
-
     const userSub = this.userService.getUser(userId);
     const advertSub = this.advertService.getUserAdverts(+userId);
 
@@ -43,6 +45,23 @@ export class UserViewComponent implements OnInit {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       })
+  }
 
+  deleteAdvert(advertId): void {
+    const dialog = this.matDialog.open(DeleteConfirmDialogComponent, {
+      data: {
+        type: "advert",
+        id: advertId
+      }
+    });
+
+    dialog.afterClosed()
+    .subscribe(() => {
+      this.advertService.getUserAdverts(+this.route.snapshot.params.id)
+        .subscribe(adverts => {
+          // Not ideal, must fix
+          this.dataSource	= new MatTableDataSource(adverts);
+        })
+    })
   }
 }

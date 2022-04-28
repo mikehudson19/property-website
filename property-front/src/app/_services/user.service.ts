@@ -44,4 +44,9 @@ export class UserService {
     updateUserPassword(body: {}): Observable<IUser> {
         return this._http.put<IUser>(`${environment.apiUrl}/${this.apiEndpoint}/password`, body);
     }
+
+    deleteUser(id: any): any {
+        const headers = new HttpHeaders({ 'Content-Type': 'application/json'});
+        return this._http.delete<any>(`${environment.apiUrl}/${this.apiEndpoint}/${id}`, { headers });
+    }
 }

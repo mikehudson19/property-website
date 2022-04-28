@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { Component, Inject, OnInit } from '@angular/core';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
+import { UserService } from '@app/_services';
+import { AdvertService } from '@app/_services/advert.service';
 
 @Component({
   selector: 'app-delete-confirm-dialog',
@@ -8,14 +10,24 @@ import { MatDialogRef } from '@angular/material/dialog';
 })
 export class DeleteConfirmDialogComponent implements OnInit {
 
-  constructor(private dialogRef: MatDialogRef<DeleteConfirmDialogComponent>) { }
+  toBeDeleted;
+
+  constructor(private dialogRef: MatDialogRef<DeleteConfirmDialogComponent>,
+              @Inject(MAT_DIALOG_DATA) private data: any,
+              private userService: UserService,
+              private advertService: AdvertService) { }
 
   ngOnInit(): void {
+    this.toBeDeleted = this.data.type;
   }
 
-  deleteAdvert(): void {
-    this.dialogRef.close(true);
+  delete(): void {
+    // Make api call to delete either the user or advert here
+    const apiCall = this.data.type === "advert" ? this.advertService.deleteAdvert(this.data.id) : this.userService.deleteUser(this.data.id);
+
+    apiCall.subscribe((x) => {
+      console.log("x",x);
+      this.dialogRef.close(x);
+    });
   }
-
-
 }
