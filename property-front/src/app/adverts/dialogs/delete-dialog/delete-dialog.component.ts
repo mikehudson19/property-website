@@ -22,11 +22,11 @@ export class DeleteDialogComponent implements OnInit {
     this.advertService
     .deleteAdvert(this.advert.id)
     .subscribe(() => {
-      this.router
-        .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
-        .then(() => {
-          this.router.navigate(["/myadverts"]);
-        });
+      // this.router
+      //   .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
+      //   .then(() => {
+      //     this.router.navigate(["/myadverts"]);
+      //   });
 
         this.dialogRef.close();
     });

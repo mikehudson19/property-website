@@ -22,11 +22,9 @@ export class DeleteConfirmDialogComponent implements OnInit {
   }
 
   delete(): void {
-    // Make api call to delete either the user or advert here
     const apiCall = this.data.type === "advert" ? this.advertService.deleteAdvert(this.data.id) : this.userService.deleteUser(this.data.id);
 
     apiCall.subscribe((x) => {
-      console.log("x",x);
       this.dialogRef.close(x);
     });
   }

@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { IAdvert } from '@app/_models/IAdvert';
 import { IUser } from '@app/_models/IUser';
 import { UserService } from '@app/_services';
@@ -30,7 +30,8 @@ export class UserViewComponent implements OnInit {
   constructor(private userService: UserService,
               private route: ActivatedRoute,
               private advertService: AdvertService,
-              private matDialog: MatDialog) { }
+              private matDialog: MatDialog,
+              private router: Router) { }
 
   ngOnInit(): void {
 
@@ -63,5 +64,10 @@ export class UserViewComponent implements OnInit {
           this.dataSource	= new MatTableDataSource(adverts);
         })
     })
+  }
+
+  viewAdvert(advertId: number): void {
+    console.log(advertId);
+    this.router.navigate(['/admin', '/user-list']);
   }
 }

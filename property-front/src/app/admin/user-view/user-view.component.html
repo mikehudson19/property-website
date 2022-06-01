@@ -63,7 +63,7 @@
             <!-- View Column -->
             <ng-container matColumnDef="view">
                 <mat-header-cell class="action-col" *matHeaderCellDef></mat-header-cell>
-                <mat-cell class="action-col" *matCellDef="let advert"><a><mat-icon>account_circle</mat-icon></a></mat-cell>
+                <mat-cell class="action-col" *matCellDef="let advert" (click)="viewAdvert(advert.id)"><a><mat-icon>account_circle</mat-icon></a></mat-cell>
             </ng-container>
         
             <!-- Remove Column -->
