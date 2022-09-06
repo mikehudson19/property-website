@@ -54,7 +54,10 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
 
             this.isFavourite = this.determineFavourite();
             this.userIsSeller = this.isUserSeller();
-            this.imagesLoaded = true;
+            // Just added this because there are no advert images on the DB
+            if (this.advert.images) {
+              this.imagesLoaded = true;
+            }
           });
       })
     );
@@ -81,9 +84,11 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
   }
 
   advertHeadlineImgToFront(advert: IAdvert): void {
-    const headlineImgIndex = advert.images.findIndex(image => image == advert.headlineImage);
-    advert.images.splice(headlineImgIndex, 1);
-    advert.images.unshift(advert.headlineImage);
+    if (advert.images) {
+      const headlineImgIndex = advert.images.findIndex(image => image == advert.headlineImage);
+      advert.images.splice(headlineImgIndex, 1);
+      advert.images.unshift(advert.headlineImage);
+    }
   }
 
   imgOverlay(img): string {

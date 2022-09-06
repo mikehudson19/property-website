@@ -18,18 +18,19 @@ export class AdvertService {
     if (id === 0) {
       return of(this.initializeAd());
     }
-    
+
     return this._http.get<IAdvert>(`${environment.apiUrl}/${this.apiEndpoint}/${id}`);
   }
 
   getAllAdverts(): Observable<any> {
     return this._http.get<any>(`${environment.apiUrl}/${this.apiEndpoint}`)
     /** @NOTE: Filtering for advert status would be handled by the API */
-      .pipe(
-        map(adverts => {
-          return adverts.filter(ad => ad.status == "Live");
-        })
-      );
+    // Commented this out for now as adverts.filer was throwing a console error
+      // .pipe(
+      //   map(adverts => {
+      //     return adverts.filter(ad => ad.status == "Live");
+      //   })
+      // );
   }
 
   getSearchedAdverts(): Observable<IAdvert[]> {

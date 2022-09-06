@@ -35,10 +35,10 @@ export class AllAdvertsComponent implements OnInit {
 
         advertSubscription.subscribe(adverts => {
           if (hasParams) {
-            this.adverts = this.filterAdverts(adverts, this.preFilledTerms.params);
+            this.adverts = this.filterAdverts(adverts.rows, this.preFilledTerms.params);
             this.loading = false;
           } else {
-            this.adverts = adverts;
+            this.adverts = adverts.rows;
             this.loading = false;
           }
         })

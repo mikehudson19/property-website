@@ -25,9 +25,9 @@ app.use(cors());
 
 app.use(bodyParser.json());
 
-app.use("/users", userRouter);
-app.use("/adverts", advertRouter);
-app.use("/cities", cityRouter);
+app.use("/api/users", userRouter);
+app.use("/api/adverts", advertRouter);
+app.use("/api/cities", cityRouter);
 
 app.listen(3000, () => {
   console.log("Node server started running on port 3000");
