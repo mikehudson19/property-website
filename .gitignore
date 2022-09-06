@@ -1,3 +1,5 @@
 Progress Notes.txt
 app.yaml
 .gcloudignore
+/dist
+.idea
