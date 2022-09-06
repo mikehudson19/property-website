@@ -29,13 +29,17 @@ export class AuthenticationService {
 
     login(email: string, password: string) {
         /** @TODO: The api url that needs to be used when connected to the Node API is: `${environment.apiUrl}/users/login` - need to change this so they are the same */
-        return this._http.post<any>(`${environment.apiUrl}/users/authenticate`, { email, password })
+        return this._http.post<any>(`${environment.apiUrl}/users/login`, { email, password })
             .pipe(map(user => {
                 // store user details and jwt token in local storage to keep user logged in between page refreshes
                 localStorage.setItem('currentUser', JSON.stringify(user));
                 this.currentUserSubject.next(user);
                 return user;
             }));
+    }
+
+    register(user: User) {
+        return this._http.post<any>(`${environment.apiUrl}/users/register`, user );
     }
 
     logout() {

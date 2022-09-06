@@ -1,15 +1,16 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MatDialog, MatDialogRef } from '@angular/material/dialog';
-import { Router } from '@angular/router';
-import { invalidInputs } from '@app/shared/utils';
-import { CustomValidators } from '@app/_helpers/customValidators';
-import { User } from '@app/_models/user';
-import { AuthenticationService, UserService } from '@app/_services';
-import { Subscription } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
-import { LoginDialogComponent } from '../login-dialog/login-dialog.component';
-import { PasswordReqDialogComponent } from '../password-req-dialog/password-req-dialog.component';
+import {Component, OnInit} from '@angular/core';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {MatDialog, MatDialogRef} from '@angular/material/dialog';
+import {Router} from '@angular/router';
+import {invalidInputs} from '@app/shared/utils';
+import {CustomValidators} from '@app/_helpers/customValidators';
+import {User} from '@app/_models/user';
+import {AuthenticationService, UserService} from '@app/_services';
+import {Subscription} from 'rxjs';
+import {debounceTime} from 'rxjs/operators';
+import {LoginDialogComponent} from '../login-dialog/login-dialog.component';
+import {PasswordReqDialogComponent} from '../password-req-dialog/password-req-dialog.component';
+import {UserRole} from "@app/_models/user-role.enum";
 
 @Component({
   selector: 'app-register-dialog',
@@ -102,24 +103,23 @@ export class RegisterDialogComponent implements OnInit {
     
     this.loading = true;
 
-    const user = new User(
-      this.registrationForm.get("firstName").value.trim(),
-      this.registrationForm.get("lastName").value.trim(),
-      this.registrationForm.get("email").value.trim(),
-      this.registrationForm.get("contactNumber").value.trim(),
-      this.registrationForm.get("passwords.password").value.trim(),
-      this.registrationForm.get("passwords.confirmPass").value.trim(),
-    );
+    const user = {
+      firstName: this.registrationForm.get("firstName").value.trim(),
+      lastName: this.registrationForm.get("lastName").value.trim(),
+      email: this.registrationForm.get("email").value.trim(),
+      role: UserRole.User,
+      contactNumber: this.registrationForm.get("contactNumber").value.trim(),
+      password: this.registrationForm.get("passwords.password").value.trim(),
+    };
 
-    user.favourites = [];
-
-    this._userService
-      .saveUser(user)
-      .subscribe();
+    this._authenticationService.register(user)
+        .subscribe(user => {
+          console.log(user);
+        });
 
     setTimeout (() => {
       this._authenticationService
-      .login(user.email, user.password) 
+      .login(user.email, user.password)
       .subscribe(
         (data) => {
           this.dialogRef.close();
