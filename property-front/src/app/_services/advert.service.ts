@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { IAdvert } from '@app/_models/IAdvert';
 import { environment } from '@environments/environment';
 import { Observable, of } from 'rxjs';
-import { map } from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -41,9 +41,10 @@ export class AdvertService {
     return this._http.get<IAdvert[]>(`${environment.apiUrl}/${this.apiEndpoint}`)
     /** @Note: This would be removed and handled by the API when there is one */
       .pipe(
-        map(x => {
-          return x.filter(advert => advert.userId === id)
-        })
+        // Commenting this out as it's breaking and needs to be on the API
+        // map(x => {
+        //   return x.filter(advert => advert.userId === id);
+        // })
       );
   }
 

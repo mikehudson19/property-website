@@ -28,7 +28,7 @@ export class UserController {
 
     if (isValid) {
         const tokenObject = JwtUtils.issueJwt(user);
-        res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires });
+        res.status(200).json({ success: true, token: tokenObject.token, expiresIn: tokenObject.expires, id: user.id });
     } else {
         res.status(401).json({ success: false, msg: "You entered the wrong password" });
     }
