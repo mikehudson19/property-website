@@ -25,7 +25,7 @@ export class MyAdvertsComponent implements OnInit {
     this._advertService.getUserAdverts(this.currentUser.id)
     .subscribe((adverts) => {
       this.loading = false;
-      this.adverts = adverts
+      this.adverts = adverts.rows;
     });
   }
 }
