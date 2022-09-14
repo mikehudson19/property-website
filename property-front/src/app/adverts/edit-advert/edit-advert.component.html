@@ -118,18 +118,34 @@
             </div>
             <div class="form-group">
               <input type="number" 
-                     name="parkingSpaces" 
-                     formControlName="parkingSpaces" 
+                     name="carports"
+                     formControlName="carports"
                      class="form-control" 
                      autocomplete="off" 
-                     id="parkingSpaces" 
+                     id="carports"
                      min="0"
-                     placeholder="Parkings"
+                     placeholder="Carports"
                      [ngClass]="{
-                      'is-invalid': validationMessage && validationMessage.parkingSpaces
+                      'is-invalid': validationMessage && validationMessage.carports
                     }"/>
               <span class="invalid-feedback">
-                <span>{{ validationMessage.parkingSpaces }}</span>
+                <span>{{ validationMessage.carports }}</span>
+              </span>
+            </div>
+            <div class="form-group">
+              <input type="number"
+                     name="size"
+                     formControlName="size"
+                     class="form-control"
+                     autocomplete="off"
+                     id="size"
+                     min="0"
+                     placeholder="Size (sqm)"
+                     [ngClass]="{
+                      'is-invalid': validationMessage && validationMessage.size
+                    }"/>
+              <span class="invalid-feedback">
+                <span>{{ validationMessage.size }}</span>
               </span>
             </div>
           </div>
@@ -166,8 +182,7 @@
 
           <div
             class="alert alert-warning text-center mt-3"
-            *ngIf="alertMessage && alertMessage.length > 0"
-          >
+            *ngIf="alertMessage && alertMessage.length > 0">
             <div>{{ alertMessage }}</div>
             <div class="mt-2">
             </div>

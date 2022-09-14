@@ -24,7 +24,11 @@ module.exports = (sequelize: any, DataTypes: any) => {
     price: DataTypes.INTEGER,
     details: DataTypes.TEXT,
     status: DataTypes.ENUM('Live', 'Hidden', 'Deactivated'),
-    userId: DataTypes.INTEGER
+    userId: DataTypes.INTEGER,
+    bedrooms: DataTypes.INTEGER,
+    bathrooms: DataTypes.INTEGER,
+    carports: DataTypes.INTEGER,
+    size: DataTypes.INTEGER
   }, {
     sequelize,
     modelName: 'Advert',

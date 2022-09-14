@@ -3,7 +3,6 @@ import { Injectable } from '@angular/core';
 import { IAdvert } from '@app/_models/IAdvert';
 import { environment } from '@environments/environment';
 import { Observable, of } from 'rxjs';
-import {map, tap} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -65,7 +64,7 @@ export class AdvertService {
   }
 
   initializeAd(): IAdvert {
-    return {  
+    return {
       title: '',
       province: '',
       city: '',
@@ -74,11 +73,12 @@ export class AdvertService {
       status: '',
       bedrooms: null,
       bathrooms: null,
-      parkingSpaces: null,
+      carports: null,
+      size: null,
       images: [],
       headlineImage: '',
       dateCreated: new Date()
-    }
+    };
   }
 
 

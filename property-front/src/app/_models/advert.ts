@@ -11,13 +11,14 @@ export class Advert implements IAdvert {
     public details: string,
     public bedrooms: number,
     public bathrooms: number,
-    public parkingSpaces: number,
-    public images: string[],
-    public headlineImage: string,
+    public carports: number,
+    public size: number,
     public dateCreated: Date,
     public status?: string,
+    public headlineImage?: string,
+    public images?: string[],
     /** @Note: shouldnt need this once the userId gets assigned via the API */
     public userId?: number,
-    public id?: number
+    public id?: number,
   ) {}
 }

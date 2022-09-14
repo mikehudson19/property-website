@@ -26,11 +26,11 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
   cities: String[] = [];
   id: number;
   advert: IAdvert;
-  isConfirm: boolean = false;
+  isConfirm = false;
   validationMessage: {
     [key: string]: string;
   } = {};
-  alertMessage: string = "";
+  alertMessage = "";
   canExit$: Subject<boolean> = new Subject<boolean>(); 
 
   images = [
@@ -85,8 +85,12 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
         this.advert?.bathrooms,
         [Validators.required, Validators.min(0)]
       ],
-      parkingSpaces: [
-        this.advert?.parkingSpaces,
+      carports: [
+        this.advert?.carports,
+        [Validators.required, Validators.min(0)]
+      ],
+      size: [
+        this.advert?.size,
         [Validators.required, Validators.min(0)]
       ]
     });
@@ -129,11 +133,11 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
     this.cities = [];
     this._locationService.list().subscribe(cities => {
       /** @Note: Can replace this at some stage with a query param sent to the API */
-      cities.forEach(city => {
+      cities.rows.forEach(city => {
         if (this.province === city.province) {
           this.cities?.push(city.name);
         }
-      })
+      });
     });
   }
 
@@ -155,7 +159,8 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
       price: this.advert.price,
       bedrooms: this.advert.bedrooms,
       bathrooms: this.advert.bathrooms,
-      parkingSpaces: this.advert.parkingSpaces
+      carports: this.advert.carports,
+      size: this.advert.size
     });
   }
 
@@ -164,21 +169,20 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
     const currentUser = this.authenticationService.currentUserValue;
     const advertDetails = this.addBreaksToAdvertDetails(this.editAdvertForm.get("details").value.trim());
 
-    const advert = new Advert(
-      this.editAdvertForm.get("title").value.trim(),
-      this.editAdvertForm.get("province").value.trim(),
-      this.editAdvertForm.get("city").value.trim(),
-      this.editAdvertForm.get("price").value.trim(),
-      advertDetails,
-      this.editAdvertForm.get("bedrooms").value,
-      this.editAdvertForm.get("bathrooms").value,
-      this.editAdvertForm.get("parkingSpaces").value,
-      this.images,    
-      this.randomHeadlineImage(),
-      new Date(),
-      'Live',
-      currentUser.id,
-    );
+    const advert = {
+      title: this.editAdvertForm.get("title").value.trim(),
+      province:  this.editAdvertForm.get("province").value.trim(),
+      city: this.editAdvertForm.get("city").value.trim(),
+      price: this.editAdvertForm.get("price").value.trim(),
+      details: advertDetails,
+      bedrooms: this.editAdvertForm.get("bedrooms").value,
+      bathrooms: this.editAdvertForm.get("bathrooms").value,
+      carports: this.editAdvertForm.get('carports').value,
+      dateCreated: new Date(),
+      status: 'Live',
+      userId: currentUser.id,
+      size: this.editAdvertForm.get('size').value
+    };
 
     this._advertService
     .createAdvert(advert).subscribe({
@@ -205,7 +209,7 @@ export class EditAdvertComponent implements OnInit, OnDestroy {
 
   onSave(): void {
     if (this.editAdvertForm.valid) {
-      if (this.id == 0) {
+      if (this.id === 0) {
         this.createAdvert();
         return;
       }
