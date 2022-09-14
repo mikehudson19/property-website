@@ -9,8 +9,9 @@ export interface IAdvert {
   userId?: number,
   bedrooms: number,
   bathrooms: number,
-  parkingSpaces: number,
-  images: string[],
-  headlineImage: string
-  dateCreated: Date
+  carports: number,
+  images?: string[],
+  headlineImage?: string;
+  dateCreated: Date;
+  size: number;
 }

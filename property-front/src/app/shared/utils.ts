@@ -119,8 +119,12 @@ const validationMessages: {} = {
     required: "Bathrooms are required",
     min: "Cannot be less than 0"
   },
-  parkingSpaces: {
+  carports: {
     required: "Parkings are required",
+    min: "Cannot be less than 0"
+  },
+  size: {
+    required: "Size is required",
     min: "Cannot be less than 0"
   }
 };
