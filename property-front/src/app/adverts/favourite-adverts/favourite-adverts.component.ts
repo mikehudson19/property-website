@@ -28,11 +28,12 @@ export class FavouriteAdvertsComponent implements OnInit {
         this.advertService.getAllAdverts()
           .pipe(
             map(adverts => {
-              const filtered = adverts.filter(ad => {
+              // Need to get this to work with the DB and API
+              const filtered = adverts.rows.filter(ad => {
                 if (user.favourites.includes(ad.id)) {
                   return ad;
                 }
-              })
+              });
 
               return filtered;
             })

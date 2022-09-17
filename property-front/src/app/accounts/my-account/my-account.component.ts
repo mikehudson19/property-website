@@ -1,21 +1,21 @@
-import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { MatDialog } from "@angular/material/dialog";
-import { MatSnackBar } from "@angular/material/snack-bar";
-import { Router } from "@angular/router";
-import { CustomValidators } from "@app/_helpers/customValidators";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Router } from '@angular/router';
+import { CustomValidators } from '@app/_helpers/customValidators';
 import { IUser } from '@app/_models/IUser';
-import { AuthenticationService, UserService } from "@app/_services";
-import { Subscription } from "rxjs";
-import { debounceTime } from "rxjs/operators";
-import { PasswordDialogComponent } from "../password-dialog/password-dialog.component";
-import { invalidInputs } from "@app/shared/utils";
-import { UserRole } from "@app/_models/user-role.enum";
+import { AuthenticationService, UserService } from '@app/_services';
+import { Subscription } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
+import { PasswordDialogComponent } from '../password-dialog/password-dialog.component';
+import { invalidInputs } from '@app/shared/utils';
+import { UserRole } from '@app/_models/user-role.enum';
 
 @Component({
-  selector: "app-my-account",
-  templateUrl: "./my-account.component.html",
-  styleUrls: ["./my-account.component.scss"],
+  selector: 'app-my-account',
+  templateUrl: './my-account.component.html',
+  styleUrls: ['./my-account.component.scss'],
 })
 
 export class MyAccountComponent implements OnInit, OnDestroy {
@@ -23,8 +23,8 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   validationMessage: { [key: string]: string } = {};
   sub: Subscription;
   authUser: IUser;
-  error: string = '';
-  successMessage: string = '';
+  error = '';
+  successMessage = '';
 
   constructor(
     private _formBuilder: FormBuilder,
@@ -37,7 +37,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.manageAccountForm = this._formBuilder.group({
       firstName: [
-        "",
+        '',
         [
           Validators.required,
           Validators.minLength(1),
@@ -48,7 +48,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
         ],
       ],
       lastName: [
-        "",
+        '',
         [
           Validators.required,
           Validators.minLength(3),
@@ -59,7 +59,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
         ],
       ],
       email: [
-        "",
+        '',
         [
           Validators.required,
           Validators.email,
@@ -69,7 +69,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
         ],
       ],
       contactNumber: [
-        "",
+        '',
         [
           Validators.required,
           CustomValidators.onlyNumbers
@@ -94,7 +94,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
         this.authUser = user;
 
         this.displayUser();
-      })
+      });
   }
 
   displayUser(): void {
@@ -109,34 +109,34 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   updateUser(): void {
 
     /** TODO: Change the way this updates */
-    const userToUpdate: IUser = { 
+    const userToUpdate: any = {
       id: this.authUser.id,
-      firstName: this.manageAccountForm.get("firstName").value.trim(),
-      lastName: this.manageAccountForm.get("lastName").value.trim(),
-      email: this.manageAccountForm.get("email").value.trim(),
-      contactNumber: this.manageAccountForm.get("contactNumber").value.trim(),
+      firstName: this.manageAccountForm.get('firstName').value.trim(),
+      lastName: this.manageAccountForm.get('lastName').value.trim(),
+      email: this.manageAccountForm.get('email').value.trim(),
+      contactNumber: this.manageAccountForm.get('contactNumber').value?.trim(),
       role: UserRole.User
     };
 
     if (this.authUser.firstName === userToUpdate.firstName &&
-        this.authUser.lastName === userToUpdate.lastName && 
-        this.authUser.email === userToUpdate.email && 
+        this.authUser.lastName === userToUpdate.lastName &&
+        this.authUser.email === userToUpdate.email &&
         this.authUser.contactNumber === userToUpdate.contactNumber ) {
-          this.matSnackBar.open("No changes were detected", "Close", {
+          this.matSnackBar.open('No changes were detected', 'Close', {
             duration: 2000
-          })
+          });
           return;
         }
 
     this._userService.updateUser(userToUpdate)
       .subscribe((user) => {
         this._router
-          .navigateByUrl("/RefreshComponent", { skipLocationChange: true })
+          .navigateByUrl('/RefreshComponent', { skipLocationChange: true })
           .then(() => {
-            this._router.navigate(["/myaccount"]);
-            this.matSnackBar.open("You profile has been updated", "Close", {
+            this._router.navigate(['/myaccount']);
+            this.matSnackBar.open('You profile has been updated', 'Close', {
               duration: 2000
-            })
+            });
           });
       });
   }
@@ -146,7 +146,7 @@ export class MyAccountComponent implements OnInit, OnDestroy {
       data: {
         user: this.authUser
       }
-    })
+    });
   }
 
   afterSave(): void {
@@ -159,6 +159,6 @@ export class MyAccountComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    if (this.sub) this.sub.unsubscribe();
+    if (this.sub) { this.sub.unsubscribe(); }
   }
 }
