@@ -6,9 +6,10 @@ import { IAdvert } from '@app/_models/IAdvert';
 import { IUser } from '@app/_models/IUser';
 import { AuthenticationService, UserService } from '@app/_services';
 import { AdvertService } from '@app/_services/advert.service';
-import { forkJoin, Subscription } from 'rxjs';
+import {forkJoin, pipe, Subscription} from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ContactSellerDialogComponent } from '../dialogs/contact-seller-dialog/contact-seller-dialog.component';
+import {AdvertGalleryService} from '@app/_services/advert-gallery.service';
 
 @Component({
   selector: 'app-advert-detail',
@@ -24,7 +25,7 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
   authUser: IUser;
   isFavourite: boolean;
   imagesLoaded: boolean;
-  isLoading: boolean = true;
+  isLoading = true;
   userIsSeller: boolean;
   advertDetailWidth: string;
 
@@ -33,24 +34,30 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
               private matSnackBar: MatSnackBar,
               private authService: AuthenticationService,
               private userService: UserService,
-              private matDialog: MatDialog) { }
+              private matDialog: MatDialog,
+              private advertGalleryService: AdvertGalleryService) { }
 
   ngOnInit(): void {
 
     this.sub.add(
       this._route.paramMap.subscribe((params) => {
-        const id = +params.get("id");
+        const advertId = +params.get('id');
         const authUserId = this.authService.currentUserValue?.id;
 
-        let advertCall = this._advertService.getAdvert(id)
+        const advertCall = this._advertService.getAdvert(advertId)
                           .pipe(tap(advert => this.advertHeadlineImgToFront(advert)));
 
-        let authUserCall = this.userService.getUser(authUserId);
+        const advertGalleryCall = this.advertGalleryService.getAdvertGalleries(advertId);
 
-        forkJoin([advertCall, authUserCall])
-          .subscribe(res => {
-            this.advert = res[0];
-            this.authUser = res[1];
+        const authUserCall = this.userService.getUser(authUserId);
+
+        forkJoin([advertCall, authUserCall, advertGalleryCall])
+          .subscribe(([advert, authUser, advertGallery]) => {
+            this.advert = advert;
+            this.authUser = authUser;
+
+            this.advert.headlineImage = advertGallery[0].headlineImage;
+            this.advert.images = Object.values(advertGallery[0]);
 
             this.isFavourite = this.determineFavourite();
             this.userIsSeller = this.isUserSeller();
@@ -107,9 +114,9 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
 
   determineFavourite(): boolean {
     this.isLoading = false;
-    if (this.authUser.favourites.includes(this.advert.id)) return true;
+    return this.authUser.favourites.includes(this.advert.id) ? true : false;
   }
-  
+
   openContactDialog(): void {
     this.matDialog.open(ContactSellerDialogComponent);
   }
@@ -131,8 +138,8 @@ export class AdvertDetailComponent implements OnInit, OnDestroy {
       this.userService.updateUser(user).subscribe();
       this.matSnackBar.open(`${this.isFavourite ? "Added to" : "Removed from"} your favourites`, "Close", {
         duration: 2000
-      })
-    })
+      });
+    });
   }
 
   isUserSeller(): boolean {

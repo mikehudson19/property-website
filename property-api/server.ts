@@ -7,6 +7,7 @@ import { userRouter } from "./app/routes/user-routes";
 import { advertRouter } from "./app/routes/advert-routes";
 import { cityRouter } from "./app/routes/city-routes";
 import passport from "passport";
+import {advertGalleryRouter} from "./app/routes/advert-gallery-routes";
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(bodyParser.json());
 app.use("/api/users", userRouter);
 app.use("/api/adverts", advertRouter);
 app.use("/api/cities", cityRouter);
+app.use("/api/advert-galleries", advertGalleryRouter);
 
 app.listen(3000, () => {
   console.log("Node server started running on port 3000");

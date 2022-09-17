@@ -35,7 +35,7 @@ export class AdvertCardLargeComponent implements OnInit {
     this.userService.getUser(authUserId)
       .subscribe(user => {
         this.authUser = user;
-        this.authUser.favourites.includes(this.advert.id) ? this.isFavourite = true : this.isFavourite = false;
+        // this.authUser.favourites.includes(this.advert.id) ? this.isFavourite = true : this.isFavourite = false;
         this.router.url === '/myadverts' ? this.displayActions = true : this.displayActions = false;
         this.isLoading  = false;
       });
@@ -57,9 +57,9 @@ export class AdvertCardLargeComponent implements OnInit {
       }
 
       this.userService.updateUser(user).subscribe();
-      this.matSnackBar.open(`${this.isFavourite ? "Added to" : "Removed from"} your favourites`, "Close", {
+      this.matSnackBar.open(`${this.isFavourite ? 'Added to' : 'Removed from'} your favourites`, "Close", {
         duration: 2000
-      })
-    })
+      });
+    });
   }
 }

@@ -5,6 +5,8 @@ import { SearchComponent } from '@app/shared/search/search.component';
 import { IAdvert } from '@app/_models/IAdvert';
 import { AdvertService } from '@app/_services/advert.service';
 import { SearchDialogComponent } from '../dialogs/search-dialog/search-dialog.component';
+import {AdvertGalleryService} from '@app/_services/advert-gallery.service';
+import {forkJoin} from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -22,28 +24,42 @@ export class AllAdvertsComponent implements OnInit {
 
   constructor(private _advertService: AdvertService,
               private route: ActivatedRoute,
-              private matDialog: MatDialog) { }
+              private matDialog: MatDialog,
+              private advertGalleries: AdvertGalleryService) { }
 
   ngOnInit(): void {
-  
+
     this.route.queryParamMap
       .subscribe((params) => {
         this.preFilledTerms = params;
 
         const hasParams = Object.keys(this.preFilledTerms.params).length > 0;
         const advertSubscription = hasParams ? this._advertService.getSearchedAdverts() : this._advertService.getAllAdverts();
+        const advertGallerySubscription = this.advertGalleries.getAdvertHeadlineImages();
 
-        advertSubscription.subscribe(adverts => {
-          if (hasParams) {
-            this.adverts = this.filterAdverts(adverts.rows, this.preFilledTerms.params);
-            this.loading = false;
-          } else {
-            this.adverts = adverts.rows;
-            this.loading = false;
-          }
-        })
-      })
+        forkJoin([
+            advertSubscription,
+            advertGallerySubscription
+        ])
+            .subscribe(([adverts, advertGalleries]) => {
+              if (hasParams) {
+                this.adverts = this.filterAdverts(adverts.rows, this.preFilledTerms.params);
+                this.loading = false;
+              } else {
+                this.adverts = adverts.rows;
+                this.loading = false;
+              }
 
+              // Todo: Don't think this is the most efficient code.
+              this.adverts.forEach(advert => {
+                advertGalleries.forEach(advertGall => {
+                  if (advertGall.advertId === advert.id) {
+                    advert.headlineImage = advertGall.headlineImage;
+                  }
+                });
+              });
+            });
+      });
   }
 
   orderChoice(choice: string): void {
@@ -52,7 +68,7 @@ export class AllAdvertsComponent implements OnInit {
       this.orderBy = 'Price | Ascending'
       this.adverts.sort(this.compare('asc'));
     }
- 
+
     if (choice === 'Descending') {
       this.isAscending = false;
       this.orderBy = 'Price | Descending'
@@ -73,7 +89,7 @@ export class AllAdvertsComponent implements OnInit {
       } else if (advertA < advertB) {
         comparison = -1;
       }
-      
+
       return (order === 'desc') ? (comparison * -1) : comparison;
     }
   }
@@ -95,7 +111,7 @@ export class AllAdvertsComponent implements OnInit {
     this.advertsToSend = [];
 
     adverts.forEach(advert => {
-      
+
       if (hasKeyword && ( !hasCity && !hasProvince && !hasMinPrice && !hasMaxPrice)) {
        if (advert.details.includes(keyword)) this.advertsToSend.push(advert);
       } else if (hasKeyword && ( hasCity || hasProvince || hasMinPrice || hasMaxPrice) ) {
