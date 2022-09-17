@@ -3,10 +3,10 @@ import * as dotenv from "dotenv";
 dotenv.config();
 
 export const db = {
-  HOST: "localhost",
-  USER: "root",
-  PASSWORD: "Nineteen19!",
-  DB: "prop_db",
+  HOST: "database-1.c0ca3ogx2a4h.us-east-1.rds.amazonaws.com",
+  USER: "admin",
+  PASSWORD: "password",
+  DB: "mydb",
   dialect: "mysql",
   pool: {
     max: 5,
@@ -15,8 +15,7 @@ export const db = {
     idle: 10000
   }
 };
-
-// module.exports = {
+// export const db = {
 //   HOST: "localhost",
 //   USER: "root",
 //   PASSWORD: "Nineteen19!",

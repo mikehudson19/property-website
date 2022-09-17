@@ -1,9 +1,9 @@
 {
   "development": {
-    "username": "root",
-    "password": "Nineteen19!",
-    "database": "prop_db",
-    "host": "localhost",
+    "username": "admin",
+    "password": "password",
+    "database": "mydb",
+    "host": "database-1.c0ca3ogx2a4h.us-east-1.rds.amazonaws.com",
     "dialect": "mysql"
   },
   "test": {
